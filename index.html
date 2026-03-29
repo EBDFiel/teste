@@ -1757,9 +1757,10 @@
       background: linear-gradient(180deg, #f6f8fb 0%, #eef2f7 100%);
       color: #162331;
       line-height: 1.7;
-      padding: 24px;
+      padding: 16px;
     }
     .container {
+      width: min(100%, 920px);
       max-width: 920px;
       margin: 0 auto;
       background: #fff;
@@ -1853,9 +1854,24 @@
       color: white;
     }
     @media (max-width: 768px) {
-      body { padding: 12px; }
-      .cover, .content { padding: 20px; }
-      h1 { font-size: 1.55rem; }
+      body {
+        padding: 0;
+        background: #eef2f7;
+      }
+      .container {
+        width: 100%;
+        max-width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+      }
+      .cover, .content {
+        padding: 20px 16px;
+      }
+      h1 {
+        font-size: 1.55rem;
+      }
     }
   </style>
 </head>
