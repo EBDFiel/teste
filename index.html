@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* (estilos mantidos exatamente iguais aos anteriores - omitidos por brevidade) */
+    /* Todos os estilos permanecem exatamente iguais aos originais */
     :root {
       --bg: #07111f;
       --bg-soft: #0c1828;
@@ -1107,16 +1107,234 @@
   </header>
 
   <main>
-    <!-- HERO, SOCIAL STRIP, ADULTOS, JOVENS, ABOUT (idênticos ao original, omitidos por brevidade) -->
-    <!-- ... todo o conteúdo do hero, social, adult, youth, about permanece igual ... -->
+    <!-- ========== SEÇÃO HERO ========== -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-panel">
+          <div>
+            <span class="eyebrow"><i class="fas fa-book-bible"></i> Escola Bíblica Dominical</span>
+            <h2>Aprendendo a Palavra de Deus para viver e ensinar melhor a cada dia.</h2>
+            <p>
+              A Escola Bíblica Dominical é um tempo precioso de crescimento espiritual, comunhão e ensino fiel das Escrituras. Aqui você encontra lições organizadas por trimestre, com conteúdo bíblico, aplicações práticas e recursos para edificação da igreja.
+            </p>
+            <div class="hero-actions">
+              <a href="#adult-class" class="btn btn-primary"><i class="fas fa-book-open"></i> Classe Adultos</a>
+              <a href="#youth-class" class="btn btn-secondary"><i class="fas fa-users"></i> Classe Jovens</a>
+            </div>
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <strong>Ensino</strong>
+                <span>Fundamentado na Bíblia</span>
+              </div>
+              <div class="hero-stat">
+                <strong>Comunhão</strong>
+                <span>Aprendendo juntos</span>
+              </div>
+              <div class="hero-stat">
+                <strong>Prática</strong>
+                <span>Aplicação para a vida</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-side">
+            <div class="hero-card">
+              <strong><i class="fas fa-book"></i> Estudo sistemático</strong>
+              <p>Lições organizadas por trimestre para um aprendizado contínuo e progressivo da Palavra.</p>
+            </div>
+            <div class="hero-card">
+              <strong><i class="fas fa-church"></i> Edificação da igreja</strong>
+              <p>Conteúdo voltado para fortalecer a fé, o discipulado e o serviço cristão.</p>
+            </div>
+            <div class="hero-card">
+              <strong><i class="fas fa-heart"></i> Vida cristã prática</strong>
+              <p>Aplicações que ajudam a viver o evangelho no dia a dia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SOCIAL STRIP ========== -->
+    <section class="social-strip">
+      <div class="container social-strip-inner">
+        <div class="social-text"><i class="fas fa-hashtag"></i> Acompanhe a EBD Fiel nas redes sociais</div>
+        <div class="social-icons-top">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CLASSE ADULTOS ========== -->
+    <section class="section" id="adult-class">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h3>Classe Adultos</h3>
+            <p>Lições para adultos com estudos bíblicos profundos, aplicações práticas e acesso rápido ao conteúdo do trimestre.</p>
+          </div>
+        </div>
+        <section class="class-section">
+          <div class="class-head">
+            <div class="class-title">
+              <div class="class-icon"><i class="fas fa-users"></i></div>
+              <div>
+                <h4>Adultos</h4>
+                <p>Estudos consistentes, reverentes e bem estruturados.</p>
+              </div>
+            </div>
+            <div class="quick-links">
+              <a href="#adult-video" class="quick-link video"><i class="fas fa-play-circle"></i> Vídeo</a>
+              <a href="https://ebdfiel.github.io/Quizzes-ClaseAdultos-2026/" target="_blank" class="quick-link quiz"><i class="fas fa-brain"></i> Quiz</a>
+            </div>
+          </div>
+          <div class="class-layout">
+            <aside class="video-section" id="adult-video">
+              <h5><i class="fas fa-circle-play"></i> Vídeo do trimestre</h5>
+              <div class="video-universal-container">
+                <div class="video-responsive-wrapper">
+                  <iframe src="https://www.youtube.com/embed/tQg7bmcS4yM?rel=0" allowfullscreen></iframe>
+                </div>
+              </div>
+              <a href="#" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a>
+              <a href="https://ebdfiel.github.io/Quizzes-ClaseAdultos-2026/" target="_blank" class="quiz-button"><i class="fas fa-question-circle"></i> Acessar Quiz Adultos</a>
+            </aside>
+            <div class="panel-side">
+              <h5><i class="fas fa-calendar-week"></i> Lições por trimestre</h5>
+              <div class="trim-hint">Selecione um trimestre para visualizar as lições disponíveis.</div>
+              <div class="trim-tabs" id="adultTabs"></div>
+              <div class="lessons-grid" id="adultLessonsContainer"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ========== CLASSE JOVENS ========== -->
+    <section class="section" id="youth-class">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h3>Classe Jovens</h3>
+            <p>Lições com linguagem atual, apresentação dinâmica e aplicações práticas para a juventude cristã.</p>
+          </div>
+        </div>
+        <section class="class-section">
+          <div class="class-head">
+            <div class="class-title">
+              <div class="class-icon"><i class="fas fa-fire"></i></div>
+              <div>
+                <h4>Conectar Jovens</h4>
+                <p>Conteúdo bíblico fiel com uma abordagem mais conectada ao público jovem.</p>
+              </div>
+            </div>
+            <div class="quick-links">
+              <a href="#youth-video" class="quick-link video"><i class="fas fa-play-circle"></i> Vídeo</a>
+              <a href="https://ebdfiel.github.io/Quizzes-ConectarJovens-/" target="_blank" class="quick-link quiz"><i class="fas fa-users"></i> Quiz</a>
+            </div>
+          </div>
+          <div class="class-layout">
+            <aside class="video-section" id="youth-video">
+              <h5><i class="fas fa-circle-play"></i> Vídeo da classe jovem</h5>
+              <div class="video-universal-container">
+                <div class="video-responsive-wrapper">
+                  <iframe src="https://www.youtube.com/embed/uCCysCorUok?rel=0" allowfullscreen></iframe>
+                </div>
+              </div>
+              <a href="#" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a>
+              <a href="https://ebdfiel.github.io/Quizzes-ConectarJovens-/" target="_blank" class="quiz-button"><i class="fas fa-question-circle"></i> Acessar Quiz Jovens</a>
+            </aside>
+            <div class="panel-side">
+              <h5><i class="fas fa-calendar-week"></i> Lições por trimestre</h5>
+              <div class="trim-hint">Selecione um trimestre para visualizar as lições disponíveis.</div>
+              <div class="trim-tabs" id="youthTabs"></div>
+              <div class="lessons-grid" id="youthLessonsContainer"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ========== SOBRE ========== -->
+    <section class="section" id="about">
+      <div class="container">
+        <section class="about-section">
+          <div class="about-grid">
+            <div class="about-text">
+              <h3>Sobre a EBD Fiel</h3>
+              <p>Projeto dedicado a fornecer material bíblico de qualidade para as Escolas Bíblicas Dominicais, com organização visual melhor, leitura confortável e acesso fácil aos estudos.</p>
+              <div class="about-features">
+                <div class="feature">
+                  <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                  <div class="feature-text">
+                    <h4>Estudo Exegético</h4>
+                    <p>Análise cuidadosa do texto bíblico com foco em fidelidade às Escrituras.</p>
+                  </div>
+                </div>
+                <div class="feature">
+                  <div class="feature-icon"><i class="fas fa-users"></i></div>
+                  <div class="feature-text">
+                    <h4>Para Todos</h4>
+                    <p>Conteúdos organizados para adultos e jovens em uma navegação simples.</p>
+                  </div>
+                </div>
+                <div class="feature">
+                  <div class="feature-icon"><i class="fas fa-mobile-screen"></i></div>
+                  <div class="feature-text">
+                    <h4>Melhor Navegação</h4>
+                    <p>Mais clareza visual, mais espaço para leitura e menos poluição de interface.</p>
+                  </div>
+                </div>
+                <div class="feature">
+                  <div class="feature-icon"><i class="fas fa-sliders"></i></div>
+                  <div class="feature-text">
+                    <h4>Painel Admin</h4>
+                    <p>Edição local rápida com controle de disponibilidade e exportação dos dados.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="about-image">
+              <div class="about-image-content">
+                <i class="fas fa-bible"></i>
+                <h3>“Examinai as Escrituras”</h3>
+                <p>João 5:39</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <!-- ... igual ao original ... -->
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>EBD Fiel</h3>
+          <p>Material bíblico fiel para fortalecer a Escola Bíblica Dominical.</p>
+          <div class="social-icons">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Links</h3>
+          <p><a href="#home">Início</a></p>
+          <p><a href="#adult-class">Adultos</a></p>
+          <p><a href="#youth-class">Jovens</a></p>
+          <p><a href="#about">Sobre</a></p>
+        </div>
+      </div>
+      <div class="copyright">&copy; 2026 EBD Fiel - Todos os direitos reservados.</div>
+    </div>
   </footer>
 
+  <!-- ADMIN PANEL e MODAL (já existentes) -->
   <div id="adminOverlay" class="admin-panel-overlay"></div>
-
   <div id="adminPanel" class="admin-panel">
     <div class="admin-panel-header">
       <h3>Administração</h3>
@@ -1129,7 +1347,7 @@
       <button id="adminResetAll">Resetar Conteúdos</button>
       <button id="adminExport">Exportar JSON</button>
       <button id="adminClearStorage" class="danger">Limpar Todos os Dados</button>
-      <!-- NOVO BOTÃO PARA CORRIGIR OS TÍTULOS DOS JOVENS NO 2º TRIMESTRE -->
+      <!-- NOVO BOTÃO PARA CORRIGIR TÍTULOS DOS JOVENS (2º TRIMESTRE) -->
       <button id="adminFixYouthTitles" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">Corrigir Títulos dos Jovens (2º Trim)</button>
     </div>
     <p class="admin-note">Se algum card continuar exibindo conteúdo antigo, use “Limpar Todos os Dados” e recarregue a página.</p>
@@ -1154,7 +1372,7 @@
 
     const EDIT_PASSWORD = "4141";
 
-    // Novos títulos para as lições dos jovens no 2º trimestre
+    // Lista dos novos títulos para o 2º trimestre dos jovens
     const YOUTH_TRIMESTRE_2_TITLES = {
       1: "Reconhecendo o Senhorio de Deus",
       2: "Compreendendo a Mordomia Cristã",
@@ -1171,7 +1389,7 @@
       13: "Mordomia cristã: obediência e responsabilidade"
     };
 
-    // Função que aplica os novos títulos e também salva no localStorage para persistência
+    // Função que aplica os novos títulos e salva no localStorage
     function applyYouthTitleUpdatesAndSave() {
       if (!youthLessons.length) {
         alert("Nenhuma lição de jovens carregada ainda.");
@@ -1179,17 +1397,14 @@
       }
       let updatedCount = 0;
       youthLessons.forEach(lesson => {
-        // Comparação flexível: converte trimestre e numero para string
         if (String(lesson.trimestre) === "2" && YOUTH_TRIMESTRE_2_TITLES[lesson.numero]) {
           const key = `${lesson.tipo}:${lesson.id}`;
           const newTitle = YOUTH_TRIMESTRE_2_TITLES[lesson.numero];
           if (lesson.titulo !== newTitle) {
             lesson.titulo = newTitle;
             updatedCount++;
-            // Salva a alteração no contentOverrides para que seja persistente
             if (!contentOverrides[key]) contentOverrides[key] = {};
             contentOverrides[key].titulo = newTitle;
-            // Se já houver conteúdo editado, mantém o conteúdo e só atualiza o título
             if (!contentOverrides[key].conteudo) {
               contentOverrides[key].conteudo = lesson.conteudo;
             }
@@ -1214,12 +1429,10 @@
     function loadOverrides() {
       const storedAdmin = localStorage.getItem('ebd_admin_overrides');
       const storedContent = localStorage.getItem('ebd_content_overrides');
-
       if (storedAdmin) {
         try { adminOverrides = JSON.parse(storedAdmin); }
         catch (e) { adminOverrides = {}; }
       }
-
       if (storedContent) {
         try { contentOverrides = JSON.parse(storedContent); }
         catch (e) { contentOverrides = {}; }
@@ -1234,7 +1447,6 @@
     function applyContentOverrides(lesson) {
       const key = `${lesson.tipo}:${lesson.id}`;
       if (!contentOverrides[key]) return lesson;
-
       const override = contentOverrides[key];
       if (override.conteudo !== undefined) {
         const updatedLesson = { ...lesson, conteudo: override.conteudo };
@@ -1244,10 +1456,8 @@
           : (override.titulo || lesson.titulo);
         return updatedLesson;
       } else if (override.titulo !== undefined) {
-        // Caso apenas o título tenha sido editado
         return { ...lesson, titulo: override.titulo };
       }
-
       return lesson;
     }
 
@@ -1283,13 +1493,10 @@
 
     function getIntroSummary(html) {
       if (!html) return 'Clique para abrir o conteúdo completo da lição.';
-
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = html;
-
       const unwantedTags = tempDiv.querySelectorAll('style, script, link');
       unwantedTags.forEach(tag => tag.remove());
-
       const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
       for (let heading of headings) {
         const headingText = heading.innerText.trim().toLowerCase();
@@ -1308,14 +1515,12 @@
           break;
         }
       }
-
       const firstParagraph = tempDiv.querySelector('p');
       if (firstParagraph && firstParagraph.innerText.trim()) {
         let text = firstParagraph.innerText.trim();
         if (text.length > 200) text = text.substring(0, 200) + '...';
         return text;
       }
-
       return 'Clique para abrir o conteúdo completo da lição.';
     }
 
@@ -1323,20 +1528,12 @@
       try {
         const response = await fetch('lessons.json');
         const data = await response.json();
-
         adultLessons = data.adult || [];
         youthLessons = data.youth || [];
 
         let nextId = 1;
-        adultLessons.forEach((lesson) => {
-          lesson.id = nextId++;
-          lesson.tipo = 'adult';
-        });
-
-        youthLessons.forEach((lesson) => {
-          lesson.id = nextId++;
-          lesson.tipo = 'youth';
-        });
+        adultLessons.forEach(lesson => { lesson.id = nextId++; lesson.tipo = 'adult'; });
+        youthLessons.forEach(lesson => { lesson.id = nextId++; lesson.tipo = 'youth'; });
 
         allLessons = [...adultLessons, ...youthLessons];
         criarAbas('adult', adultLessons);
@@ -1350,10 +1547,9 @@
     }
 
     function criarAbas(tipo, lista) {
-      const trimestres = [...new Set(lista.map((lesson) => lesson.trimestre))].sort((a, b) => a - b);
+      const trimestres = [...new Set(lista.map(l => l.trimestre))].sort((a,b) => a - b);
       const tabsContainer = document.getElementById(`${tipo}Tabs`);
       const lessonsContainer = document.getElementById(`${tipo}LessonsContainer`);
-
       if (!tabsContainer || !lessonsContainer) return;
 
       tabsContainer.innerHTML = '';
@@ -1364,50 +1560,45 @@
         return;
       }
 
-      trimestres.forEach((trim, index) => {
-        const button = document.createElement('button');
-        button.className = `tab-btn${index === 0 ? ' active' : ''}`;
-        button.textContent = `${trim}º Trimestre`;
-        button.dataset.trim = trim;
-        button.addEventListener('click', () => {
-          document.querySelectorAll(`#${tipo}Tabs .tab-btn`).forEach((btn) => btn.classList.remove('active'));
-          button.classList.add('active');
+      trimestres.forEach((trim, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `tab-btn${idx === 0 ? ' active' : ''}`;
+        btn.textContent = `${trim}º Trimestre`;
+        btn.dataset.trim = trim;
+        btn.addEventListener('click', () => {
+          document.querySelectorAll(`#${tipo}Tabs .tab-btn`).forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
           const { adults, youths } = getFinalLessons();
           const source = tipo === 'adult' ? adults : youths;
-          renderizarLicoes(tipo, source.filter((lesson) => String(lesson.trimestre) === String(trim)));
+          renderizarLicoes(tipo, source.filter(l => String(l.trimestre) === String(trim)));
         });
-        tabsContainer.appendChild(button);
+        tabsContainer.appendChild(btn);
       });
 
       const { adults, youths } = getFinalLessons();
       const firstTrim = trimestres[0];
       const source = tipo === 'adult' ? adults : youths;
-      renderizarLicoes(tipo, source.filter((lesson) => String(lesson.trimestre) === String(firstTrim)));
+      renderizarLicoes(tipo, source.filter(l => String(l.trimestre) === String(firstTrim)));
     }
 
     function renderizarLicoes(tipo, lista) {
       const container = document.getElementById(`${tipo}LessonsContainer`);
       if (!container) return;
-
       if (!lista.length) {
         container.innerHTML = '<div class="empty-message">Nenhuma lição disponível para este trimestre.</div>';
         return;
       }
-
       container.innerHTML = '';
-
-      lista.forEach((licao) => {
+      lista.forEach(licao => {
         const available = isLessonAvailable(licao);
         const card = document.createElement('article');
         card.className = 'lesson-card fade-in';
         card.setAttribute('data-lesson-id', licao.id);
         card.setAttribute('data-lesson-tipo', licao.tipo);
-
         const badgeClass = available ? 'available' : 'preparation';
         const badgeText = available ? 'Disponível' : 'Em preparação';
         const introSummary = getIntroSummary(licao.conteudo);
         const safeLesson = encodeURIComponent(JSON.stringify(licao));
-
         card.innerHTML = `
           <span class="status-badge ${badgeClass}">${badgeText}</span>
           <div class="lesson-top">
@@ -1425,35 +1616,27 @@
             </div>
           </div>
         `;
-
         container.appendChild(card);
       });
-
       attachCardAdminClicks(tipo);
     }
 
     function attachCardAdminClicks(tipo) {
-      document.querySelectorAll(`#${tipo}LessonsContainer .lesson-card`).forEach((card) => {
-        let clickCount = 0;
-        let clickTimeout;
-
-        card.addEventListener('click', (event) => {
-          if (event.target.closest('.view-btn')) return;
-
-          clickCount += 1;
-          if (clickTimeout) clearTimeout(clickTimeout);
-          clickTimeout = setTimeout(() => { clickCount = 0; }, 1000);
-
+      document.querySelectorAll(`#${tipo}LessonsContainer .lesson-card`).forEach(card => {
+        let clickCount = 0, timeout;
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.view-btn')) return;
+          clickCount++;
+          if (timeout) clearTimeout(timeout);
+          timeout = setTimeout(() => { clickCount = 0; }, 1000);
           if (clickCount >= 5) {
             clickCount = 0;
             if (checkPassword()) {
               const lessonId = card.getAttribute('data-lesson-id');
               const lessonTipo = card.getAttribute('data-lesson-tipo');
-              const lesson = allLessons.find((item) => String(item.id) === String(lessonId) && item.tipo === lessonTipo);
+              const lesson = allLessons.find(item => String(item.id) === String(lessonId) && item.tipo === lessonTipo);
               if (lesson) abrirEditModal(lesson);
-            } else {
-              alert('Senha incorreta! Acesso negado.');
-            }
+            } else alert('Senha incorreta! Acesso negado.');
           }
         });
       });
@@ -1461,32 +1644,20 @@
 
     function renderAll() {
       const { adults, youths } = getFinalLessons();
-
       const activeAdultTrim = document.querySelector('#adultTabs .tab-btn.active')?.dataset.trim;
-      if (activeAdultTrim) {
-        renderizarLicoes('adult', adults.filter((lesson) => String(lesson.trimestre) === String(activeAdultTrim)));
-      }
-
+      if (activeAdultTrim) renderizarLicoes('adult', adults.filter(l => String(l.trimestre) === String(activeAdultTrim)));
       const activeYouthTrim = document.querySelector('#youthTabs .tab-btn.active')?.dataset.trim;
-      if (activeYouthTrim) {
-        renderizarLicoes('youth', youths.filter((lesson) => String(lesson.trimestre) === String(activeYouthTrim)));
-      }
-
+      if (activeYouthTrim) renderizarLicoes('youth', youths.filter(l => String(l.trimestre) === String(activeYouthTrim)));
       construirAdminPanel();
     }
 
     function construirAdminPanel() {
       const container = document.getElementById('adminList');
       if (!container) return;
-
       container.innerHTML = '';
-
-      allLessons.forEach((lesson) => {
+      allLessons.forEach(lesson => {
         const key = `${lesson.tipo}:${lesson.id}`;
-        const available = Object.prototype.hasOwnProperty.call(adminOverrides, key)
-          ? adminOverrides[key]
-          : isLessonAvailable(lesson);
-
+        const available = adminOverrides.hasOwnProperty(key) ? adminOverrides[key] : isLessonAvailable(lesson);
         const row = document.createElement('div');
         row.className = 'lesson-row';
         row.innerHTML = `
@@ -1500,28 +1671,21 @@
         `;
         container.appendChild(row);
       });
-
-      document.querySelectorAll('#adminList .toggle-btn').forEach((button) => {
-        button.addEventListener('click', () => {
-          const key = button.dataset.key;
-          const lesson = allLessons.find((item) => `${item.tipo}:${item.id}` === key);
-          const current = Object.prototype.hasOwnProperty.call(adminOverrides, key)
-            ? adminOverrides[key]
-            : isLessonAvailable(lesson);
+      document.querySelectorAll('#adminList .toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.key;
+          const lesson = allLessons.find(item => `${item.tipo}:${item.id}` === key);
+          const current = adminOverrides.hasOwnProperty(key) ? adminOverrides[key] : isLessonAvailable(lesson);
           adminOverrides[key] = !current;
           saveOverrides();
           renderAll();
         });
       });
-
-      document.querySelectorAll('#adminList .edit-btn').forEach((button) => {
-        button.addEventListener('click', () => {
-          if (!checkPassword()) {
-            alert('Senha incorreta! Acesso negado.');
-            return;
-          }
-          const key = button.dataset.key;
-          const lesson = allLessons.find((item) => `${item.tipo}:${item.id}` === key);
+      document.querySelectorAll('#adminList .edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!checkPassword()) { alert('Senha incorreta!'); return; }
+          const key = btn.dataset.key;
+          const lesson = allLessons.find(item => `${item.tipo}:${item.id}` === key);
           if (lesson) abrirEditModal(lesson);
         });
       });
@@ -1532,25 +1696,15 @@
       const title = document.getElementById('editModalTitle');
       const textarea = document.getElementById('editConteudo');
       const key = `${lesson.tipo}:${lesson.id}`;
-
       title.textContent = `Editar: ${lesson.titulo}`;
-      textarea.value = contentOverrides[key]?.conteudo !== undefined
-        ? contentOverrides[key].conteudo
-        : (lesson.conteudo || '');
-
+      textarea.value = contentOverrides[key]?.conteudo !== undefined ? contentOverrides[key].conteudo : (lesson.conteudo || '');
       modal.style.display = 'block';
-
       document.getElementById('saveEditBtn').onclick = () => {
         const novoConteudo = textarea.value;
         let novoTitulo = lesson.titulo;
         const titleMatch = novoConteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
         if (titleMatch && titleMatch[1]) novoTitulo = titleMatch[1].trim();
-
-        contentOverrides[key] = {
-          conteudo: novoConteudo,
-          titulo: novoTitulo
-        };
-
+        contentOverrides[key] = { conteudo: novoConteudo, titulo: novoTitulo };
         saveOverrides();
         modal.style.display = 'none';
         renderAll();
@@ -1588,7 +1742,6 @@
       const isYouth = licao.tipo === 'youth';
       const primaryColor = isYouth ? '#3b82f6' : '#f7b24d';
       const darkColor = '#102131';
-
       return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1777,12 +1930,10 @@
 
     let clickCountLogo = 0;
     let clickTimeoutLogo;
-
     function handleLogoClick() {
-      clickCountLogo += 1;
+      clickCountLogo++;
       if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
       clickTimeoutLogo = setTimeout(() => { clickCountLogo = 0; }, 1000);
-
       if (clickCountLogo >= 5) {
         clickCountLogo = 0;
         document.getElementById('adminOverlay').style.display = 'block';
@@ -1800,15 +1951,11 @@
       const nav = document.getElementById('mainNav');
 
       logo.addEventListener('click', handleLogoClick);
-
       mobileBtn.addEventListener('click', () => {
         nav.classList.toggle('active');
-        mobileBtn.innerHTML = nav.classList.contains('active')
-          ? '<i class="fas fa-times"></i>'
-          : '<i class="fas fa-bars"></i>';
+        mobileBtn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
       });
-
-      document.querySelectorAll('#mainNav a').forEach((link) => {
+      document.querySelectorAll('#mainNav a').forEach(link => {
         link.addEventListener('click', () => {
           nav.classList.remove('active');
           mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
@@ -1818,12 +1965,12 @@
       document.getElementById('closeAdminBtn').addEventListener('click', fecharAdminPanel);
       document.getElementById('adminOverlay').addEventListener('click', fecharAdminPanel);
       document.getElementById('adminUnlockAll').addEventListener('click', () => {
-        allLessons.forEach((lesson) => { adminOverrides[`${lesson.tipo}:${lesson.id}`] = true; });
+        allLessons.forEach(lesson => { adminOverrides[`${lesson.tipo}:${lesson.id}`] = true; });
         saveOverrides();
         renderAll();
       });
       document.getElementById('adminBlockAll').addEventListener('click', () => {
-        allLessons.forEach((lesson) => { adminOverrides[`${lesson.tipo}:${lesson.id}`] = false; });
+        allLessons.forEach(lesson => { adminOverrides[`${lesson.tipo}:${lesson.id}`] = false; });
         saveOverrides();
         renderAll();
       });
@@ -1841,7 +1988,6 @@
       document.getElementById('closeEditBtn').addEventListener('click', () => {
         document.getElementById('editModal').style.display = 'none';
       });
-
       window.addEventListener('click', (event) => {
         if (event.target === document.getElementById('editModal')) {
           document.getElementById('editModal').style.display = 'none';
@@ -1852,7 +1998,6 @@
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
     let particles = [];
-
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -1864,23 +2009,21 @@
         o: Math.random() * 0.28 + 0.08
       }));
     }
-
     function drawParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((particle) => {
+      particles.forEach(p => {
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(247, 178, 77, ${particle.o})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(247, 178, 77, ${p.o})`;
         ctx.fill();
-        particle.y += particle.d;
-        if (particle.y > canvas.height) {
-          particle.y = -5;
-          particle.x = Math.random() * canvas.width;
+        p.y += p.d;
+        if (p.y > canvas.height) {
+          p.y = -5;
+          p.x = Math.random() * canvas.width;
         }
       });
       requestAnimationFrame(drawParticles);
     }
-
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     drawParticles();
