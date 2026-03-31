@@ -1463,6 +1463,51 @@
       return today >= getReleaseDate(lesson.data);
     }
 
+    // NOVA FUNÇÃO: extrai o texto da seção "Introdução" do HTML da lição
+    function getIntroSummary(html) {
+      if (!html) return 'Clique para abrir o conteúdo completo da lição.';
+
+      // Cria um elemento temporário para parsear o HTML
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+
+      // Busca qualquer tag de cabeçalho que contenha "Introdução" (case insensitive)
+      const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
+      for (let heading of headings) {
+        const headingText = heading.innerText.trim().toLowerCase();
+        if (headingText.includes('introdução') || headingText.includes('introducao')) {
+          // Coleta os parágrafos e elementos de texto após esse heading até o próximo heading
+          let introText = '';
+          let nextElement = heading.nextElementSibling;
+          while (nextElement && !/^H[1-6]$/i.test(nextElement.tagName)) {
+            introText += nextElement.innerText + ' ';
+            nextElement = nextElement.nextElementSibling;
+          }
+          if (introText.trim()) {
+            // Limpa espaços extras e formata
+            introText = introText.replace(/\s+/g, ' ').trim();
+            // Limita a 200 caracteres para não ocupar muito espaço
+            if (introText.length > 200) {
+              introText = introText.substring(0, 200) + '...';
+            }
+            return introText;
+          }
+          break; // Para após encontrar a primeira introdução
+        }
+      }
+
+      // Fallback: se não encontrar uma seção de introdução, tenta o primeiro parágrafo
+      const firstParagraph = tempDiv.querySelector('p');
+      if (firstParagraph && firstParagraph.innerText.trim()) {
+        let text = firstParagraph.innerText.trim();
+        if (text.length > 200) text = text.substring(0, 200) + '...';
+        return text;
+      }
+
+      // Fallback final
+      return 'Clique para abrir o conteúdo completo da lição.';
+    }
+
     async function carregarDados() {
       try {
         const response = await fetch('lessons.json');
@@ -1529,13 +1574,6 @@
       renderizarLicoes(tipo, source.filter((lesson) => String(lesson.trimestre) === String(firstTrim)));
     }
 
-    function createDescriptionFromContent(html) {
-      if (!html) return 'Clique para abrir o conteúdo completo da lição.';
-      const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-      if (!text) return 'Clique para abrir o conteúdo completo da lição.';
-      return text.length > 120 ? `${text.substring(0, 120)}...` : text;
-    }
-
     function renderizarLicoes(tipo, lista) {
       const container = document.getElementById(`${tipo}LessonsContainer`);
       if (!container) return;
@@ -1556,7 +1594,8 @@
 
         const badgeClass = available ? 'available' : 'preparation';
         const badgeText = available ? 'Disponível' : 'Em preparação';
-        const description = createDescriptionFromContent(licao.conteudo);
+        // USANDO A NOVA FUNÇÃO PARA OBTER O RESUMO DA INTRODUÇÃO
+        const introSummary = getIntroSummary(licao.conteudo);
         const safeLesson = encodeURIComponent(JSON.stringify(licao));
 
         card.innerHTML = `
@@ -1568,7 +1607,7 @@
           </div>
           <div class="lesson-body">
             <div class="lesson-date"><i class="far fa-calendar-alt"></i> ${licao.data || ''}</div>
-            <div class="lesson-description">${description}</div>
+            <div class="lesson-description">${introSummary}</div>
             <div class="lesson-footer">
               ${available
                 ? `<button class="lesson-action view-btn" data-licao="${safeLesson}"><i class="fas fa-book-open"></i> Ver Lição</button>`
