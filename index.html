@@ -1463,20 +1463,22 @@
       return today >= getReleaseDate(lesson.data);
     }
 
-    // NOVA FUNÇÃO: extrai o texto da seção "Introdução" do HTML da lição
+    // FUNÇÃO CORRIGIDA: remove estilos e scripts e extrai apenas a introdução
     function getIntroSummary(html) {
       if (!html) return 'Clique para abrir o conteúdo completo da lição.';
 
-      // Cria um elemento temporário para parsear o HTML
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = html;
 
-      // Busca qualquer tag de cabeçalho que contenha "Introdução" (case insensitive)
+      // Remove todas as tags de estilo, script e link para evitar capturar CSS/JS
+      const unwantedTags = tempDiv.querySelectorAll('style, script, link');
+      unwantedTags.forEach(tag => tag.remove());
+
+      // Agora busca qualquer cabeçalho que contenha "introdução"
       const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
       for (let heading of headings) {
         const headingText = heading.innerText.trim().toLowerCase();
         if (headingText.includes('introdução') || headingText.includes('introducao')) {
-          // Coleta os parágrafos e elementos de texto após esse heading até o próximo heading
           let introText = '';
           let nextElement = heading.nextElementSibling;
           while (nextElement && !/^H[1-6]$/i.test(nextElement.tagName)) {
@@ -1484,19 +1486,17 @@
             nextElement = nextElement.nextElementSibling;
           }
           if (introText.trim()) {
-            // Limpa espaços extras e formata
             introText = introText.replace(/\s+/g, ' ').trim();
-            // Limita a 200 caracteres para não ocupar muito espaço
             if (introText.length > 200) {
               introText = introText.substring(0, 200) + '...';
             }
             return introText;
           }
-          break; // Para após encontrar a primeira introdução
+          break;
         }
       }
 
-      // Fallback: se não encontrar uma seção de introdução, tenta o primeiro parágrafo
+      // Fallback: primeiro parágrafo após limpeza
       const firstParagraph = tempDiv.querySelector('p');
       if (firstParagraph && firstParagraph.innerText.trim()) {
         let text = firstParagraph.innerText.trim();
@@ -1504,7 +1504,6 @@
         return text;
       }
 
-      // Fallback final
       return 'Clique para abrir o conteúdo completo da lição.';
     }
 
@@ -1594,7 +1593,6 @@
 
         const badgeClass = available ? 'available' : 'preparation';
         const badgeText = available ? 'Disponível' : 'Em preparação';
-        // USANDO A NOVA FUNÇÃO PARA OBTER O RESUMO DA INTRODUÇÃO
         const introSummary = getIntroSummary(licao.conteudo);
         const safeLesson = encodeURIComponent(JSON.stringify(licao));
 
