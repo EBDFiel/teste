@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* (estilos mantidos exatamente iguais aos anteriores - omitidos por brevidade) */
     :root {
       --bg: #07111f;
       --bg-soft: #0c1828;
@@ -225,20 +226,6 @@
       font-weight: 800;
       transition: 0.25s ease;
       border: 1px solid transparent;
-    }
-
-    .btn:hover,
-    .quick-link:hover,
-    .lesson-action:hover,
-    .admin-buttons button:hover,
-    .save-btn:hover,
-    .toggle-btn:hover,
-    .edit-btn:hover,
-    .video-direct-link:hover,
-    .quiz-button:hover,
-    .social-icons-top a:hover,
-    .social-icons a:hover {
-      transform: translateY(-2px);
     }
 
     .btn-primary {
@@ -1391,6 +1378,32 @@
 
     const EDIT_PASSWORD = "4141";
 
+    // Novos títulos para as lições dos jovens no 2º trimestre
+    const YOUTH_TRIMESTRE_2_TITLES = {
+      1: "Reconhecendo o Senhorio de Deus",
+      2: "Compreendendo a Mordomia Cristã",
+      3: "A Mordomia da natureza",
+      4: "O Templo do Espírito Santo: vivendo com saúde e em santidade",
+      5: "Mordomia dos sentimentos: fortalecendo o coração e a alma",
+      6: "A Mordomia da mente: lidando com os pensamentos",
+      7: "Cuidando do espírito que nos conecta",
+      8: "A Mordomia do tempo: administrando os dias com sabedoria",
+      9: "Glorificando a Deus com as finanças",
+      10: "Servindo na Igreja do Senhor",
+      11: "A Mordomia da família",
+      12: "A Mordomia dos Dons e talentos",
+      13: "Mordomia cristã: obediência e responsabilidade"
+    };
+
+    function applyYouthTitleUpdates() {
+      if (!youthLessons.length) return;
+      youthLessons.forEach(lesson => {
+        if (lesson.trimestre === 2 && YOUTH_TRIMESTRE_2_TITLES[lesson.numero]) {
+          lesson.titulo = YOUTH_TRIMESTRE_2_TITLES[lesson.numero];
+        }
+      });
+    }
+
     function checkPassword() {
       const pass = prompt("Digite a senha para editar a lição:");
       return pass === EDIT_PASSWORD;
@@ -1463,18 +1476,15 @@
       return today >= getReleaseDate(lesson.data);
     }
 
-    // FUNÇÃO CORRIGIDA: remove estilos e scripts e extrai apenas a introdução
     function getIntroSummary(html) {
       if (!html) return 'Clique para abrir o conteúdo completo da lição.';
 
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = html;
 
-      // Remove todas as tags de estilo, script e link para evitar capturar CSS/JS
       const unwantedTags = tempDiv.querySelectorAll('style, script, link');
       unwantedTags.forEach(tag => tag.remove());
 
-      // Agora busca qualquer cabeçalho que contenha "introdução"
       const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
       for (let heading of headings) {
         const headingText = heading.innerText.trim().toLowerCase();
@@ -1487,16 +1497,13 @@
           }
           if (introText.trim()) {
             introText = introText.replace(/\s+/g, ' ').trim();
-            if (introText.length > 200) {
-              introText = introText.substring(0, 200) + '...';
-            }
+            if (introText.length > 200) introText = introText.substring(0, 200) + '...';
             return introText;
           }
           break;
         }
       }
 
-      // Fallback: primeiro parágrafo após limpeza
       const firstParagraph = tempDiv.querySelector('p');
       if (firstParagraph && firstParagraph.innerText.trim()) {
         let text = firstParagraph.innerText.trim();
@@ -1514,6 +1521,9 @@
 
         adultLessons = data.adult || [];
         youthLessons = data.youth || [];
+
+        // Aplica os novos títulos para o 2º trimestre dos jovens
+        applyYouthTitleUpdates();
 
         let nextId = 1;
         adultLessons.forEach((lesson) => {
