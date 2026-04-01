@@ -602,6 +602,30 @@
       font-weight: 700;
       line-height: 1.3;
       color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .edit-title-icon {
+      font-size: 0.85rem;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: 0.2s;
+      background: rgba(255,255,255,0.1);
+      padding: 4px;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .edit-title-icon:hover {
+      opacity: 1;
+      background: rgba(247,178,77,0.3);
+      transform: scale(1.05);
     }
 
     .lesson-body {
@@ -1396,17 +1420,14 @@
       }
       let updatedCount = 0;
       youthLessons.forEach(lesson => {
-        // Converte para string para garantir compatibilidade
         if (String(lesson.trimestre) === "2" && YOUTH_TRIMESTRE_2_TITLES[lesson.numero]) {
           const key = `${lesson.tipo}:${lesson.id}`;
           const newTitle = YOUTH_TRIMESTRE_2_TITLES[lesson.numero];
           if (lesson.titulo !== newTitle) {
             lesson.titulo = newTitle;
             updatedCount++;
-            // Sobrescreve qualquer título salvo anteriormente no localStorage
             if (!contentOverrides[key]) contentOverrides[key] = {};
             contentOverrides[key].titulo = newTitle;
-            // Mantém o conteúdo original se não houver edição, senão preserva o conteúdo já editado
             if (!contentOverrides[key].conteudo) {
               contentOverrides[key].conteudo = lesson.conteudo;
             }
@@ -1420,6 +1441,30 @@
       } else {
         alert("Nenhum título precisou ser corrigido. Verifique se as lições do 2º trimestre já estão com os títulos corretos.");
       }
+      return true;
+    }
+
+    // Função para atualizar título de uma lição específica (usada pelo ícone de lápis)
+    function updateLessonTitle(lesson, newTitle) {
+      if (!newTitle || newTitle.trim() === "") return false;
+      const key = `${lesson.tipo}:${lesson.id}`;
+      // Atualiza o objeto da lição no array correspondente
+      if (lesson.tipo === 'adult') {
+        const idx = adultLessons.findIndex(l => l.id === lesson.id);
+        if (idx !== -1) adultLessons[idx].titulo = newTitle;
+      } else if (lesson.tipo === 'youth') {
+        const idx = youthLessons.findIndex(l => l.id === lesson.id);
+        if (idx !== -1) youthLessons[idx].titulo = newTitle;
+      }
+      // Atualiza no contentOverrides
+      if (!contentOverrides[key]) contentOverrides[key] = {};
+      contentOverrides[key].titulo = newTitle;
+      // Se houver conteúdo, mantém; senão, mantém o conteúdo original
+      if (!contentOverrides[key].conteudo) {
+        contentOverrides[key].conteudo = lesson.conteudo;
+      }
+      saveOverrides();
+      renderAll(); // re-renderiza para atualizar a visualização
       return true;
     }
 
@@ -1607,7 +1652,10 @@
           <div class="lesson-top">
             <span class="lesson-quarter">${licao.trimestre}º Trimestre</span>
             <div class="lesson-number">Lição ${licao.numero}</div>
-            <div class="lesson-title">${licao.titulo}</div>
+            <div class="lesson-title">
+              ${licao.titulo}
+              <i class="fas fa-pencil-alt edit-title-icon" data-lesson-id="${licao.id}" data-lesson-tipo="${licao.tipo}" title="Editar título"></i>
+            </div>
           </div>
           <div class="lesson-body">
             <div class="lesson-date"><i class="far fa-calendar-alt"></i> ${licao.data || ''}</div>
@@ -1621,6 +1669,27 @@
         `;
         container.appendChild(card);
       });
+
+      // Adiciona evento para os ícones de edição de título
+      document.querySelectorAll(`#${tipo}LessonsContainer .edit-title-icon`).forEach(icon => {
+        icon.addEventListener('click', (e) => {
+          e.stopPropagation(); // evita que o clique no ícone acione o clique no card
+          if (!checkPassword()) {
+            alert('Senha incorreta! Acesso negado.');
+            return;
+          }
+          const lessonId = parseInt(icon.dataset.lessonId);
+          const lessonTipo = icon.dataset.lessonTipo;
+          const lesson = allLessons.find(l => l.id === lessonId && l.tipo === lessonTipo);
+          if (lesson) {
+            const newTitle = prompt("Digite o novo título da lição:", lesson.titulo);
+            if (newTitle && newTitle.trim() !== "") {
+              updateLessonTitle(lesson, newTitle.trim());
+            }
+          }
+        });
+      });
+
       attachCardAdminClicks(tipo);
     }
 
@@ -1628,7 +1697,7 @@
       document.querySelectorAll(`#${tipo}LessonsContainer .lesson-card`).forEach(card => {
         let clickCount = 0, timeout;
         card.addEventListener('click', (e) => {
-          if (e.target.closest('.view-btn')) return;
+          if (e.target.closest('.view-btn') || e.target.closest('.edit-title-icon')) return;
           clickCount++;
           if (timeout) clearTimeout(timeout);
           timeout = setTimeout(() => { clickCount = 0; }, 1000);
