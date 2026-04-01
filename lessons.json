@@ -1,7 +1,18 @@
 {
   "adult": [
-    { "trimestre": 1, "numero": 1, "data": "05/01/2026", "titulo": "Lição 1 - Adultos", "conteudo": "<h1>Lição 1</h1><p>Conteúdo</p>" },
-    { "trimestre": 1, "numero": 2, "data": "12/01/2026", "titulo": "Lição 2 - Adultos", "conteudo": "<h1>Lição 2</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 1, "data": "04/01/2026", "titulo": "Fundamentos da fé cristã", "conteudo": "<h1>Lição 1</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 2, "data": "11/01/2026", "titulo": "A importância da Palavra de Deus", "conteudo": "<h1>Lição 2</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 3, "data": "18/01/2026", "titulo": "Vivendo em santidade", "conteudo": "<h1>Lição 3</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 4, "data": "25/01/2026", "titulo": "O papel da oração na vida cristã", "conteudo": "<h1>Lição 4</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 5, "data": "01/02/2026", "titulo": "A comunhão com Deus", "conteudo": "<h1>Lição 5</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 6, "data": "08/02/2026", "titulo": "A importância da igreja", "conteudo": "<h1>Lição 6</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 7, "data": "15/02/2026", "titulo": "Crescimento espiritual", "conteudo": "<h1>Lição 7</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 8, "data": "22/02/2026", "titulo": "A prática do amor cristão", "conteudo": "<h1>Lição 8</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 9, "data": "01/03/2026", "titulo": "Perseverança na fé", "conteudo": "<h1>Lição 9</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 10, "data": "08/03/2026", "titulo": "Obediência a Deus", "conteudo": "<h1>Lição 10</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 11, "data": "15/03/2026", "titulo": "A vida guiada pelo Espírito Santo", "conteudo": "<h1>Lição 11</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 12, "data": "22/03/2026", "titulo": "Testemunhando com a vida", "conteudo": "<h1>Lição 12</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 13, "data": "29/03/2026", "titulo": "Firmados na fé", "conteudo": "<h1>Lição 13</h1><p>Conteúdo</p>" },
 
     { "trimestre": 2, "numero": 1, "data": "05/04/2026", "titulo": "O chamado que transforma a dor em propósito", "conteudo": "<h1>Lição 1</h1><p>Conteúdo</p>" },
     { "trimestre": 2, "numero": 2, "data": "12/04/2026", "titulo": "Preparando-se para o agir de Deus", "conteudo": "<h1>Lição 2</h1><p>Conteúdo</p>" },
@@ -17,28 +28,27 @@
     { "trimestre": 2, "numero": 12, "data": "21/06/2026", "titulo": "Vigilância e oração: o perigo das alianças erradas", "conteudo": "<h1>Lição 12</h1><p>Conteúdo</p>" },
     { "trimestre": 2, "numero": 13, "data": "28/06/2026", "titulo": "Os elementos fundamentais da vitória de Neemias", "conteudo": "<h1>Lição 13</h1><p>Conteúdo</p>" },
 
-    { "trimestre": 3, "numero": 1, "data": "05/07/2026", "titulo": "Lição 1 - Adultos 3º Trim", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
-    { "trimestre": 4, "numero": 1, "data": "04/10/2026", "titulo": "Lição 1 - Adultos 4º Trim", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" }
+    { "trimestre": 3, "numero": 1, "data": "05/07/2026", "titulo": "Vivendo pela fé", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 2, "data": "12/07/2026", "titulo": "A graça de Deus", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 3, "data": "19/07/2026", "titulo": "O amor de Cristo", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 4, "data": "26/07/2026", "titulo": "Vida de santidade", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 5, "data": "02/08/2026", "titulo": "Chamados para servir", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 6, "data": "09/08/2026", "titulo": "A importância da fé", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 7, "data": "16/08/2026", "titulo": "Vivendo em obediência", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 8, "data": "23/08/2026", "titulo": "A esperança cristã", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 9, "data": "30/08/2026", "titulo": "Firmes na Palavra", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 10, "data": "06/09/2026", "titulo": "A prática da justiça", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 11, "data": "13/09/2026", "titulo": "A vida com Deus", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 12, "data": "20/09/2026", "titulo": "Crescendo na fé", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 3, "numero": 13, "data": "27/09/2026", "titulo": "Vitória em Cristo", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+
+    { "trimestre": 4, "numero": 1, "data": "04/10/2026", "titulo": "Chamados para vencer", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" }
   ],
 
   "youth": [
-    { "trimestre": 1, "numero": 1, "data": "05/01/2026", "titulo": "Lição 1 - Jovens", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 1, "numero": 1, "data": "04/01/2026", "titulo": "Fundamentos da vida cristã", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
 
-    { "trimestre": 2, "numero": 1, "data": "05/04/2026", "titulo": "Reconhecendo o Senhorio de Deus", "conteudo": "<h1>Lição 1</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 2, "data": "12/04/2026", "titulo": "Compreendendo a Mordomia Cristã", "conteudo": "<h1>Lição 2</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 3, "data": "19/04/2026", "titulo": "A Mordomia da natureza", "conteudo": "<h1>Lição 3</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 4, "data": "26/04/2026", "titulo": "O Templo do Espírito Santo: vivendo com saúde e em santidade", "conteudo": "<h1>Lição 4</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 5, "data": "03/05/2026", "titulo": "Mordomia dos sentimentos: fortalecendo o coração e a alma", "conteudo": "<h1>Lição 5</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 6, "data": "10/05/2026", "titulo": "A Mordomia da mente: lidando com os pensamentos", "conteudo": "<h1>Lição 6</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 7, "data": "17/05/2026", "titulo": "Cuidando do espírito que nos conecta", "conteudo": "<h1>Lição 7</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 8, "data": "24/05/2026", "titulo": "A Mordomia do tempo: administrando os dias com sabedoria", "conteudo": "<h1>Lição 8</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 9, "data": "31/05/2026", "titulo": "Glorificando a Deus com as finanças", "conteudo": "<h1>Lição 9</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 10, "data": "07/06/2026", "titulo": "Servindo na Igreja do Senhor", "conteudo": "<h1>Lição 10</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 11, "data": "14/06/2026", "titulo": "A Mordomia da família", "conteudo": "<h1>Lição 11</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 12, "data": "21/06/2026", "titulo": "A Mordomia dos Dons e talentos", "conteudo": "<h1>Lição 12</h1><p>Conteúdo</p>" },
-    { "trimestre": 2, "numero": 13, "data": "28/06/2026", "titulo": "Mordomia cristã: obediência e responsabilidade", "conteudo": "<h1>Lição 13</h1><p>Conteúdo</p>" },
-
-    { "trimestre": 3, "numero": 1, "data": "05/07/2026", "titulo": "Lição 1 - Jovens 3º Trim", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
-    { "trimestre": 4, "numero": 1, "data": "04/10/2026", "titulo": "Lição 1 - Jovens 4º Trim", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" }
+    { "trimestre": 2, "numero": 1, "data": "05/04/2026", "titulo": "Reconhecendo o Senhorio de Deus", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" },
+    { "trimestre": 2, "numero": 2, "data": "12/04/2026", "titulo": "Compreendendo a Mordomia Cristã", "conteudo": "<h1>Lição</h1><p>Conteúdo</p>" }
   ]
 }
