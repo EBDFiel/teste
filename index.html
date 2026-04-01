@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Todos os estilos permanecem exatamente iguais aos originais */
+    /* ========== ESTILOS (MANTIDOS IGUAIS) ========== */
     :root {
       --bg: #07111f;
       --bg-soft: #0c1828;
@@ -1333,7 +1333,7 @@
     </div>
   </footer>
 
-  <!-- ADMIN PANEL e MODAL (já existentes) -->
+  <!-- ADMIN PANEL e MODAL -->
   <div id="adminOverlay" class="admin-panel-overlay"></div>
   <div id="adminPanel" class="admin-panel">
     <div class="admin-panel-header">
@@ -1347,7 +1347,6 @@
       <button id="adminResetAll">Resetar Conteúdos</button>
       <button id="adminExport">Exportar JSON</button>
       <button id="adminClearStorage" class="danger">Limpar Todos os Dados</button>
-      <!-- NOVO BOTÃO PARA CORRIGIR TÍTULOS DOS JOVENS (2º TRIMESTRE) -->
       <button id="adminFixYouthTitles" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">Corrigir Títulos dos Jovens (2º Trim)</button>
     </div>
     <p class="admin-note">Se algum card continuar exibindo conteúdo antigo, use “Limpar Todos os Dados” e recarregue a página.</p>
@@ -1372,7 +1371,7 @@
 
     const EDIT_PASSWORD = "4141";
 
-    // Lista dos novos títulos para o 2º trimestre dos jovens
+    // Mapeamento dos títulos corrigidos para o 2º trimestre dos jovens
     const YOUTH_TRIMESTRE_2_TITLES = {
       1: "Reconhecendo o Senhorio de Deus",
       2: "Compreendendo a Mordomia Cristã",
@@ -1389,7 +1388,7 @@
       13: "Mordomia cristã: obediência e responsabilidade"
     };
 
-    // Função que aplica os novos títulos e salva no localStorage
+    // Função que aplica os títulos e SALVA no localStorage, sobrescrevendo qualquer conflito
     function applyYouthTitleUpdatesAndSave() {
       if (!youthLessons.length) {
         alert("Nenhuma lição de jovens carregada ainda.");
@@ -1397,14 +1396,17 @@
       }
       let updatedCount = 0;
       youthLessons.forEach(lesson => {
+        // Converte para string para garantir compatibilidade
         if (String(lesson.trimestre) === "2" && YOUTH_TRIMESTRE_2_TITLES[lesson.numero]) {
           const key = `${lesson.tipo}:${lesson.id}`;
           const newTitle = YOUTH_TRIMESTRE_2_TITLES[lesson.numero];
           if (lesson.titulo !== newTitle) {
             lesson.titulo = newTitle;
             updatedCount++;
+            // Sobrescreve qualquer título salvo anteriormente no localStorage
             if (!contentOverrides[key]) contentOverrides[key] = {};
             contentOverrides[key].titulo = newTitle;
+            // Mantém o conteúdo original se não houver edição, senão preserva o conteúdo já editado
             if (!contentOverrides[key].conteudo) {
               contentOverrides[key].conteudo = lesson.conteudo;
             }
@@ -1430,12 +1432,10 @@
       const storedAdmin = localStorage.getItem('ebd_admin_overrides');
       const storedContent = localStorage.getItem('ebd_content_overrides');
       if (storedAdmin) {
-        try { adminOverrides = JSON.parse(storedAdmin); }
-        catch (e) { adminOverrides = {}; }
+        try { adminOverrides = JSON.parse(storedAdmin); } catch(e) { adminOverrides = {}; }
       }
       if (storedContent) {
-        try { contentOverrides = JSON.parse(storedContent); }
-        catch (e) { contentOverrides = {}; }
+        try { contentOverrides = JSON.parse(storedContent); } catch(e) { contentOverrides = {}; }
       }
     }
 
@@ -1534,6 +1534,9 @@
         let nextId = 1;
         adultLessons.forEach(lesson => { lesson.id = nextId++; lesson.tipo = 'adult'; });
         youthLessons.forEach(lesson => { lesson.id = nextId++; lesson.tipo = 'youth'; });
+
+        // Aplica os títulos automaticamente ao carregar
+        applyYouthTitleUpdatesAndSave();
 
         allLessons = [...adultLessons, ...youthLessons];
         criarAbas('adult', adultLessons);
@@ -1977,7 +1980,6 @@
       document.getElementById('adminResetAll').addEventListener('click', resetAllContent);
       document.getElementById('adminExport').addEventListener('click', exportJSON);
       document.getElementById('adminClearStorage').addEventListener('click', clearAllData);
-      // Evento do novo botão
       document.getElementById('adminFixYouthTitles').addEventListener('click', () => {
         if (checkPassword()) {
           applyYouthTitleUpdatesAndSave();
