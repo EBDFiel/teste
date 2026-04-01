@@ -2,11 +2,11 @@
 <html lang="pt-BR">
 <head>
   <link rel="manifest" href="/teste/manifest.json">
-<meta name="theme-color" content="#07111f">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="EBD Fiel">
-<link rel="icon" href="/teste/icons/icon-192.png">
+  <meta name="theme-color" content="#07111f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="EBD Fiel">
+  <link rel="icon" href="/teste/icons/icon-192.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>EBD Fiel - Escola Bíblica Dominical</title>
@@ -1411,9 +1411,9 @@
       13: "Mordomia cristã: obediência e responsabilidade"
     };
 
-    function applyYouthTitleUpdatesAndSave() {
+    function applyYouthTitleUpdatesAndSave(showAlert = true) {
       if (!youthLessons.length) {
-        alert("Nenhuma lição de jovens carregada ainda.");
+        if (showAlert) alert("Nenhuma lição de jovens carregada ainda.");
         return false;
       }
 
@@ -1438,12 +1438,17 @@
         }
       });
 
+      if (showAlert) {
+        if (updatedCount > 0) {
+          alert(`${updatedCount} título(s) do 2º trimestre dos jovens foram corrigidos e salvos.`);
+        } else {
+          alert("Nenhum título precisou ser corrigido. Verifique se as lições do 2º trimestre já estão com os títulos corretos.");
+        }
+      }
+
       if (updatedCount > 0) {
         saveOverrides();
         renderAll();
-        alert(`${updatedCount} título(s) do 2º trimestre dos jovens foram corrigidos e salvos.`);
-      } else {
-        alert("Nenhum título precisou ser corrigido. Verifique se as lições do 2º trimestre já estão com os títulos corretos.");
       }
 
       return true;
@@ -1593,8 +1598,6 @@
         let nextId = 1;
         adultLessons.forEach(lesson => { lesson.id = nextId++; lesson.tipo = 'adult'; });
         youthLessons.forEach(lesson => { lesson.id = nextId++; lesson.tipo = 'youth'; });
-
-        applyYouthTitleUpdatesAndSave();
 
         allLessons = [...adultLessons, ...youthLessons];
         criarAbas('adult', adultLessons);
@@ -2101,7 +2104,7 @@
 
       document.getElementById('adminFixYouthTitles').addEventListener('click', () => {
         if (checkPassword()) {
-          applyYouthTitleUpdatesAndSave();
+          applyYouthTitleUpdatesAndSave(true);
         } else {
           alert('Senha incorreta! Acesso negado.');
         }
@@ -2155,12 +2158,13 @@
     window.addEventListener('resize', resizeCanvas);
     drawParticles();
   </script>
+
   <script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/teste/service-worker.js");
-    });
-  }
-</script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/teste/service-worker.js");
+      });
+    }
+  </script>
 </body>
 </html>
