@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ========== ESTILOS (MANTIDOS IGUAIS) ========== */
     :root {
       --bg: #07111f;
       --bg-soft: #0c1828;
@@ -622,6 +621,7 @@
       align-items: center;
       justify-content: center;
     }
+
     .edit-title-icon:hover {
       opacity: 1;
       background: rgba(247,178,77,0.3);
@@ -1131,7 +1131,6 @@
   </header>
 
   <main>
-    <!-- ========== SEÇÃO HERO ========== -->
     <section class="hero" id="home">
       <div class="container">
         <div class="hero-panel">
@@ -1178,7 +1177,6 @@
       </div>
     </section>
 
-    <!-- ========== SOCIAL STRIP ========== -->
     <section class="social-strip">
       <div class="container social-strip-inner">
         <div class="social-text"><i class="fas fa-hashtag"></i> Acompanhe a EBD Fiel nas redes sociais</div>
@@ -1191,7 +1189,6 @@
       </div>
     </section>
 
-    <!-- ========== CLASSE ADULTOS ========== -->
     <section class="section" id="adult-class">
       <div class="container">
         <div class="section-heading">
@@ -1236,7 +1233,6 @@
       </div>
     </section>
 
-    <!-- ========== CLASSE JOVENS ========== -->
     <section class="section" id="youth-class">
       <div class="container">
         <div class="section-heading">
@@ -1281,7 +1277,6 @@
       </div>
     </section>
 
-    <!-- ========== SOBRE ========== -->
     <section class="section" id="about">
       <div class="container">
         <section class="about-section">
@@ -1357,7 +1352,6 @@
     </div>
   </footer>
 
-  <!-- ADMIN PANEL e MODAL -->
   <div id="adminOverlay" class="admin-panel-overlay"></div>
   <div id="adminPanel" class="admin-panel">
     <div class="admin-panel-header">
@@ -1395,7 +1389,6 @@
 
     const EDIT_PASSWORD = "4141";
 
-    // Mapeamento dos títulos corrigidos para o 2º trimestre dos jovens
     const YOUTH_TRIMESTRE_2_TITLES = {
       1: "Reconhecendo o Senhorio de Deus",
       2: "Compreendendo a Mordomia Cristã",
@@ -1412,28 +1405,33 @@
       13: "Mordomia cristã: obediência e responsabilidade"
     };
 
-    // Função que aplica os títulos e SALVA no localStorage, sobrescrevendo qualquer conflito
     function applyYouthTitleUpdatesAndSave() {
       if (!youthLessons.length) {
         alert("Nenhuma lição de jovens carregada ainda.");
         return false;
       }
+
       let updatedCount = 0;
+
       youthLessons.forEach(lesson => {
         if (String(lesson.trimestre) === "2" && YOUTH_TRIMESTRE_2_TITLES[lesson.numero]) {
           const key = `${lesson.tipo}:${lesson.id}`;
           const newTitle = YOUTH_TRIMESTRE_2_TITLES[lesson.numero];
+
           if (lesson.titulo !== newTitle) {
             lesson.titulo = newTitle;
             updatedCount++;
+
             if (!contentOverrides[key]) contentOverrides[key] = {};
             contentOverrides[key].titulo = newTitle;
+
             if (!contentOverrides[key].conteudo) {
               contentOverrides[key].conteudo = lesson.conteudo;
             }
           }
         }
       });
+
       if (updatedCount > 0) {
         saveOverrides();
         renderAll();
@@ -1441,14 +1439,14 @@
       } else {
         alert("Nenhum título precisou ser corrigido. Verifique se as lições do 2º trimestre já estão com os títulos corretos.");
       }
+
       return true;
     }
 
-    // Função para atualizar título de uma lição específica (usada pelo ícone de lápis)
     function updateLessonTitle(lesson, newTitle) {
       if (!newTitle || newTitle.trim() === "") return false;
       const key = `${lesson.tipo}:${lesson.id}`;
-      // Atualiza o objeto da lição no array correspondente
+
       if (lesson.tipo === 'adult') {
         const idx = adultLessons.findIndex(l => l.id === lesson.id);
         if (idx !== -1) adultLessons[idx].titulo = newTitle;
@@ -1456,15 +1454,16 @@
         const idx = youthLessons.findIndex(l => l.id === lesson.id);
         if (idx !== -1) youthLessons[idx].titulo = newTitle;
       }
-      // Atualiza no contentOverrides
+
       if (!contentOverrides[key]) contentOverrides[key] = {};
       contentOverrides[key].titulo = newTitle;
-      // Se houver conteúdo, mantém; senão, mantém o conteúdo original
+
       if (!contentOverrides[key].conteudo) {
         contentOverrides[key].conteudo = lesson.conteudo;
       }
+
       saveOverrides();
-      renderAll(); // re-renderiza para atualizar a visualização
+      renderAll();
       return true;
     }
 
@@ -1476,9 +1475,11 @@
     function loadOverrides() {
       const storedAdmin = localStorage.getItem('ebd_admin_overrides');
       const storedContent = localStorage.getItem('ebd_content_overrides');
+
       if (storedAdmin) {
         try { adminOverrides = JSON.parse(storedAdmin); } catch(e) { adminOverrides = {}; }
       }
+
       if (storedContent) {
         try { contentOverrides = JSON.parse(storedContent); } catch(e) { contentOverrides = {}; }
       }
@@ -1492,7 +1493,9 @@
     function applyContentOverrides(lesson) {
       const key = `${lesson.tipo}:${lesson.id}`;
       if (!contentOverrides[key]) return lesson;
+
       const override = contentOverrides[key];
+
       if (override.conteudo !== undefined) {
         const updatedLesson = { ...lesson, conteudo: override.conteudo };
         const titleMatch = updatedLesson.conteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
@@ -1503,6 +1506,7 @@
       } else if (override.titulo !== undefined) {
         return { ...lesson, titulo: override.titulo };
       }
+
       return lesson;
     }
 
@@ -1542,6 +1546,7 @@
       tempDiv.innerHTML = html;
       const unwantedTags = tempDiv.querySelectorAll('style, script, link');
       unwantedTags.forEach(tag => tag.remove());
+
       const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
       for (let heading of headings) {
         const headingText = heading.innerText.trim().toLowerCase();
@@ -1560,12 +1565,14 @@
           break;
         }
       }
+
       const firstParagraph = tempDiv.querySelector('p');
       if (firstParagraph && firstParagraph.innerText.trim()) {
         let text = firstParagraph.innerText.trim();
         if (text.length > 200) text = text.substring(0, 200) + '...';
         return text;
       }
+
       return 'Clique para abrir o conteúdo completo da lição.';
     }
 
@@ -1573,6 +1580,7 @@
       try {
         const response = await fetch('lessons.json');
         const data = await response.json();
+
         adultLessons = data.adult || [];
         youthLessons = data.youth || [];
 
@@ -1580,7 +1588,6 @@
         adultLessons.forEach(lesson => { lesson.id = nextId++; lesson.tipo = 'adult'; });
         youthLessons.forEach(lesson => { lesson.id = nextId++; lesson.tipo = 'youth'; });
 
-        // Aplica os títulos automaticamente ao carregar
         applyYouthTitleUpdatesAndSave();
 
         allLessons = [...adultLessons, ...youthLessons];
@@ -1598,6 +1605,7 @@
       const trimestres = [...new Set(lista.map(l => l.trimestre))].sort((a,b) => a - b);
       const tabsContainer = document.getElementById(`${tipo}Tabs`);
       const lessonsContainer = document.getElementById(`${tipo}LessonsContainer`);
+
       if (!tabsContainer || !lessonsContainer) return;
 
       tabsContainer.innerHTML = '';
@@ -1613,6 +1621,7 @@
         btn.className = `tab-btn${idx === 0 ? ' active' : ''}`;
         btn.textContent = `${trim}º Trimestre`;
         btn.dataset.trim = trim;
+
         btn.addEventListener('click', () => {
           document.querySelectorAll(`#${tipo}Tabs .tab-btn`).forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
@@ -1620,6 +1629,7 @@
           const source = tipo === 'adult' ? adults : youths;
           renderizarLicoes(tipo, source.filter(l => String(l.trimestre) === String(trim)));
         });
+
         tabsContainer.appendChild(btn);
       });
 
@@ -1632,21 +1642,26 @@
     function renderizarLicoes(tipo, lista) {
       const container = document.getElementById(`${tipo}LessonsContainer`);
       if (!container) return;
+
       if (!lista.length) {
         container.innerHTML = '<div class="empty-message">Nenhuma lição disponível para este trimestre.</div>';
         return;
       }
+
       container.innerHTML = '';
+
       lista.forEach(licao => {
         const available = isLessonAvailable(licao);
         const card = document.createElement('article');
         card.className = 'lesson-card fade-in';
         card.setAttribute('data-lesson-id', licao.id);
         card.setAttribute('data-lesson-tipo', licao.tipo);
+
         const badgeClass = available ? 'available' : 'preparation';
         const badgeText = available ? 'Disponível' : 'Em preparação';
         const introSummary = getIntroSummary(licao.conteudo);
         const safeLesson = encodeURIComponent(JSON.stringify(licao));
+
         card.innerHTML = `
           <span class="status-badge ${badgeClass}">${badgeText}</span>
           <div class="lesson-top">
@@ -1667,13 +1682,13 @@
             </div>
           </div>
         `;
+
         container.appendChild(card);
       });
 
-      // Adiciona evento para os ícones de edição de título
       document.querySelectorAll(`#${tipo}LessonsContainer .edit-title-icon`).forEach(icon => {
         icon.addEventListener('click', (e) => {
-          e.stopPropagation(); // evita que o clique no ícone acione o clique no card
+          e.stopPropagation();
           if (!checkPassword()) {
             alert('Senha incorreta! Acesso negado.');
             return;
@@ -1696,11 +1711,14 @@
     function attachCardAdminClicks(tipo) {
       document.querySelectorAll(`#${tipo}LessonsContainer .lesson-card`).forEach(card => {
         let clickCount = 0, timeout;
+
         card.addEventListener('click', (e) => {
           if (e.target.closest('.view-btn') || e.target.closest('.edit-title-icon')) return;
+
           clickCount++;
           if (timeout) clearTimeout(timeout);
           timeout = setTimeout(() => { clickCount = 0; }, 1000);
+
           if (clickCount >= 5) {
             clickCount = 0;
             if (checkPassword()) {
@@ -1708,7 +1726,9 @@
               const lessonTipo = card.getAttribute('data-lesson-tipo');
               const lesson = allLessons.find(item => String(item.id) === String(lessonId) && item.tipo === lessonTipo);
               if (lesson) abrirEditModal(lesson);
-            } else alert('Senha incorreta! Acesso negado.');
+            } else {
+              alert('Senha incorreta! Acesso negado.');
+            }
           }
         });
       });
@@ -1716,20 +1736,26 @@
 
     function renderAll() {
       const { adults, youths } = getFinalLessons();
+
       const activeAdultTrim = document.querySelector('#adultTabs .tab-btn.active')?.dataset.trim;
       if (activeAdultTrim) renderizarLicoes('adult', adults.filter(l => String(l.trimestre) === String(activeAdultTrim)));
+
       const activeYouthTrim = document.querySelector('#youthTabs .tab-btn.active')?.dataset.trim;
       if (activeYouthTrim) renderizarLicoes('youth', youths.filter(l => String(l.trimestre) === String(activeYouthTrim)));
+
       construirAdminPanel();
     }
 
     function construirAdminPanel() {
       const container = document.getElementById('adminList');
       if (!container) return;
+
       container.innerHTML = '';
+
       allLessons.forEach(lesson => {
         const key = `${lesson.tipo}:${lesson.id}`;
         const available = adminOverrides.hasOwnProperty(key) ? adminOverrides[key] : isLessonAvailable(lesson);
+
         const row = document.createElement('div');
         row.className = 'lesson-row';
         row.innerHTML = `
@@ -1743,6 +1769,7 @@
         `;
         container.appendChild(row);
       });
+
       document.querySelectorAll('#adminList .toggle-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const key = btn.dataset.key;
@@ -1753,9 +1780,13 @@
           renderAll();
         });
       });
+
       document.querySelectorAll('#adminList .edit-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          if (!checkPassword()) { alert('Senha incorreta!'); return; }
+          if (!checkPassword()) {
+            alert('Senha incorreta!');
+            return;
+          }
           const key = btn.dataset.key;
           const lesson = allLessons.find(item => `${item.tipo}:${item.id}` === key);
           if (lesson) abrirEditModal(lesson);
@@ -1768,14 +1799,18 @@
       const title = document.getElementById('editModalTitle');
       const textarea = document.getElementById('editConteudo');
       const key = `${lesson.tipo}:${lesson.id}`;
+
       title.textContent = `Editar: ${lesson.titulo}`;
       textarea.value = contentOverrides[key]?.conteudo !== undefined ? contentOverrides[key].conteudo : (lesson.conteudo || '');
+
       modal.style.display = 'block';
+
       document.getElementById('saveEditBtn').onclick = () => {
         const novoConteudo = textarea.value;
         let novoTitulo = lesson.titulo;
         const titleMatch = novoConteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
         if (titleMatch && titleMatch[1]) novoTitulo = titleMatch[1].trim();
+
         contentOverrides[key] = { conteudo: novoConteudo, titulo: novoTitulo };
         saveOverrides();
         modal.style.display = 'none';
@@ -1814,6 +1849,7 @@
       const isYouth = licao.tipo === 'youth';
       const primaryColor = isYouth ? '#3b82f6' : '#f7b24d';
       const darkColor = '#102131';
+
       return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -2002,10 +2038,12 @@
 
     let clickCountLogo = 0;
     let clickTimeoutLogo;
+
     function handleLogoClick() {
       clickCountLogo++;
       if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
       clickTimeoutLogo = setTimeout(() => { clickCountLogo = 0; }, 1000);
+
       if (clickCountLogo >= 5) {
         clickCountLogo = 0;
         document.getElementById('adminOverlay').style.display = 'block';
@@ -2023,10 +2061,12 @@
       const nav = document.getElementById('mainNav');
 
       logo.addEventListener('click', handleLogoClick);
+
       mobileBtn.addEventListener('click', () => {
         nav.classList.toggle('active');
         mobileBtn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
       });
+
       document.querySelectorAll('#mainNav a').forEach(link => {
         link.addEventListener('click', () => {
           nav.classList.remove('active');
@@ -2036,19 +2076,23 @@
 
       document.getElementById('closeAdminBtn').addEventListener('click', fecharAdminPanel);
       document.getElementById('adminOverlay').addEventListener('click', fecharAdminPanel);
+
       document.getElementById('adminUnlockAll').addEventListener('click', () => {
         allLessons.forEach(lesson => { adminOverrides[`${lesson.tipo}:${lesson.id}`] = true; });
         saveOverrides();
         renderAll();
       });
+
       document.getElementById('adminBlockAll').addEventListener('click', () => {
         allLessons.forEach(lesson => { adminOverrides[`${lesson.tipo}:${lesson.id}`] = false; });
         saveOverrides();
         renderAll();
       });
+
       document.getElementById('adminResetAll').addEventListener('click', resetAllContent);
       document.getElementById('adminExport').addEventListener('click', exportJSON);
       document.getElementById('adminClearStorage').addEventListener('click', clearAllData);
+
       document.getElementById('adminFixYouthTitles').addEventListener('click', () => {
         if (checkPassword()) {
           applyYouthTitleUpdatesAndSave();
@@ -2056,9 +2100,11 @@
           alert('Senha incorreta! Acesso negado.');
         }
       });
+
       document.getElementById('closeEditBtn').addEventListener('click', () => {
         document.getElementById('editModal').style.display = 'none';
       });
+
       window.addEventListener('click', (event) => {
         if (event.target === document.getElementById('editModal')) {
           document.getElementById('editModal').style.display = 'none';
@@ -2069,6 +2115,7 @@
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
     let particles = [];
+
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -2080,6 +2127,7 @@
         o: Math.random() * 0.28 + 0.08
       }));
     }
+
     function drawParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach(p => {
@@ -2087,6 +2135,7 @@
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(247, 178, 77, ${p.o})`;
         ctx.fill();
+
         p.y += p.d;
         if (p.y > canvas.height) {
           p.y = -5;
@@ -2095,6 +2144,7 @@
       });
       requestAnimationFrame(drawParticles);
     }
+
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     drawParticles();
