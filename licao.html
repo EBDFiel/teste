@@ -73,33 +73,35 @@
     `;
   }
 
-  let licao = null;
+ let licao = null;
 
-  try {
-    const raw = sessionStorage.getItem("licaoAtual");
-    licao = raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    console.error("Erro ao ler sessionStorage:", e);
+try {
+  const raw = sessionStorage.getItem("licaoAtual");
+
+  console.log("LIDO:", raw);
+
+  if (!raw) {
+    throw new Error("Nada no sessionStorage");
   }
 
-  document.getElementById("titulo").innerText = licao?.titulo || "Lição";
-  document.getElementById("content").innerHTML = gerarConteudoHtml(licao);
+  licao = JSON.parse(raw);
 
-  window.onload = () => {
-    setTimeout(hideLoading, 200);
-  };
+} catch (e) {
+  console.error("ERRO:", e);
 
-  let startX = 0;
+  document.getElementById("content").innerHTML = `
+    <h2>Erro ao carregar a lição</h2>
+    <p>Volte e tente novamente.</p>
+  `;
+}
 
-  document.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-  });
+// 🔥 render seguro
+if (licao) {
+  document.getElementById("titulo").innerText = licao.titulo || "Lição";
 
-  document.addEventListener("touchend", e => {
-    if (e.changedTouches[0].clientX - startX > 100) {
-      voltar();
-    }
-  });
+  document.getElementById("content").innerHTML =
+    licao.conteudo || "<p>Conteúdo vazio</p>";
+}
 
   document.getElementById("shareBtn").addEventListener("click", async () => {
     const url = "https://ebdfiel.github.io/teste/";
