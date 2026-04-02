@@ -38,12 +38,19 @@ self.addEventListener("fetch", (event) => {
 
   if (req.method !== "GET") return;
 
-  // páginas HTML
+  // navegação HTML
   if (req.mode === "navigate") {
     event.respondWith(
       fetch(req)
-        .then((response) => response)
-        .catch(() => caches.match("./offline.html"))
+        .then((response) => {
+          return response;
+        })
+        .catch(async () => {
+          const cachedPage =
+            (await caches.match(req)) ||
+            (await caches.match("./offline.html"));
+          return cachedPage;
+        })
     );
     return;
   }
@@ -57,7 +64,12 @@ self.addEventListener("fetch", (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
           return response;
         })
-        .catch(() => caches.match("./lessons.json"))
+        .catch(async () => {
+          return (
+            (await caches.match(req)) ||
+            (await caches.match("./lessons.json"))
+          );
+        })
     );
     return;
   }
@@ -81,7 +93,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // css / js / manifest / fontes etc
+  // css / js / manifest / fontes / outros
   event.respondWith(
     caches.match(req).then((cached) => {
       return (
