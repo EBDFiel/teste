@@ -7,24 +7,49 @@
   <style>
     body {
       margin: 0;
-      font-family: Inter, Arial, sans-serif;
       background: #f6f8fb;
+      font-family: Arial, sans-serif;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #07111f;
+      color: white;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .back-btn {
+      background: #f7b24d;
+      color: #102131;
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .content {
+      min-height: 100vh;
     }
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <button class="back-btn" onclick="history.back()">← Voltar</button>
+    <div id="titulo">Lição</div>
+  </div>
 
-<script>
-  const conteudo = sessionStorage.getItem("ebd_licao_atual");
+  <div id="content" class="content"></div>
 
-  if (conteudo) {
-    document.open();
-    document.write(conteudo);
-    document.close();
-  } else {
-    document.body.innerHTML = "<p style='padding:20px'>Conteúdo não encontrado.</p>";
-  }
-</script>
+  <script>
+    const titulo = localStorage.getItem("licaoAtualTitulo") || "Lição";
+    const html = localStorage.getItem("licaoAtualHtml") || "<p>Conteúdo não encontrado.</p>";
 
+    document.title = titulo + " - EBD Fiel";
+    document.getElementById("titulo").textContent = titulo;
+    document.getElementById("content").innerHTML = html;
+  </script>
 </body>
 </html>
