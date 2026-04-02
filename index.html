@@ -2154,12 +2154,19 @@
     }
 
    function abrirNovaGuia(licao) {
-  const conteudoHtml = gerarConteudoHtml(licao);
+    const conteudoHtml = gerarConteudoHtml(licao);
 
-  localStorage.setItem("licaoAtualHtml", conteudoHtml);
-  localStorage.setItem("licaoAtualTitulo", licao.titulo || "Lição");
+    // salva conteúdo da lição
+    localStorage.setItem("licaoAtualHtml", conteudoHtml);
+    localStorage.setItem("licaoAtualTitulo", licao.titulo || "Lição");
 
-  window.location.href = "./licao.html";
+    // animação de saída
+    document.body.classList.add("page-leaving");
+
+    // navegação com delay suave
+    setTimeout(() => {
+        window.location.href = "./licao.html";
+    }, 220);
 }
 
     function fecharAdminPanel() {
