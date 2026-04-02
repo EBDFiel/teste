@@ -6,18 +6,11 @@
   <meta name="theme-color" content="#07111f">
   <title>Lição - EBD Fiel</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      --bg: #07111f;
-      --bg-soft: #0c1828;
-      --stroke: rgba(255,255,255,0.1);
-      --text: #162331;
-      --muted: #64748b;
       --primary: #f7b24d;
       --primary-2: #ff9800;
       --dark: #102131;
@@ -30,8 +23,6 @@
       margin: 0;
       font-family: 'Inter', sans-serif;
       background: linear-gradient(180deg, #f6f8fb 0%, #eef2f7 100%);
-      color: var(--text);
-      min-height: 100vh;
       padding-bottom: calc(var(--bottom-nav-height) + 16px);
       opacity: 0;
       transform: translateY(10px);
@@ -43,94 +34,76 @@
     }
 
     @keyframes pageEnter {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes pageLeave {
-      from {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateY(8px);
-      }
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(8px); }
     }
 
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 1000;
-      background: rgba(7,17,31,0.94);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      color: #fff;
-    }
-
-    .topbar-inner {
-      width: min(calc(100% - 24px), 1100px);
-      margin: 0 auto;
-      min-height: 72px;
+      background: rgba(7,17,31,0.95);
+      color: white;
+      padding: 12px 16px;
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 10px 0;
     }
 
     .back-btn {
       border: 0;
-      border-radius: 16px;
-      padding: 12px 14px;
+      border-radius: 14px;
+      padding: 10px 14px;
       background: linear-gradient(135deg, var(--primary), var(--primary-2));
       color: var(--dark);
       font-weight: 800;
-      font-size: 0.95rem;
       cursor: pointer;
-      box-shadow: 0 10px 20px rgba(255, 152, 0, 0.22);
-      transition: transform 0.18s ease, opacity 0.18s ease;
-      flex-shrink: 0;
     }
 
-    .back-btn:active {
-      transform: scale(0.96);
+    .content {
+      background: white;
+      border-radius: 20px;
+      margin: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
-    .topbar-copy {
-      min-width: 0;
+    /* BOTÃO COMPARTILHAR */
+    .share-app-wrap {
+      padding: 10px 16px 30px;
+      display: flex;
+      justify-content: center;
     }
 
-    .topbar-copy strong {
-      display: block;
-      font-size: 1rem;
-      line-height: 1.2;
+    .share-app-btn {
+      border: 0;
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #1688dc, #0267b3);
+      color: white;
+      font-weight: 800;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      cursor: pointer;
     }
 
-    .topbar-copy span {
-      display: block;
-      color: #b9c8d6;
-      font-size: 0.84rem;
-      margin-top: 2px;
-    }
-
+    /* LOADING */
     .loading-overlay {
       position: fixed;
       inset: 0;
-      z-index: 5000;
+      background: rgba(7,17,31,0.8);
       display: flex;
-      align-items: center;
       justify-content: center;
-      background: rgba(7,17,31,0.82);
-      backdrop-filter: blur(10px);
+      align-items: center;
+      z-index: 9999;
       opacity: 0;
       visibility: hidden;
-      transition: 0.25s ease;
+      transition: .2s;
     }
 
     .loading-overlay.show {
@@ -138,250 +111,129 @@
       visibility: visible;
     }
 
-    .loading-box {
-      width: min(86vw, 300px);
-      padding: 28px 24px;
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.06);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-      text-align: center;
-      color: #fff;
-    }
-
-    .loading-spinner {
-      width: 46px;
-      height: 46px;
-      margin: 0 auto 14px;
-      border-radius: 50%;
-      border: 4px solid rgba(255,255,255,0.16);
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255,255,255,0.2);
       border-top-color: var(--primary);
-      animation: spin 0.9s linear infinite;
-    }
-
-    .loading-box strong {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 1rem;
-    }
-
-    .loading-box p {
-      color: #c7d2de;
-      font-size: 0.92rem;
-      margin: 0;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
-    .page-shell {
-      width: min(calc(100% - 24px), 980px);
-      margin: 18px auto 0;
-    }
-
-    .content-wrap {
-      background: #fff;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 18px 50px rgba(15,23,42,0.12);
-      border: 1px solid rgba(15,23,42,0.06);
-    }
-
-    .content {
-      min-height: calc(100vh - 180px);
-    }
-
-    .empty {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 24px;
-      text-align: center;
-      color: #475569;
-    }
-
-    .bottom-app-nav {
+    /* NAV INFERIOR */
+    .bottom-nav {
       position: fixed;
-      left: 12px;
-      right: 12px;
       bottom: 10px;
-      z-index: 2000;
+      left: 10px;
+      right: 10px;
+      background: #07111f;
+      border-radius: 20px;
       display: flex;
-      align-items: center;
       justify-content: space-around;
-      gap: 8px;
-      min-height: var(--bottom-nav-height);
-      padding: 10px 12px max(10px, env(safe-area-inset-bottom));
-      background: rgba(7,17,31,0.92);
-      border: 1px solid rgba(255,255,255,0.09);
-      backdrop-filter: blur(16px);
-      border-radius: 24px;
-      box-shadow: 0 24px 50px rgba(0,0,0,0.28);
+      padding: 10px;
     }
 
-    .bottom-nav-link {
-      flex: 1;
-      min-height: 52px;
-      border-radius: 18px;
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      color: #dce6ef;
-      font-size: 0.78rem;
-      font-weight: 700;
+    .bottom-nav a {
+      color: white;
       text-decoration: none;
-      transition: 0.2s ease;
-    }
-
-    .bottom-nav-link i {
-      font-size: 1.05rem;
-    }
-
-    .bottom-nav-link.active,
-    .bottom-nav-link:hover {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-    }
-
-    @media (max-width: 768px) {
-      .topbar-inner {
-        width: min(calc(100% - 20px), 980px);
-      }
-
-      .page-shell {
-        width: min(calc(100% - 12px), 980px);
-        margin-top: 10px;
-      }
-
-      .content-wrap {
-        border-radius: 20px;
-      }
-
-      .topbar-copy strong {
-        font-size: 0.94rem;
-      }
-
-      .topbar-copy span {
-        font-size: 0.8rem;
-      }
+      font-size: 12px;
+      text-align: center;
     }
   </style>
 </head>
+
 <body>
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-box">
-      <div class="loading-spinner"></div>
-      <strong>Carregando lição...</strong>
-      <p>Organizando o conteúdo para leitura.</p>
-    </div>
-  </div>
 
-  <header class="topbar">
-    <div class="topbar-inner">
-      <button class="back-btn" id="backBtn">
-        <i class="fas fa-arrow-left"></i> Voltar
-      </button>
-      <div class="topbar-copy">
-        <strong id="titulo">Lição</strong>
-        <span>EBD Fiel • Escola Bíblica Dominical</span>
-      </div>
-    </div>
-  </header>
+<div class="loading-overlay" id="loading">
+  <div class="spinner"></div>
+</div>
 
-  <main class="page-shell">
-    <div class="content-wrap">
-      <div id="content" class="content"></div>
-    </div>
-  </main>
+<div class="topbar">
+  <button class="back-btn" onclick="voltar()">←</button>
+  <div id="titulo">Lição</div>
+</div>
 
-  <nav class="bottom-app-nav" aria-label="Navegação inferior">
-    <a href="./index.html#home" class="bottom-nav-link">
-      <i class="fas fa-house"></i>
-      <span>Início</span>
-    </a>
-    <a href="./index.html#adult-class" class="bottom-nav-link">
-      <i class="fas fa-book-open"></i>
-      <span>Adultos</span>
-    </a>
-    <a href="./index.html#youth-class" class="bottom-nav-link">
-      <i class="fas fa-users"></i>
-      <span>Jovens</span>
-    </a>
-    <a href="./index.html#about" class="bottom-nav-link">
-      <i class="fas fa-circle-info"></i>
-      <span>Sobre</span>
-    </a>
-  </nav>
+<div id="content" class="content"></div>
 
-  <script>
-    const loadingOverlay = document.getElementById("loadingOverlay");
+<!-- BOTÃO COMPARTILHAR -->
+<div class="share-app-wrap">
+  <button class="share-app-btn" id="shareBtn">
+    <i class="fas fa-share-alt"></i> Compartilhar app
+  </button>
+</div>
 
-    function showLoading() {
-      loadingOverlay.classList.add("show");
-    }
+<!-- NAV INFERIOR -->
+<div class="bottom-nav">
+  <a href="./index.html#home">🏠<br>Início</a>
+  <a href="./index.html#adult-class">📖<br>Adultos</a>
+  <a href="./index.html#youth-class">👥<br>Jovens</a>
+</div>
 
-    function hideLoading() {
-      loadingOverlay.classList.remove("show");
-    }
+<script>
+  const loading = document.getElementById("loading");
 
-    function goBackWithAnimation() {
-      showLoading();
-      document.body.classList.add("page-leaving");
+  function showLoading() {
+    loading.classList.add("show");
+  }
 
-      setTimeout(() => {
-        if (history.length > 1) {
-          history.back();
-        } else {
-          window.location.href = "./index.html#home";
-        }
-      }, 240);
-    }
+  function hideLoading() {
+    loading.classList.remove("show");
+  }
 
-    const titulo = localStorage.getItem("licaoAtualTitulo") || "Lição";
-    const html = localStorage.getItem("licaoAtualHtml") ||
-      "<div class='empty'><h2>Conteúdo não encontrado.</h2><p>Volte para a página principal e abra a lição novamente.</p></div>";
-
-    document.title = titulo + " - EBD Fiel";
-    document.getElementById("titulo").textContent = titulo;
-    document.getElementById("content").innerHTML = html;
-
-    window.addEventListener("load", () => {
-      setTimeout(hideLoading, 180);
-    });
-
-    document.getElementById("backBtn").addEventListener("click", goBackWithAnimation);
-
-    function setupSwipeBack() {
-      let startX = 0;
-      let startY = 0;
-      let tracking = false;
-
-      document.addEventListener("touchstart", (e) => {
-        const touch = e.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        tracking = startX <= 28;
-      }, { passive: true });
-
-      document.addEventListener("touchend", (e) => {
-        if (!tracking) return;
-
-        const touch = e.changedTouches[0];
-        const deltaX = touch.clientX - startX;
-        const deltaY = Math.abs(touch.clientY - startY);
-
-        if (deltaX > 90 && deltaY < 80) {
-          goBackWithAnimation();
-        }
-
-        tracking = false;
-      }, { passive: true });
-    }
-
-    setupSwipeBack();
+  function voltar() {
     showLoading();
-  </script>
+    document.body.classList.add("page-leaving");
+
+    setTimeout(() => {
+      history.back();
+    }, 200);
+  }
+
+  const titulo = localStorage.getItem("licaoAtualTitulo") || "Lição";
+  const html = localStorage.getItem("licaoAtualHtml") || "<p>Erro ao carregar</p>";
+
+  document.getElementById("titulo").innerText = titulo;
+  document.getElementById("content").innerHTML = html;
+
+  window.onload = () => {
+    setTimeout(hideLoading, 200);
+  };
+
+  // SWIPE PRA VOLTAR
+  let startX = 0;
+
+  document.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+  });
+
+  document.addEventListener("touchend", e => {
+    if (e.changedTouches[0].clientX - startX > 100) {
+      voltar();
+    }
+  });
+
+  // COMPARTILHAR
+  document.getElementById("shareBtn").addEventListener("click", async () => {
+    const url = "https://ebdfiel.github.io/teste/";
+
+    if (navigator.share) {
+      await navigator.share({
+        title: "EBD Fiel",
+        text: "Acesse as lições da EBD aqui:",
+        url: url
+      });
+    } else {
+      navigator.clipboard.writeText(url);
+      alert("Link copiado!");
+    }
+  });
+
+  showLoading();
+</script>
+
 </body>
 </html>
