@@ -62,25 +62,13 @@
     }
 
     @keyframes pageEnter {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes pageLeave {
-      from {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateY(8px);
-      }
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(8px); }
     }
 
     a { color: inherit; text-decoration: none; }
@@ -2314,8 +2302,14 @@
     function abrirNovaGuia(licao) {
       const conteudoHtml = gerarConteudoHtml(licao);
 
-      localStorage.setItem("licaoAtualHtml", conteudoHtml);
-      localStorage.setItem("licaoAtualTitulo", licao.titulo || "Lição");
+      try {
+        sessionStorage.setItem("licaoAtualHtml", conteudoHtml);
+        sessionStorage.setItem("licaoAtualTitulo", licao.titulo || "Lição");
+      } catch (e) {
+        console.error("Erro ao salvar no sessionStorage:", e);
+        alert("Não foi possível abrir a lição agora.");
+        return;
+      }
 
       showLoadingOverlay();
       document.body.classList.add("page-leaving");
@@ -2584,5 +2578,3 @@
   </script>
 </body>
 </html>
-
-
