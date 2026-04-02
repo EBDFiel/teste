@@ -1,55 +1,98 @@
-const CACHE = "app-v1";
+const CACHE_NAME = "ebd-fiel-v3";
 
-const FILES = [
+const FILES_TO_CACHE = [
   "./",
   "./index.html",
+  "./licao.html",
   "./offline.html",
   "./manifest.json",
-  "./licao.html"
+  "./lessons.json",
+  "./icones/icon-192.png",
+  "./icones/icon-512.png"
 ];
 
 // instala
-self.addEventListener("install", (e) => {
-  e.waitUntil(
-    caches.open(CACHE).then(cache => cache.addAll(FILES))
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
   );
   self.skipWaiting();
 });
 
 // ativa
-self.addEventListener("activate", (e) => {
-  e.waitUntil(self.clients.claim());
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys
+          .filter((key) => key !== CACHE_NAME)
+          .map((key) => caches.delete(key))
+      )
+    ).then(() => self.clients.claim())
+  );
 });
 
 // fetch
-self.addEventListener("fetch", (e) => {
-  const req = e.request;
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
 
-  // páginas
+  if (req.method !== "GET") return;
+
+  // páginas HTML
   if (req.mode === "navigate") {
-    e.respondWith(
-      fetch(req).catch(() => caches.match("./offline.html"))
+    event.respondWith(
+      fetch(req)
+        .then((response) => response)
+        .catch(() => caches.match("./offline.html"))
     );
     return;
   }
 
-  // imagens fallback
+  // lessons.json
+  if (req.url.includes("lessons.json")) {
+    event.respondWith(
+      fetch(req)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+          return response;
+        })
+        .catch(() => caches.match("./lessons.json"))
+    );
+    return;
+  }
+
+  // imagens
   if (req.destination === "image") {
-    e.respondWith(
-      caches.match(req).then(res => {
-        return res || fetch(req).catch(() =>
-          new Response(
-            '<h1>Imagem offline</h1>',
-            { headers: { "Content-Type": "text/html" } }
-          )
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        return (
+          cached ||
+          fetch(req)
+            .then((response) => {
+              const copy = response.clone();
+              caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+              return response;
+            })
+            .catch(() => caches.match("./icones/icon-192.png"))
         );
       })
     );
     return;
   }
 
-  // padrão cache
-  e.respondWith(
-    caches.match(req).then(res => res || fetch(req))
+  // css / js / manifest / fontes etc
+  event.respondWith(
+    caches.match(req).then((cached) => {
+      return (
+        cached ||
+        fetch(req).then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+          return response;
+        })
+      );
+    })
   );
 });
+
