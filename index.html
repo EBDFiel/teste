@@ -2294,12 +2294,22 @@
       if (overlay) overlay.classList.remove('show');
     }
 
-    function abrirNovaGuia(licao) {
+   function abrirNovaGuia(licao) {
+  if (!licao) {
+    alert("Erro: lição inválida");
+    return;
+  }
+
   try {
-    sessionStorage.setItem("licaoAtual", JSON.stringify(licao));
+    const json = JSON.stringify(licao);
+
+    // 🔥 teste
+    console.log("SALVANDO:", json);
+
+    sessionStorage.setItem("licaoAtual", json);
   } catch (e) {
-    console.error("Erro ao salvar a lição:", e);
-    alert("Não foi possível abrir a lição agora.");
+    console.error("Erro ao salvar:", e);
+    alert("Erro ao abrir lição");
     return;
   }
 
@@ -2308,9 +2318,8 @@
 
   setTimeout(() => {
     window.location.href = "./licao.html";
-  }, 260);
+  }, 250);
 }
-
 
     function fecharAdminPanel() {
       document.getElementById('adminOverlay').style.display = 'none';
