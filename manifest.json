@@ -2,32 +2,25 @@
   "name": "EBD Fiel - Escola Bíblica Dominical",
   "short_name": "EBD Fiel",
   "description": "Material bíblico fiel para fortalecer a Escola Bíblica Dominical.",
-  "lang": "pt-BR",
-  "start_url": "/teste/index.html",
-  "scope": "/teste/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "portrait",
   "background_color": "#07111f",
   "theme_color": "#07111f",
-  "categories": ["education", "books", "lifestyle"],
+  "lang": "pt-BR",
   "icons": [
     {
-      "src": "/teste/icons/icon-192.png",
+      "src": "./icones/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
-      "src": "/teste/icons/icon-512.png",
+      "src": "./icones/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/teste/icons/icon-512-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }
