@@ -4,52 +4,127 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lição - EBD Fiel</title>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #f6f8fb;
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', Arial, sans-serif;
+      background: linear-gradient(180deg, #f6f8fb 0%, #eef2f7 100%);
+      color: #162331;
+
+      opacity: 0;
+      transform: translateY(10px);
+      animation: pageEnter 0.35s ease forwards;
     }
+
+    body.page-leaving {
+      animation: pageLeave 0.25s ease forwards;
+    }
+
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pageLeave {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+    }
+
     .topbar {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: #07111f;
+      background: rgba(7, 17, 31, 0.96);
+      backdrop-filter: blur(10px);
       color: white;
       padding: 14px 16px;
       display: flex;
       align-items: center;
       gap: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
     }
+
     .back-btn {
-      background: #f7b24d;
-      color: #102131;
       border: 0;
-      border-radius: 10px;
+      border-radius: 14px;
       padding: 10px 14px;
-      font-weight: bold;
+      background: linear-gradient(135deg, #f7b24d, #ff9800);
+      color: #102131;
+      font-weight: 800;
+      font-size: 0.95rem;
       cursor: pointer;
+      box-shadow: 0 8px 18px rgba(255, 152, 0, 0.22);
+      transition: transform 0.18s ease, opacity 0.18s ease;
     }
+
+    .back-btn:active {
+      transform: scale(0.96);
+    }
+
+    .title {
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.3;
+    }
+
     .content {
-      min-height: 100vh;
+      min-height: calc(100vh - 60px);
+      padding: 0;
+    }
+
+    .empty {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 24px;
+      text-align: center;
+      color: #475569;
     }
   </style>
 </head>
+
 <body>
+
   <div class="topbar">
-    <button class="back-btn" onclick="history.back()">← Voltar</button>
-    <div id="titulo">Lição</div>
+    <button class="back-btn" id="backBtn">← Voltar</button>
+    <div class="title" id="titulo">Lição</div>
   </div>
 
   <div id="content" class="content"></div>
 
   <script>
     const titulo = localStorage.getItem("licaoAtualTitulo") || "Lição";
-    const html = localStorage.getItem("licaoAtualHtml") || "<p>Conteúdo não encontrado.</p>";
+    const html = localStorage.getItem("licaoAtualHtml") ||
+      "<div class='empty'><h2>Conteúdo não encontrado.</h2><p>Volte e abra a lição novamente.</p></div>";
 
     document.title = titulo + " - EBD Fiel";
     document.getElementById("titulo").textContent = titulo;
     document.getElementById("content").innerHTML = html;
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      document.body.classList.add("page-leaving");
+
+      setTimeout(() => {
+        history.back();
+      }, 220);
+    });
   </script>
+
 </body>
 </html>
