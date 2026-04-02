@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="EBD Fiel">
- <link rel="icon" href="./icones/icon-192.png">
+  <link rel="icon" href="./icones/icon-192.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>EBD Fiel - Escola Bíblica Dominical</title>
@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     :root {
       --bg: #07111f;
@@ -35,6 +36,7 @@
       --radius-lg: 24px;
       --radius-md: 18px;
       --container: 1240px;
+      --bottom-nav-height: 78px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -49,6 +51,36 @@
       line-height: 1.6;
       overflow-x: hidden;
       min-height: 100vh;
+      padding-bottom: calc(var(--bottom-nav-height) + 16px);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: pageEnter 0.35s ease forwards;
+    }
+
+    body.page-leaving {
+      animation: pageLeave 0.25s ease forwards;
+    }
+
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pageLeave {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(8px);
+      }
     }
 
     a { color: inherit; text-decoration: none; }
@@ -431,12 +463,6 @@
       transition: 0.25s ease;
     }
 
-    .quick-link.video {
-      background: rgba(255,0,0,0.14);
-      border: 1px solid rgba(255,0,0,0.22);
-      color: #fff;
-    }
-
     .quick-link.quiz {
       background: linear-gradient(135deg, #1688dc, #0267b3);
       color: #fff;
@@ -465,7 +491,6 @@
       padding: 20px;
     }
 
-    .video-section h5,
     .panel-side h5 {
       font-size: 1.05rem;
       display: flex;
@@ -498,10 +523,10 @@
       width: 100%;
       height: 100%;
       border: 0;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
 
-    .video-direct-link,
-    .quiz-button,
     .lesson-action {
       display: inline-flex;
       align-items: center;
@@ -509,26 +534,6 @@
       gap: 10px;
       font-weight: 800;
       transition: 0.25s ease;
-    }
-
-    .video-direct-link,
-    .quiz-button {
-      width: 100%;
-      min-height: 48px;
-      border-radius: 14px;
-    }
-
-    .video-direct-link {
-      background: rgba(255,0,0,0.14);
-      border: 1px solid rgba(255,0,0,0.22);
-      color: #fff;
-      margin-top: 8px;
-    }
-
-    .quiz-button {
-      margin-top: 12px;
-      background: linear-gradient(135deg, #1688dc, #0267b3);
-      color: #fff;
     }
 
     .trim-hint {
@@ -1073,6 +1078,104 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .bottom-app-nav {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 10px;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: space-around;
+      gap: 8px;
+      min-height: var(--bottom-nav-height);
+      padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+      background: rgba(7,17,31,0.92);
+      border: 1px solid rgba(255,255,255,0.09);
+      backdrop-filter: blur(16px);
+      border-radius: 24px;
+      box-shadow: 0 24px 50px rgba(0,0,0,0.28);
+    }
+
+    .bottom-nav-link {
+      flex: 1;
+      min-height: 52px;
+      border-radius: 18px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      color: #dce6ef;
+      font-size: 0.78rem;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .bottom-nav-link i {
+      font-size: 1.05rem;
+    }
+
+    .bottom-nav-link.active,
+    .bottom-nav-link:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(7,17,31,0.82);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.25s ease;
+    }
+
+    .loading-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .loading-box {
+      width: min(86vw, 300px);
+      padding: 28px 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+
+    .loading-spinner {
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      border: 4px solid rgba(255,255,255,0.16);
+      border-top-color: var(--primary);
+      animation: spin 0.9s linear infinite;
+    }
+
+    .loading-box strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    .loading-box p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     @media (max-width: 1080px) {
       .hero-panel,
       .class-layout,
@@ -1184,11 +1287,24 @@
       .lesson-action.primary {
         min-width: 0;
       }
+
+      .bottom-app-nav {
+        display: flex;
+      }
     }
   </style>
 </head>
+
 <body>
   <canvas id="particles"></canvas>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+      <div class="loading-spinner"></div>
+      <strong>Abrindo lição...</strong>
+      <p>Preparando o conteúdo para você.</p>
+    </div>
+  </div>
 
   <header class="topbar">
     <div class="container topbar-inner">
@@ -1293,18 +1409,19 @@
               </div>
             </div>
             <div class="quick-links">
-             <a href="https://ebdfiel.github.io/Quizzes-ClaseAdultos-2026/" target="_blank" class="quick-link quiz"><i class="fas fa-brain"></i> Quiz</a>
+              <a href="https://ebdfiel.github.io/Quizzes-ClaseAdultos-2026/" target="_blank" class="quick-link quiz"><i class="fas fa-brain"></i> Quiz</a>
             </div>
           </div>
+
           <div class="class-layout">
             <aside class="video-section" id="adult-video">
-              <h5><i class="fas fa-circle-play"></i> Vídeo do trimestre</h5>
               <div class="video-universal-container">
                 <div class="video-responsive-wrapper">
                   <iframe src="https://www.youtube.com/embed/tQg7bmcS4yM?rel=0" allowfullscreen></iframe>
                 </div>
               </div>
-                          </aside>
+            </aside>
+
             <div class="panel-side">
               <h5><i class="fas fa-calendar-week"></i> Lições por trimestre</h5>
               <div class="trim-hint">Selecione um trimestre para visualizar as lições disponíveis.</div>
@@ -1339,15 +1456,16 @@
               <a href="https://ebdfiel.github.io/Quizzes-ConectarJovens-/" target="_blank" class="quick-link quiz"><i class="fas fa-users"></i> Quiz</a>
             </div>
           </div>
+
           <div class="class-layout">
             <aside class="video-section" id="youth-video">
-              <h5><i class="fas fa-circle-play"></i> Vídeo da classe jovem</h5>
               <div class="video-universal-container">
                 <div class="video-responsive-wrapper">
                   <iframe src="https://www.youtube.com/embed/uCCysCorUok?rel=0" allowfullscreen></iframe>
                 </div>
               </div>
-                         </aside>
+            </aside>
+
             <div class="panel-side">
               <h5><i class="fas fa-calendar-week"></i> Lições por trimestre</h5>
               <div class="trim-hint">Selecione um trimestre para visualizar as lições disponíveis.</div>
@@ -1435,6 +1553,25 @@
       <div class="copyright">&copy; 2026 EBD Fiel - Todos os direitos reservados.</div>
     </div>
   </footer>
+
+  <nav class="bottom-app-nav" id="bottomAppNav" aria-label="Navegação inferior">
+    <a href="#home" class="bottom-nav-link active" data-target="home">
+      <i class="fas fa-house"></i>
+      <span>Início</span>
+    </a>
+    <a href="#adult-class" class="bottom-nav-link" data-target="adult-class">
+      <i class="fas fa-book-open"></i>
+      <span>Adultos</span>
+    </a>
+    <a href="#youth-class" class="bottom-nav-link" data-target="youth-class">
+      <i class="fas fa-users"></i>
+      <span>Jovens</span>
+    </a>
+    <a href="#about" class="bottom-nav-link" data-target="about">
+      <i class="fas fa-circle-info"></i>
+      <span>Sobre</span>
+    </a>
+  </nav>
 
   <div id="adminOverlay" class="admin-panel-overlay"></div>
   <div id="adminPanel" class="admin-panel">
@@ -2147,21 +2284,29 @@
 </html>`;
     }
 
-   function abrirNovaGuia(licao) {
-    const conteudoHtml = gerarConteudoHtml(licao);
+    function showLoadingOverlay() {
+      const overlay = document.getElementById('loadingOverlay');
+      if (overlay) overlay.classList.add('show');
+    }
 
-    // salva conteúdo da lição
-    localStorage.setItem("licaoAtualHtml", conteudoHtml);
-    localStorage.setItem("licaoAtualTitulo", licao.titulo || "Lição");
+    function hideLoadingOverlay() {
+      const overlay = document.getElementById('loadingOverlay');
+      if (overlay) overlay.classList.remove('show');
+    }
 
-    // animação de saída
-    document.body.classList.add("page-leaving");
+    function abrirNovaGuia(licao) {
+      const conteudoHtml = gerarConteudoHtml(licao);
 
-    // navegação com delay suave
-    setTimeout(() => {
+      localStorage.setItem("licaoAtualHtml", conteudoHtml);
+      localStorage.setItem("licaoAtualTitulo", licao.titulo || "Lição");
+
+      showLoadingOverlay();
+      document.body.classList.add("page-leaving");
+
+      setTimeout(() => {
         window.location.href = "./licao.html";
-    }, 220);
-}
+      }, 260);
+    }
 
     function fecharAdminPanel() {
       document.getElementById('adminOverlay').style.display = 'none';
@@ -2191,9 +2336,66 @@
       }
     }
 
+    function updateBottomNavActive() {
+      const sections = [
+        { id: 'home', link: 'home' },
+        { id: 'adult-class', link: 'adult-class' },
+        { id: 'youth-class', link: 'youth-class' },
+        { id: 'about', link: 'about' }
+      ];
+
+      let current = 'home';
+      const trigger = window.innerHeight * 0.35;
+
+      sections.forEach(section => {
+        const el = document.getElementById(section.id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= trigger && rect.bottom >= trigger) {
+          current = section.link;
+        }
+      });
+
+      document.querySelectorAll('.bottom-nav-link').forEach(link => {
+        link.classList.toggle('active', link.dataset.target === current);
+      });
+    }
+
+    function setupSwipeBack() {
+      let startX = 0;
+      let startY = 0;
+      let tracking = false;
+
+      document.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        tracking = startX <= 28;
+      }, { passive: true });
+
+      document.addEventListener('touchend', (e) => {
+        if (!tracking) return;
+
+        const touch = e.changedTouches[0];
+        const deltaX = touch.clientX - startX;
+        const deltaY = Math.abs(touch.clientY - startY);
+
+        if (deltaX > 90 && deltaY < 80) {
+          if (window.history.length > 1 && location.hash && location.hash !== '#home') {
+            history.back();
+          } else if (location.hash && location.hash !== '#home') {
+            location.hash = '#home';
+          }
+        }
+
+        tracking = false;
+      }, { passive: true });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       loadOverrides();
       carregarDados();
+      hideLoadingOverlay();
 
       const logo = document.getElementById('logo');
       const mobileBtn = document.getElementById('mobileMenuBtn');
@@ -2206,7 +2408,7 @@
         mobileBtn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
       });
 
-      document.querySelectorAll('#mainNav a').forEach(link => {
+      document.querySelectorAll('#mainNav a, .bottom-nav-link').forEach(link => {
         link.addEventListener('click', () => {
           nav.classList.remove('active');
           mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
@@ -2249,6 +2451,11 @@
           document.getElementById('editModal').style.display = 'none';
         }
       });
+
+      window.addEventListener('scroll', updateBottomNavActive, { passive: true });
+      window.addEventListener('hashchange', updateBottomNavActive);
+      updateBottomNavActive();
+      setupSwipeBack();
     });
 
     const canvas = document.getElementById('particles');
