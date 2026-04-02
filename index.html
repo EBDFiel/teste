@@ -1397,7 +1397,6 @@
     let adminOverrides = {};
     let contentOverrides = {};
 
-    // Variáveis para armazenar o trimestre ativo de cada classe (inicialmente nenhum)
     let activeAdultTrim = null;
     let activeYouthTrim = null;
 
@@ -1609,7 +1608,6 @@
 
         allLessons = [...adultLessons, ...youthLessons];
         
-        // Criar abas sem carregar nenhuma lição automaticamente
         criarAbas('adult', adultLessons);
         criarAbas('youth', youthLessons);
         
@@ -1635,26 +1633,22 @@
         return;
       }
 
-      // Criar botões de trimestre sem ativar nenhum automaticamente
       trimestres.forEach(trim => {
         const btn = document.createElement('button');
-        btn.className = 'tab-btn'; // sem a classe 'active' inicialmente
+        btn.className = 'tab-btn';
         btn.textContent = `${trim}º Trimestre`;
         btn.dataset.trim = trim;
 
         btn.addEventListener('click', () => {
-          // Remove active de todos os botões da mesma classe
           document.querySelectorAll(`#${tipo}Tabs .tab-btn`).forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           
-          // Armazena o trimestre ativo
           if (tipo === 'adult') {
             activeAdultTrim = trim;
           } else {
             activeYouthTrim = trim;
           }
           
-          // Renderiza as lições do trimestre selecionado
           const { adults, youths } = getFinalLessons();
           const source = tipo === 'adult' ? adults : youths;
           renderizarLicoes(tipo, source.filter(l => String(l.trimestre) === String(trim)));
@@ -1663,7 +1657,6 @@
         tabsContainer.appendChild(btn);
       });
 
-      // Não renderizar nenhuma lição inicialmente. Exibir mensagem padrão.
       lessonsContainer.innerHTML = '<div class="empty-message">📖 Selecione um trimestre para ver as lições.</div>';
     }
 
@@ -1765,17 +1758,14 @@
     function renderAll() {
       const { adults, youths } = getFinalLessons();
 
-      // Se houver um trimestre ativo para adultos, renderiza as lições daquele trimestre
       if (activeAdultTrim !== null) {
         const filtered = adults.filter(l => String(l.trimestre) === String(activeAdultTrim));
         renderizarLicoes('adult', filtered);
       } else {
-        // Se nenhum trimestre foi selecionado ainda, exibe mensagem padrão
         const container = document.getElementById('adultLessonsContainer');
         if (container) container.innerHTML = '<div class="empty-message">📖 Selecione um trimestre para ver as lições.</div>';
       }
 
-      // Mesma lógica para jovens
       if (activeYouthTrim !== null) {
         const filtered = youths.filter(l => String(l.trimestre) === String(activeYouthTrim));
         renderizarLicoes('youth', filtered);
@@ -2193,8 +2183,27 @@
 
   <script>
     if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/teste/service-worker.js");
+      window.addEventListener("load", async () => {
+        try {
+          const registration = await navigator.serviceWorker.register("/teste/service-worker.js");
+
+          registration.addEventListener("updatefound", () => {
+            const newWorker = registration.installing;
+            if (!newWorker) return;
+
+            newWorker.addEventListener("statechange", () => {
+              if (
+                newWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
+                console.log("Nova versão disponível. Atualizando...");
+                window.location.reload();
+              }
+            });
+          });
+        } catch (error) {
+          console.error("Erro ao registrar service worker:", error);
+        }
       });
     }
   </script>
