@@ -2,283 +2,149 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#07111f">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lição - EBD Fiel</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    :root {
-      --primary: #f7b24d;
-      --primary-2: #ff9800;
-      --dark: #102131;
-      --bg: #eef2f7;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(180deg, #f6f8fb 0%, #eef2f7 100%);
-      color: #162331;
+      background: #eef2f7;
     }
 
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 1000;
-      background: rgba(7,17,31,0.95);
+      background: #07111f;
       color: white;
-      padding: 12px 16px;
+      padding: 12px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      gap: 10px;
+      z-index: 999;
     }
 
     .back-btn {
-      border: 0;
-      border-radius: 14px;
-      padding: 10px 14px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      color: var(--dark);
-      font-weight: 800;
+      background: #f7b24d;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    .topbar-title {
-      font-weight: 700;
-      font-size: 1rem;
-      line-height: 1.3;
+    .title {
+      font-weight: bold;
     }
 
-    .page {
-      max-width: 980px;
-      margin: 18px auto;
-      padding: 0 12px 40px;
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 10px;
     }
 
     .card {
       background: white;
-      border-radius: 24px;
+      border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 14px 40px rgba(15,23,42,0.10);
-      border: 1px solid rgba(15,23,42,0.06);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
     .cover {
-      padding: 28px 24px 22px;
+      padding: 25px;
       background: linear-gradient(135deg, #f7b24d, #ffd18b);
-      color: #102131;
-    }
-
-    .cover-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .cover img {
-      max-height: 68px;
-      width: auto;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.45);
-      font-size: 0.86rem;
-      font-weight: 800;
+      text-align: center;
     }
 
     .content {
-      padding: 28px 22px 22px;
+      padding: 20px;
+      line-height: 1.7;
       color: #334155;
-      line-height: 1.75;
     }
 
     .content h1 {
-      color: #102131;
-      font-size: 2rem;
-      line-height: 1.1;
-      margin: 0 0 12px;
-      letter-spacing: -0.03em;
+      margin-top: 0;
     }
 
-    .content h2,
-    .content h3 {
-      color: #102131;
-      line-height: 1.2;
-      margin-top: 28px;
-      margin-bottom: 12px;
+    .share {
+      text-align: center;
+      padding: 20px;
     }
 
-    .content p,
-    .content li {
-      color: #334155;
-      font-size: 1rem;
-    }
-
-    .content blockquote {
-      margin: 20px 0;
-      padding: 18px 20px;
-      border-left: 5px solid #f7b24d;
-      background: #f8fafc;
-      border-radius: 16px;
-      color: #1e293b;
-    }
-
-    .share-wrap {
-      padding: 8px 22px 24px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .share-btn {
-      border: 0;
-      padding: 14px 18px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #1688dc, #0267b3);
+    .share button {
+      background: #0ea5e9;
       color: white;
-      font-weight: 800;
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    .error-box {
-      margin: 24px;
+    .error {
       padding: 20px;
-      border-radius: 18px;
-      background: #fff4f4;
+      background: #ffe4e4;
       color: #7f1d1d;
-      border: 1px solid #fecaca;
-    }
-
-    @media (max-width: 768px) {
-      .page {
-        margin-top: 10px;
-        padding: 0 8px 30px;
-      }
-
-      .card {
-        border-radius: 18px;
-      }
-
-      .cover,
-      .content {
-        padding-left: 16px;
-        padding-right: 16px;
-      }
-
-      .content h1 {
-        font-size: 1.55rem;
-      }
+      border-radius: 10px;
+      margin: 20px;
     }
   </style>
 </head>
+
 <body>
 
-  <div class="topbar">
-    <button class="back-btn" onclick="voltar()">←</button>
-    <div class="topbar-title" id="tituloTopbar">Lição</div>
+<div class="topbar">
+  <button class="back-btn" onclick="voltar()">←</button>
+  <div class="title" id="titulo">Lição</div>
+</div>
+
+<div class="container">
+  <div class="card" id="app"></div>
+
+  <div class="share">
+    <button onclick="compartilhar()">
+      <i class="fas fa-share"></i> Compartilhar app
+    </button>
   </div>
+</div>
 
-  <main class="page">
-    <div class="card">
-      <div id="app"></div>
-      <div class="share-wrap">
-        <button class="share-btn" id="shareBtn">
-          <i class="fas fa-share-alt"></i> Compartilhar app
-        </button>
-      </div>
-    </div>
-  </main>
+<script>
+function voltar() {
+  if (history.length > 1) {
+    history.back();
+  } else {
+    window.location.href = "./index.html";
+  }
+}
 
-  <script>
-    function voltar() {
-      if (history.length > 1) {
-        history.back();
-      } else {
-        window.location.href = "./index.html#home";
-      }
-    }
+function mostrarErro(msg) {
+  document.getElementById("app").innerHTML =
+    "<div class='error'>" + msg + "</div>";
+}
 
-    function renderErro(msg) {
-      document.getElementById("app").innerHTML = `
-        <div class="error-box">
-          <h2>Erro ao carregar a lição</h2>
-          <p>${msg}</p>
-        </div>
-      `;
-    }
+function render(licao) {
+  if (!licao) {
+    mostrarErro("Lição não encontrada.");
+    return;
+  }
 
-    function montarPaginaDaLicao(licao) {
-      const isYouth = licao.tipo === "youth";
-      const cor1 = isYouth ? "#3b82f6" : "#f7b24d";
-      const cor2 = isYouth ? "#60a5fa" : "#ffd18b";
-      const classe = isYouth ? "Classe Jovens" : "Classe Adultos";
+  document.getElementById("titulo").innerText =
+    licao.titulo || "Lição";
 
-      return `
-        <div class="cover" style="background: linear-gradient(135deg, ${cor1}, ${cor2});">
-          <div class="cover-top">
-            <img src="https://i.imgur.com/B1CSSvW.png" alt="EBD Fiel Logo">
-            <span class="pill">
-              <i class="fas fa-book-open"></i> ${classe}
-            </span>
-          </div>
-        </div>
-
-        <div class="content">
-          ${licao.conteudo || "<p><em>Conteúdo não disponível.</em></p>"}
-        </div>
-      `;
-    }
-
-    try {
-      const raw = sessionStorage.getItem("licaoAtual");
-
-      if (!raw) {
-        renderErro("Nenhuma lição foi encontrada no armazenamento. Volte e abra a lição novamente.");
-      } else {
-        const licao = JSON.parse(raw);
-
-        document.title = (licao.titulo || "Lição") + " - EBD Fiel";
-        document.getElementById("tituloTopbar").textContent = licao.titulo || "Lição";
-        function montarPaginaDaLicao(licao) {
-  const isYouth = licao.tipo === "youth";
-  const cor1 = isYouth ? "#3b82f6" : "#f7b24d";
-  const cor2 = isYouth ? "#60a5fa" : "#ffd18b";
-  const classe = isYouth ? "Classe Jovens" : "Classe Adultos";
-
-  // 🔥 garante que o conteúdo é string válida
   let conteudo = "";
 
   try {
-    conteudo = licao.conteudo || "<p>Conteúdo vazio</p>";
+    conteudo = licao.conteudo || "<p>Sem conteúdo</p>";
   } catch (e) {
-    conteudo = "<p>Erro ao interpretar conteúdo</p>";
+    conteudo = "<p>Erro ao carregar conteúdo</p>";
   }
 
-  return `
-    <div class="cover" style="background: linear-gradient(135deg, ${cor1}, ${cor2});">
-      <div class="cover-top">
-        <img src="https://i.imgur.com/B1CSSvW.png">
-        <span class="pill">
-          <i class="fas fa-book-open"></i> ${classe}
-        </span>
-      </div>
+  document.getElementById("app").innerHTML = `
+    <div class="cover">
+      <h2>${licao.titulo || "Lição"}</h2>
     </div>
 
     <div class="content">
@@ -286,43 +152,52 @@
     </div>
   `;
 }
-      }
-    } catch (e) {
-      console.error("Erro ao renderizar a lição:", e);
-      renderErro("O conteúdo chegou, mas houve um erro ao montar a página.");
-    }
 
-    let startX = 0;
+// 🔥 CARREGAMENTO PRINCIPAL
+try {
+  const raw = sessionStorage.getItem("licaoAtual");
 
-    document.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
+  if (!raw) {
+    mostrarErro("Nenhuma lição foi encontrada.");
+  } else {
+    const licao = JSON.parse(raw);
+    render(licao);
+  }
+} catch (e) {
+  console.error(e);
+  mostrarErro("Erro ao abrir a lição.");
+}
+
+// 🔥 SWIPE VOLTAR
+let startX = 0;
+
+document.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+  if (e.changedTouches[0].clientX - startX > 100) {
+    voltar();
+  }
+});
+
+// 🔥 COMPARTILHAR
+function compartilhar() {
+  const url = "https://ebdfiel.github.io/teste/";
+
+  if (navigator.share) {
+    navigator.share({
+      title: "EBD Fiel",
+      text: "Veja esta lição:",
+      url: url
     });
+  } else {
+    navigator.clipboard.writeText(url);
+    alert("Link copiado!");
+  }
+}
+</script>
 
-    document.addEventListener("touchend", (e) => {
-      if (e.changedTouches[0].clientX - startX > 100) {
-        voltar();
-      }
-    });
-
-    document.getElementById("shareBtn").addEventListener("click", async () => {
-      const url = "https://ebdfiel.github.io/teste/";
-
-      try {
-        if (navigator.share) {
-          await navigator.share({
-            title: "EBD Fiel",
-            text: "Acesse as lições da EBD aqui:",
-            url
-          });
-        } else {
-          await navigator.clipboard.writeText(url);
-          alert("Link copiado!");
-        }
-      } catch (e) {
-        console.error("Erro ao compartilhar:", e);
-      }
-    });
-  </script>
 </body>
 </html>
 
