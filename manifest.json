@@ -3,7 +3,7 @@
   "short_name": "EBD Fiel",
   "description": "Material bíblico fiel para fortalecer a Escola Bíblica Dominical.",
   "lang": "pt-BR",
-  "start_url": "/teste/",
+  "start_url": "/teste/index.html",
   "scope": "/teste/",
   "display": "standalone",
   "orientation": "portrait-primary",
