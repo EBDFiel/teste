@@ -1,24 +1,23 @@
-const CACHE_NAME = "ebd-fiel-v1";
-const STATIC_ASSETS = [
+const CACHE_NAME = "ebd-fiel-v2";
+const APP_SHELL = [
   "/teste/",
   "/teste/index.html",
   "/teste/manifest.json",
   "/teste/icons/icon-192.png",
-  "/teste/icons/icon-512.png"
+  "/teste/icons/icon-512.png",
+  "/teste/icons/icon-512-maskable.png"
 ];
 
-// Instala e força atualização imediata
+// Instala a nova versão e já assume o controle
 self.addEventListener("install", (event) => {
   self.skipWaiting();
 
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
   );
 });
 
-// Ativa e limpa caches antigos
+// Remove caches antigos e assume as páginas abertas
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -33,7 +32,9 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-// Estratégia de cache
+// Estratégia:
+// HTML/navegação = network first
+// arquivos estáticos = stale-while-revalidate
 self.addEventListener("fetch", (event) => {
   const request = event.request;
 
@@ -41,38 +42,61 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
 
+  // Só trata requisições do mesmo domínio
   if (url.origin !== self.location.origin) return;
 
-  // HTML → sempre tenta rede primeiro
+  // Navegação / HTML
   if (request.mode === "navigate") {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          const clone = response.clone();
+          const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put("/teste/index.html", clone);
+            cache.put("/teste/index.html", copy);
           });
           return response;
         })
-        .catch(() => caches.match("/teste/index.html"))
+        .catch(async () => {
+          const cached = await caches.match("/teste/index.html");
+          return cached || Response.error();
+        })
     );
     return;
   }
 
-  // Assets → cache first
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      const fetchPromise = fetch(request)
-        .then((networkResponse) => {
-          const clone = networkResponse.clone();
+  // lessons.json: sempre tenta rede primeiro para refletir updates
+  if (url.pathname.endsWith("/lessons.json") || url.pathname.endsWith("lessons.json")) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, clone);
+            cache.put(request, copy);
           });
-          return networkResponse;
+          return response;
         })
-        .catch(() => cached);
+        .catch(async () => {
+          const cached = await caches.match(request);
+          return cached || Response.error();
+        })
+    );
+    return;
+  }
 
-      return cached || fetchPromise;
+  // Restante dos arquivos: responde do cache e atualiza em segundo plano
+  event.respondWith(
+    caches.match(request).then((cachedResponse) => {
+      const networkFetch = fetch(request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, copy);
+          });
+          return response;
+        })
+        .catch(() => cachedResponse);
+
+      return cachedResponse || networkFetch;
     })
   );
 });
