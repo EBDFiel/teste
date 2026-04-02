@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lição - EBD Fiel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: #f6f8fb;
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  const conteudo = sessionStorage.getItem("ebd_licao_atual");
+
+  if (conteudo) {
+    document.open();
+    document.write(conteudo);
+    document.close();
+  } else {
+    document.body.innerHTML = "<p style='padding:20px'>Conteúdo não encontrado.</p>";
+  }
+</script>
+
+</body>
+</html>
