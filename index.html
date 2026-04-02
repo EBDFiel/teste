@@ -2301,15 +2301,10 @@
   }
 
   try {
-    const json = JSON.stringify(licao);
-
-    // 🔥 teste
-    console.log("SALVANDO:", json);
-
-    sessionStorage.setItem("licaoAtual", json);
+    sessionStorage.setItem("licaoAtual", JSON.stringify(licao));
   } catch (e) {
-    console.error("Erro ao salvar:", e);
-    alert("Erro ao abrir lição");
+    console.error("Erro ao salvar a lição:", e);
+    alert("Não foi possível abrir a lição agora.");
     return;
   }
 
