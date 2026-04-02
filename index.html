@@ -2295,18 +2295,22 @@
     }
 
     function abrirNovaGuia(licao) {
-      const conteudoHtml = gerarConteudoHtml(licao);
+  try {
+    sessionStorage.setItem("licaoAtual", JSON.stringify(licao));
+  } catch (e) {
+    console.error("Erro ao salvar a lição:", e);
+    alert("Não foi possível abrir a lição agora.");
+    return;
+  }
 
-      localStorage.setItem("licaoAtualHtml", conteudoHtml);
-      localStorage.setItem("licaoAtualTitulo", licao.titulo || "Lição");
+  showLoadingOverlay();
+  document.body.classList.add("page-leaving");
 
-      showLoadingOverlay();
-      document.body.classList.add("page-leaving");
+  setTimeout(() => {
+    window.location.href = "./licao.html";
+  }, 260);
+}
 
-      setTimeout(() => {
-        window.location.href = "./licao.html";
-      }, 260);
-    }
 
     function fecharAdminPanel() {
       document.getElementById('adminOverlay').style.display = 'none';
