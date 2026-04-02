@@ -2023,14 +2023,11 @@
     }
 
     function abrirNovaGuia(licao) {
-      const conteudoHtml = gerarConteudoHtml(licao);
-      const newWindow = window.open();
-      if (!newWindow) {
-        alert('Não foi possível abrir a nova guia. Verifique se o bloqueador de pop-ups está ativado.');
-        return;
-      }
-      newWindow.document.write(conteudoHtml);
-      newWindow.document.close();
+  const conteudoHtml = gerarConteudoHtml(licao);
+
+  sessionStorage.setItem("ebd_licao_atual", conteudoHtml);
+  window.location.href = "licao.html";
+}
     }
 
     function fecharAdminPanel() {
