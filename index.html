@@ -1596,7 +1596,9 @@
 
     async function carregarDados() {
       try {
-        const response = await fetch('lessons.json');
+        const response = await fetch(`lessons.json?v=${Date.now()}`, {
+  cache: 'no-store'
+});
         const data = await response.json();
 
         adultLessons = data.adult || [];
