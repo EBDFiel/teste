@@ -234,6 +234,19 @@
     }
 
     .btn {
+  min-height: 50px;
+  padding: 0 22px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 800;
+  transition: 0.25s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+
+  /* IMPORTANTE */
   position: relative;
   overflow: hidden;
 }
@@ -241,14 +254,17 @@
 .btn::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
-  opacity: 0;
-  transition: 0.4s;
-}
-
-.btn:hover::after {
-  opacity: 1;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.55),
+    transparent
+  );
+  transform: skewX(-20deg);
 }
 
     .btn-primary {
