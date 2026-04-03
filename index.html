@@ -2488,12 +2488,14 @@
     const installBtn = document.getElementById("installAppBtn");
     const installBottomBtn = document.getElementById("installBottomBtn");
 
-   if (logo) {
+  if (logo) {
   logo.addEventListener('click', handleLogoClick);
 
-  logo.querySelectorAll('*').forEach(el => {
-    el.addEventListener('click', handleLogoClick);
-  });
+  const img = logo.querySelector('img');
+  const text = logo.querySelector('.brand-copy');
+
+  if (img) img.addEventListener('click', handleLogoClick);
+  if (text) text.addEventListener('click', handleLogoClick);
 }
 
     document.querySelectorAll('#mainNav a, .bottom-nav-link').forEach(link => {
