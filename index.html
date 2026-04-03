@@ -2295,25 +2295,19 @@
       abrirNovaGuia(licao);
     });
 
-    let clickCountLogo = 0;
-    let clickTimeoutLogo;
-
-   let clickCountLogo = 0;
+  let clickCountLogo = 0;
 let clickTimeoutLogo;
 
 function handleLogoClick() {
   clickCountLogo++;
 
-  // limpa o timer anterior
   if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
 
-  // agora você tem mais tempo pra clicar
   clickTimeoutLogo = setTimeout(() => {
     clickCountLogo = 0;
   }, 2500);
 
-  // abre com 5 cliques
- if (clickCountLogo >= 3) {
+  if (clickCountLogo >= 5) {
     clickCountLogo = 0;
 
     document.getElementById('adminOverlay').style.display = 'block';
