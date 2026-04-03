@@ -2294,7 +2294,7 @@
       if (overlay) overlay.classList.remove('show');
     }
 
-   function abrirNovaGuia(licao) {
+  function abrirNovaGuia(licao) {
   if (!licao) {
     alert("Erro: lição inválida");
     return;
@@ -2302,6 +2302,9 @@
 
   try {
     sessionStorage.setItem("licaoAtual", JSON.stringify(licao));
+
+    const destino = licao.tipo === "youth" ? "#youth-class" : "#adult-class";
+    sessionStorage.setItem("voltarPara", destino);
   } catch (e) {
     console.error("Erro ao salvar a lição:", e);
     alert("Não foi possível abrir a lição agora.");
