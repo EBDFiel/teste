@@ -1,4 +1,4 @@
-const CACHE_NAME = "ebd-fiel-v7";
+const CACHE_NAME = "ebd-fiel-v8";
 
 const FILES_TO_CACHE = [
   "./",
