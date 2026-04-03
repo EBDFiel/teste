@@ -1,26 +1,125 @@
 {
-  "name": "EBD Fiel - Escola Bíblica Dominical",
-  "short_name": "EBD Fiel",
-  "description": "Material bíblico fiel para fortalecer a Escola Bíblica Dominical.",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#07111f",
-  "theme_color": "#07111f",
-  "lang": "pt-BR",
-  "icons": [
+  "adult": [
     {
-      "src": "./icones/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "id": "adult_t1_l1",
+      "trimestre": 1,
+      "numero": 1,
+      "titulo": "O chamado que transforma a dor em propósito",
+      "data": "04/01/2026",
+      "verdade_aplicada": "Devemos ter em mente que dependemos do Senhor e da direção do Espírito Santo no enfrentamento dos desafios que surgem na jornada cristã.",
+      "conteudo": "<h1>Lição 1: O chamado que transforma a dor em propósito</h1><p><strong>TEXTO ÁUREO</strong><br>“E sucedeu que, ouvindo eu estas palavras, assentei-me, e chorei, e lamentei por alguns dias; e estive jejuando e orando perante o Deus dos céus.” Neemias 1.4</p><p><strong>VERDADE APLICADA</strong><br>Devemos ter em mente que dependemos do Senhor e da direção do Espírito Santo no enfrentamento dos desafios que surgem na jornada cristã.</p><p><strong>OBJETIVOS DA LIÇÃO</strong><br>✔ Compreender o contexto no qual Neemias estava inserido.<br>✔ Saber como agir em tempos de adversidades.<br>✔ Reconhecer que o chamado de Deus não depende das circunstâncias.</p><p><strong>TEXTOS DE REFERÊNCIA</strong><br>Neemias 1</p><blockquote><p>1. As palavras de Neemias, filho de Hacalias...</p></blockquote><div class=\"reading-grid\"><div class=\"reading-day\"><strong>Segunda</strong> | Pv 17.17</div></div><p><strong>HINOS SUGERIDOS</strong><br>187, 370, 578</p><p><strong>MOTIVO DE ORAÇÃO</strong><br>Ore para que o Espírito Santo fortaleça os corações abatidos.</p><p><strong>ESBOÇO DA LIÇÃO</strong><br>1. A situação do povo e de Jerusalém<br>2. As reações de Neemias<br>3. Deus promete restaurar o seu povo<br>Conclusão</p><hr><p><strong>ANÁLISE GERAL:</strong> Esta lição nos convida a mergulhar na história de Neemias...</p>"
     },
     {
-      "src": "./icones/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "id": "adult_t1_l2",
+      "trimestre": 1,
+      "numero": 2,
+      "titulo": "Preparando-se para o agir de Deus",
+      "data": "11/01/2026",
+      "verdade_aplicada": "Precisamos nos preparar espiritualmente antes de agir.",
+      "conteudo": "<h1>Lição 2: Preparando-se para o agir de Deus</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "id": "adult_t1_l3",
+      "trimestre": 1,
+      "numero": 3,
+      "titulo": "Lidando com vozes contrárias",
+      "data": "18/01/2026",
+      "verdade_aplicada": "Os servos de Deus devem perseverar diante da oposição.",
+      "conteudo": "<h1>Lição 3: Lidando com vozes contrárias</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "id": "adult_t1_l4",
+      "trimestre": 1,
+      "numero": 4,
+      "titulo": "O poder das palavras",
+      "data": "25/01/2026",
+      "verdade_aplicada": "Nossas palavras têm poder de edificação.",
+      "conteudo": "<h1>Lição 4: O poder das palavras</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "id": "adult_t1_l5",
+      "trimestre": 1,
+      "numero": 5,
+      "titulo": "Fortalecido pela fé",
+      "data": "01/02/2026",
+      "verdade_aplicada": "A fé em Deus nos capacita a vencer o medo.",
+      "conteudo": "<h1>Lição 5: Fortalecido pela fé</h1><p>Conteúdo completo da lição...</p>"
+    },
+
+    {
+      "id": "adult_t2_l1",
+      "trimestre": 2,
+      "numero": 1,
+      "titulo": "A Soberania de Deus",
+      "data": "05/04/2026",
+      "verdade_aplicada": "Deus governa soberanamente sobre todas as coisas.",
+      "conteudo": "<h1>Lição 1: A Soberania de Deus</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "id": "adult_t2_l2",
+      "trimestre": 2,
+      "numero": 2,
+      "titulo": "A Majestade de Deus",
+      "data": "12/04/2026",
+      "verdade_aplicada": "A majestade de Deus revela Sua grandeza.",
+      "conteudo": "<h1>Lição 2: A Majestade de Deus</h1><p>Conteúdo da lição...</p>"
+    },
+
+    {
+      "id": "adult_t3_l1",
+      "trimestre": 3,
+      "numero": 1,
+      "titulo": "Vida de Oração",
+      "data": "05/07/2026",
+      "verdade_aplicada": "A oração é o canal de comunicação com Deus.",
+      "conteudo": "<h1>Lição 1: Vida de Oração</h1><p>Conteúdo da lição...</p>"
+    },
+
+    {
+      "id": "adult_t4_l1",
+      "trimestre": 4,
+      "numero": 1,
+      "titulo": "Andando em Novidade de Vida",
+      "data": "04/10/2026",
+      "verdade_aplicada": "O novo nascimento produz uma nova maneira de viver.",
+      "conteudo": "<h1>Lição 1: Andando em Novidade de Vida</h1><p>Conteúdo da lição...</p>"
+    }
+  ],
+
+  "youth": [
+    {
+      "id": "youth_t1_l1",
+      "trimestre": 1,
+      "numero": 1,
+      "titulo": "Reconhecendo o Senhorio de Deus",
+      "data": "04/01/2026",
+      "versiculo_dia": "Salmos 24.1",
+      "versiculo_dia_texto": "Do Senhor é a terra e a sua plenitude, o mundo e aqueles que nele habitam.",
+      "verdade_aplicada": "Deus é Senhor de tudo.",
+      "conteudo": "<h1>Lição 1: Reconhecendo o Senhorio de Deus</h1><p>Reconhecer o Senhorio de Deus é reconhecer Deus como soberano sobre tudo.</p>"
+    },
+    {
+      "id": "youth_t1_l2",
+      "trimestre": 1,
+      "numero": 2,
+      "titulo": "A Trindade: Pai, Filho e Espírito Santo",
+      "data": "11/01/2026",
+      "versiculo_dia": "Mateus 28.19",
+      "versiculo_dia_texto": "Ide, portanto, fazei discípulos...",
+      "verdade_aplicada": "Deus se revela como Pai, Filho e Espírito Santo.",
+      "conteudo": "<h1>Lição 2: A Trindade</h1><p>A doutrina da Trindade afirma que há um só Deus.</p>"
+    },
+
+    {
+      "id": "youth_t2_l1",
+      "trimestre": 2,
+      "numero": 1,
+      "titulo": "Reconhecendo o Senhorio de Deus",
+      "data": "05/04/2026",
+      "versiculo_dia": "1 Coríntios 10.31",
+      "versiculo_dia_texto": "Fazei tudo para a glória de Deus.",
+      "verdade_aplicada": "Viver sob a autoridade de Deus.",
+      "conteudo": "<h1>Lição 1: Senhorio</h1><p>Deus é soberano e digno de governar tudo.</p>"
     }
   ]
 }
