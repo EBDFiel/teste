@@ -19,16 +19,12 @@
     :root {
       --bg: #07111f;
       --bg-soft: #0c1828;
-      --bg-card: rgba(255,255,255,0.05);
-      --bg-card-2: rgba(255,255,255,0.07);
       --stroke: rgba(255,255,255,0.1);
       --text: #eef6fc;
       --muted: #a7bacb;
       --primary: #f7b24d;
       --primary-2: #ff9800;
-      --accent: #3ea6ff;
       --success: #22c55e;
-      --warning: #f59e0b;
       --danger: #ef4444;
       --dark: #102131;
       --shadow: 0 20px 60px rgba(0,0,0,0.32);
@@ -38,6 +34,7 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Inter', sans-serif;
       color: var(--text);
@@ -186,7 +183,6 @@
     }
 
     .hero-panel {
-      position: relative;
       overflow: hidden;
       border-radius: 38px;
       border: 1px solid var(--stroke);
@@ -357,7 +353,6 @@
       background: rgba(255,255,255,0.06);
       border: 1px solid var(--stroke);
       color: #fff;
-      transition: 0.25s ease;
     }
 
     .section {
@@ -446,7 +441,6 @@
       align-items: center;
       gap: 10px;
       font-weight: 700;
-      transition: 0.25s ease;
     }
 
     .quick-link.quiz {
@@ -534,7 +528,6 @@
       font-size: 0.95rem;
       font-weight: 800;
       cursor: pointer;
-      transition: 0.25s ease;
     }
 
     .tab-btn:hover,
@@ -559,15 +552,6 @@
       box-shadow: 0 24px 60px rgba(0,0,0,0.22);
       transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
-    }
-
-    .lesson-card::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 110px;
-      background: linear-gradient(90deg, rgba(247,178,77,0.14), transparent, rgba(62,166,255,0.10));
-      pointer-events: none;
     }
 
     .lesson-card:hover {
@@ -682,14 +666,13 @@
       justify-content: center;
       gap: 10px;
       font-weight: 800;
-      transition: 0.25s ease;
+      border: 0;
+      cursor: pointer;
     }
 
     .lesson-action.primary {
-      width: auto;
       min-width: 148px;
       padding: 0 18px;
-      border: 1px solid transparent;
       background: linear-gradient(135deg, var(--primary), var(--primary-2));
       color: var(--dark);
       box-shadow: 0 14px 28px rgba(255,152,0,0.18);
@@ -702,7 +685,6 @@
       background: rgba(255,255,255,0.05);
       color: #fff;
       border: 1px solid rgba(255,255,255,0.10);
-      box-shadow: none;
     }
 
     .lesson-action:disabled,
@@ -882,79 +864,41 @@
       backdrop-filter: blur(6px);
     }
 
-    .admin-panel,
+    .admin-panel {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(92vw, 920px);
+      max-height: 84vh;
+      overflow-y: auto;
+      background: #0d1726;
+      color: #fff;
+      border: 1px solid rgba(247,178,77,0.3);
+      border-radius: 26px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+      z-index: 3000;
+      padding: 22px;
+    }
+
     .edit-modal {
-  display: none;
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(92vw, 920px);
-  max-height: calc(100vh - 40px);
-  overflow-y: auto;
-  background: #0d1726;
-  color: #fff;
-  border: 1px solid rgba(247,178,77,0.3);
-  border-radius: 26px;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.45);
-  z-index: 4000;
-  padding: 22px;
-}
-
-.edit-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 14px;
-}
-
-.cancel-btn {
-  background: linear-gradient(135deg, #475569, #334155);
-  color: #fff;
-}
-
-.edit-preview-wrap {
-  margin-top: 18px;
-  padding: 16px;
-  border-radius: 18px;
-  background: #142233;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.edit-preview-wrap h4 {
-  margin-bottom: 12px;
-  color: #ffd79b;
-}
-
-.edit-preview {
-  background: #fff;
-  color: #334155;
-  border-radius: 16px;
-  padding: 20px;
-  line-height: 1.7;
-}
-
-.edit-preview h1,
-.edit-preview h2,
-.edit-preview h3 {
-  color: #102131;
-}
-
-@media (max-width: 768px) {
-  .edit-modal {
-    top: 10px;
-    width: calc(100vw - 16px);
-    max-height: calc(100vh - 20px);
-    border-radius: 20px;
-    padding: 16px;
-  }
-
-  .edit-actions {
-    flex-direction: column;
-  }
-}
-
-    .edit-modal { z-index: 4000; }
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(92vw, 920px);
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      background: #0d1726;
+      color: #fff;
+      border: 1px solid rgba(247,178,77,0.3);
+      border-radius: 26px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+      z-index: 4000;
+      padding: 22px;
+    }
 
     .admin-panel-header,
     .edit-modal-header {
@@ -1013,7 +957,6 @@
       border: 0;
       cursor: pointer;
       font-weight: 800;
-      transition: 0.25s ease;
     }
 
     .toggle-btn,
@@ -1089,6 +1032,45 @@
       border-radius: 999px;
       background: linear-gradient(135deg, var(--primary), var(--primary-2));
       color: var(--dark);
+    }
+
+    .cancel-btn {
+      background: linear-gradient(135deg, #475569, #334155);
+      color: #fff;
+    }
+
+    .edit-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .edit-preview-wrap {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 18px;
+      background: #142233;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .edit-preview-wrap h4 {
+      margin-bottom: 12px;
+      color: #ffd79b;
+    }
+
+    .edit-preview {
+      background: #fff;
+      color: #334155;
+      border-radius: 16px;
+      padding: 20px;
+      line-height: 1.7;
+    }
+
+    .edit-preview h1,
+    .edit-preview h2,
+    .edit-preview h3 {
+      color: #102131;
     }
 
     .fade-in { animation: fadeIn 0.45s ease; }
@@ -1234,7 +1216,6 @@
         transform: translateY(-140%);
         opacity: 0;
         visibility: hidden;
-        transition: 0.3s ease;
       }
 
       nav.active {
@@ -1263,19 +1244,25 @@
 
       .section-heading { align-items: flex-start; }
       .class-head { align-items: flex-start; }
-
-      .lesson-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
+      .lesson-row { flex-direction: column; align-items: stretch; }
       .lesson-row-actions { justify-content: flex-start; }
       .lessons-grid { grid-template-columns: 1fr; }
       .lesson-description { min-height: auto; }
       .lesson-footer { flex-wrap: wrap; }
       .lesson-action.primary { min-width: 0; }
-
       .bottom-app-nav { display: flex; }
+
+      .edit-modal {
+        top: 10px;
+        width: calc(100vw - 16px);
+        max-height: calc(100vh - 20px);
+        border-radius: 20px;
+        padding: 16px;
+      }
+
+      .edit-actions {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -1295,7 +1282,7 @@
     <div class="container topbar-inner">
       <div class="brand" id="logo">
         <div class="brand-mark">
-          <img src="https://i.imgur.com/vsNu5IC.png" alt="Logo EBD Fiel" class="logo-img">
+          <img src="https://i.imgur.com/vsNu5IC.png" alt="Logo EBD Fiel">
         </div>
         <div class="brand-copy">
           <h1>EBD Fiel</h1>
@@ -1481,6 +1468,7 @@
             <div class="about-text">
               <h3>Sobre a EBD Fiel</h3>
               <p>Projeto dedicado a fornecer material bíblico de qualidade para as Escolas Bíblicas Dominicais, com organização visual melhor, leitura confortável e acesso fácil aos estudos.</p>
+
               <div class="about-features">
                 <div class="feature">
                   <div class="feature-icon"><i class="fas fa-book-open"></i></div>
@@ -1489,6 +1477,7 @@
                     <p>Análise cuidadosa do texto bíblico com foco em fidelidade às Escrituras.</p>
                   </div>
                 </div>
+
                 <div class="feature">
                   <div class="feature-icon"><i class="fas fa-users"></i></div>
                   <div class="feature-text">
@@ -1496,6 +1485,7 @@
                     <p>Conteúdos organizados para adultos e jovens em uma navegação simples.</p>
                   </div>
                 </div>
+
                 <div class="feature">
                   <div class="feature-icon"><i class="fas fa-mobile-screen"></i></div>
                   <div class="feature-text">
@@ -1503,6 +1493,7 @@
                     <p>Mais clareza visual, mais espaço para leitura e menos poluição de interface.</p>
                   </div>
                 </div>
+
                 <div class="feature">
                   <div class="feature-icon"><i class="fas fa-sliders"></i></div>
                   <div class="feature-text">
@@ -1538,6 +1529,7 @@
             <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
           </div>
         </div>
+
         <div class="footer-column">
           <h3>Links</h3>
           <p><a href="#home">Início</a></p>
@@ -1546,11 +1538,12 @@
           <p><a href="#about">Sobre</a></p>
         </div>
       </div>
+
       <div class="copyright">&copy; 2026 EBD Fiel - Todos os direitos reservados.</div>
     </div>
   </footer>
 
-  <nav class="bottom-app-nav" id="bottomAppNav" aria-label="Navegação inferior">
+  <nav class="bottom-app-nav" aria-label="Navegação inferior">
     <a href="#home" class="bottom-nav-link active" data-target="home">
       <i class="fas fa-house"></i>
       <span>Início</span>
@@ -1574,12 +1567,15 @@
   </nav>
 
   <div id="adminOverlay" class="admin-panel-overlay"></div>
+
   <div id="adminPanel" class="admin-panel">
     <div class="admin-panel-header">
       <h3>Administração</h3>
       <button class="close-admin" id="closeAdminBtn">&times;</button>
     </div>
+
     <div id="adminList"></div>
+
     <div class="admin-buttons">
       <button id="adminUnlockAll">Liberar Todas</button>
       <button id="adminBlockAll">Bloquear Todas</button>
@@ -1588,28 +1584,31 @@
       <button id="adminClearStorage" class="danger">Limpar Todos os Dados</button>
       <button id="adminFixYouthTitles" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">Corrigir Títulos dos Jovens (2º Trim)</button>
     </div>
+
     <p class="admin-note">Se algum card continuar exibindo conteúdo antigo, use “Limpar Todos os Dados” e recarregue a página.</p>
+  </div>
+
   <div id="editModal" class="edit-modal">
-  <div class="edit-modal-header">
-    <h3 id="editModalTitle">Editar Lição</h3>
-    <button class="close-edit" id="closeEditBtn">&times;</button>
-  </div>
+    <div class="edit-modal-header">
+      <h3 id="editModalTitle">Editar Lição</h3>
+      <button class="close-edit" id="closeEditBtn">&times;</button>
+    </div>
 
-  <label for="editConteudo">Conteúdo da lição (HTML)</label>
-  <textarea id="editConteudo" placeholder="Cole aqui todo o conteúdo da lição, incluindo o título em <h1>...</h1>"></textarea>
+    <label for="editConteudo">Conteúdo da lição (HTML)</label>
+    <textarea id="editConteudo" placeholder="Cole aqui todo o conteúdo da lição, incluindo o título em <h1>...</h1>"></textarea>
 
-  <div class="edit-actions">
-    <button class="save-btn" id="previewEditBtn" type="button">Visualizar antes de salvar</button>
-    <button class="save-btn" id="formatHtmlBtn" type="button">Formatar HTML automático</button>
-    <button class="save-btn" id="saveEditBtn" type="button">Salvar Alterações</button>
-    <button class="save-btn cancel-btn" id="cancelEditBtn" type="button">Cancelar</button>
-  </div>
+    <div class="edit-actions">
+      <button class="save-btn" id="previewEditBtn" type="button">Visualizar antes de salvar</button>
+      <button class="save-btn" id="formatHtmlBtn" type="button">Formatar HTML automático</button>
+      <button class="save-btn" id="saveEditBtn" type="button">Salvar Alterações</button>
+      <button class="save-btn cancel-btn" id="cancelEditBtn" type="button">Cancelar</button>
+    </div>
 
-  <div id="editPreviewWrap" class="edit-preview-wrap" style="display:none;">
-    <h4>Pré-visualização</h4>
-    <div id="editPreview" class="edit-preview"></div>
+    <div id="editPreviewWrap" class="edit-preview-wrap" style="display:none;">
+      <h4>Pré-visualização</h4>
+      <div id="editPreview" class="edit-preview"></div>
+    </div>
   </div>
-</div>
 
   <script>
     let adultLessons = [];
@@ -1667,11 +1666,8 @@
       });
 
       if (showAlert) {
-        if (updatedCount > 0) {
-          alert(`${updatedCount} título(s) do 2º trimestre dos jovens foram corrigidos e salvos.`);
-        } else {
-          alert("Nenhum título precisou ser corrigido.");
-        }
+        if (updatedCount > 0) alert(`${updatedCount} título(s) corrigidos.`);
+        else alert("Nenhum título precisou ser corrigido.");
       }
 
       if (updatedCount > 0) {
@@ -1783,8 +1779,7 @@
       if (!html) return 'Clique para abrir o conteúdo completo da lição.';
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = html;
-      const unwantedTags = tempDiv.querySelectorAll('style, script, link');
-      unwantedTags.forEach(tag => tag.remove());
+      tempDiv.querySelectorAll('style, script, link').forEach(tag => tag.remove());
 
       const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
       for (let heading of headings) {
@@ -1818,7 +1813,6 @@
     async function carregarDados() {
       try {
         const response = await fetch(`lessons.json?v=${Date.now()}`, { cache: 'no-store' });
-
         if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
 
         const data = await response.json();
@@ -1834,7 +1828,6 @@
 
         criarAbas('adult', adultLessons);
         criarAbas('youth', youthLessons);
-
         construirAdminPanel();
       } catch (error) {
         console.error('Erro ao carregar lessons.json:', error);
@@ -1983,10 +1976,7 @@
           clickCount++;
 
           if (timeout) clearTimeout(timeout);
-
-          timeout = setTimeout(() => {
-            clickCount = 0;
-          }, 1000);
+          timeout = setTimeout(() => { clickCount = 0; }, 1000);
 
           if (clickCount >= 5) {
             clickCount = 0;
@@ -2012,16 +2002,14 @@
       const { adults, youths } = getFinalLessons();
 
       if (activeAdultTrim !== null) {
-        const filtered = adults.filter(l => String(l.trimestre) === String(activeAdultTrim));
-        renderizarLicoes('adult', filtered);
+        renderizarLicoes('adult', adults.filter(l => String(l.trimestre) === String(activeAdultTrim)));
       } else {
         const container = document.getElementById('adultLessonsContainer');
         if (container) container.innerHTML = '<div class="empty-message">📖 Selecione um trimestre para ver as lições.</div>';
       }
 
       if (activeYouthTrim !== null) {
-        const filtered = youths.filter(l => String(l.trimestre) === String(activeYouthTrim));
-        renderizarLicoes('youth', filtered);
+        renderizarLicoes('youth', youths.filter(l => String(l.trimestre) === String(activeYouthTrim)));
       } else {
         const container = document.getElementById('youthLessonsContainer');
         if (container) container.innerHTML = '<div class="empty-message">📖 Selecione um trimestre para ver as lições.</div>';
@@ -2082,24 +2070,85 @@
       });
     }
 
+    function formatarHtmlBasico(html) {
+      try {
+        let texto = html.trim();
+        texto = texto.replace(/>\s+</g, '>\n<');
+        texto = texto.replace(/<(h1|h2|h3|h4|h5|h6|p|ul|ol|li|blockquote|section|article|div)([^>]*)>/gi, '\n<$1$2>');
+        texto = texto.replace(/<\/(h1|h2|h3|h4|h5|h6|p|ul|ol|li|blockquote|section|article|div)>/gi, '</$1>\n');
+        texto = texto.replace(/\n{3,}/g, '\n\n');
+        return texto.trim();
+      } catch (e) {
+        console.error("Erro ao formatar HTML:", e);
+        return html;
+      }
+    }
+
+    function atualizarPreviewEdicao() {
+      const textarea = document.getElementById('editConteudo');
+      const previewWrap = document.getElementById('editPreviewWrap');
+      const preview = document.getElementById('editPreview');
+
+      const conteudo = textarea.value.trim();
+
+      if (!conteudo) {
+        preview.innerHTML = "<p><em>Nada para visualizar.</em></p>";
+      } else {
+        preview.innerHTML = conteudo;
+      }
+
+      previewWrap.style.display = 'block';
+    }
+
     function abrirEditModal(lesson) {
       const modal = document.getElementById('editModal');
       const title = document.getElementById('editModalTitle');
       const textarea = document.getElementById('editConteudo');
+      const previewWrap = document.getElementById('editPreviewWrap');
+      const preview = document.getElementById('editPreview');
       const key = `${lesson.tipo}:${lesson.id}`;
 
       title.textContent = `Editar: ${lesson.titulo}`;
+
       textarea.value =
         contentOverrides[key]?.conteudo !== undefined
           ? contentOverrides[key].conteudo
           : (lesson.conteudo || '');
 
+      previewWrap.style.display = 'none';
+      preview.innerHTML = '';
+
       modal.style.display = 'block';
+      modal.scrollTop = 0;
+      textarea.scrollTop = 0;
+
+      setTimeout(() => {
+        textarea.focus();
+      }, 100);
+
+      document.getElementById('previewEditBtn').onclick = () => {
+        atualizarPreviewEdicao();
+        modal.scrollTop = modal.scrollHeight;
+      };
+
+      document.getElementById('formatHtmlBtn').onclick = () => {
+        textarea.value = formatarHtmlBasico(textarea.value);
+        textarea.focus();
+      };
+
+      document.getElementById('cancelEditBtn').onclick = () => {
+        modal.style.display = 'none';
+      };
 
       document.getElementById('saveEditBtn').onclick = () => {
         const novoConteudo = textarea.value;
-        let novoTitulo = lesson.titulo;
 
+        if (!novoConteudo.trim()) {
+          alert("O conteúdo não pode ficar vazio.");
+          return;
+        }
+
+        let novoTitulo = lesson.titulo;
         const titleMatch = novoConteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
         if (titleMatch && titleMatch[1]) {
           novoTitulo = titleMatch[1].trim();
@@ -2141,174 +2190,6 @@
       a.download = 'lessons_export.json';
       a.click();
       URL.revokeObjectURL(url);
-    }
-
-    function gerarConteudoHtml(licao) {
-      const isYouth = licao.tipo === 'youth';
-      const primaryColor = isYouth ? '#3b82f6' : '#f7b24d';
-      const darkColor = '#102131';
-
-      return `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${licao.titulo} - EBD Fiel</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(180deg, #f6f8fb 0%, #eef2f7 100%);
-      color: #162331;
-      line-height: 1.7;
-      padding: 16px;
-    }
-    .container {
-      width: min(100%, 920px);
-      max-width: 920px;
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 28px;
-      box-shadow: 0 18px 50px rgba(15,23,42,0.12);
-      overflow: hidden;
-      border: 1px solid rgba(15,23,42,0.06);
-    }
-    .cover {
-      padding: 28px 28px 22px;
-      background: linear-gradient(135deg, ${primaryColor}, ${isYouth ? '#60a5fa' : '#ffd18b'});
-      color: ${darkColor};
-    }
-    .cover-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .cover img {
-      max-height: 68px;
-      width: auto;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.45);
-      font-size: 0.86rem;
-      font-weight: 800;
-    }
-    .content {
-      padding: 30px 28px;
-    }
-    h1 {
-      color: ${darkColor};
-      font-size: 2rem;
-      line-height: 1.1;
-      margin: 0 0 12px;
-      letter-spacing: -0.03em;
-    }
-    h2, h3 {
-      color: ${darkColor};
-      line-height: 1.2;
-      margin-top: 28px;
-      margin-bottom: 12px;
-    }
-    p, li {
-      color: #334155;
-      font-size: 1rem;
-    }
-    blockquote {
-      margin: 20px 0;
-      padding: 18px 20px;
-      border-left: 5px solid ${primaryColor};
-      background: #f8fafc;
-      border-radius: 16px;
-      color: #1e293b;
-    }
-    .social-footer {
-      margin-top: 28px;
-      padding-top: 22px;
-      border-top: 1px solid #e2e8f0;
-    }
-    .social-footer p {
-      margin-bottom: 10px;
-    }
-    .social-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 42px;
-      padding: 0 14px;
-      border-radius: 999px;
-      background: #f1f5f9;
-      color: #162331;
-      text-decoration: none;
-      font-weight: 700;
-    }
-    .social-links a.whatsapp-link {
-      background: #25d366;
-      color: white;
-    }
-    @media (max-width: 768px) {
-      body {
-        padding: 0;
-        background: #eef2f7;
-      }
-      .container {
-        width: 100%;
-        max-width: 100%;
-        min-height: 100vh;
-        border-radius: 0;
-        border: 0;
-        box-shadow: none;
-      }
-      .cover, .content {
-        padding: 20px 16px;
-      }
-      h1 {
-        font-size: 1.55rem;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="cover">
-      <div class="cover-top">
-        <img src="https://i.imgur.com/B1CSSvW.png" alt="EBD Fiel Logo">
-        <span class="pill"><i class="fas fa-book-open"></i> ${isYouth ? 'Classe Jovens' : 'Classe Adultos'}</span>
-      </div>
-    </div>
-    <div class="content">
-      ${licao.conteudo ? licao.conteudo : '<p><em>Conteúdo não disponível.</em></p>'}
-      <div class="social-footer">
-        <p><strong>Você está sendo edificado por este material? Então venha caminhar conosco também nas redes sociais.</strong></p>
-        <p>A sua participação é muito importante. Ao curtir, comentar e compartilhar, você contribui para que o ensino da Palavra de Deus alcance ainda mais pessoas.</p>
-        <div class="social-links">
-          <a href="https://www.instagram.com/ebdfiel/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-          <a href="https://www.youtube.com/@EBDFiel" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-          <a href="https://www.tiktok.com/@ebdfiel" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
-          <a href="https://www.facebook.com/EBDFiel/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
-          <a href="https://chat.whatsapp.com/Lh4cvZW1DPMJ5ctHYWyyMC" target="_blank" class="whatsapp-link"><i class="fab fa-whatsapp"></i> Grupo de WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
-</html>`;
     }
 
     function showLoadingOverlay() {
@@ -2364,7 +2245,6 @@
       clickCountLogo++;
 
       if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
-
       clickTimeoutLogo = setTimeout(() => {
         clickCountLogo = 0;
       }, 1000);
@@ -2476,14 +2356,15 @@
       document.getElementById('adminClearStorage').addEventListener('click', clearAllData);
 
       document.getElementById('adminFixYouthTitles').addEventListener('click', () => {
-        if (checkPassword()) {
-          applyYouthTitleUpdatesAndSave(true);
-        } else {
-          alert('Senha incorreta! Acesso negado.');
-        }
+        if (checkPassword()) applyYouthTitleUpdatesAndSave(true);
+        else alert('Senha incorreta! Acesso negado.');
       });
 
       document.getElementById('closeEditBtn').addEventListener('click', () => {
+        document.getElementById('editModal').style.display = 'none';
+      });
+
+      document.getElementById('cancelEditBtn').addEventListener('click', () => {
         document.getElementById('editModal').style.display = 'none';
       });
 
@@ -2548,10 +2429,7 @@
             if (!newWorker) return;
 
             newWorker.addEventListener("statechange", () => {
-              if (
-                newWorker.state === "installed" &&
-                navigator.serviceWorker.controller
-              ) {
+              if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
                 console.log("Nova versão disponível. Atualizando...");
                 window.location.reload();
               }
@@ -2584,9 +2462,7 @@
       if (!deferredInstallPrompt) return;
 
       deferredInstallPrompt.prompt();
-      const { outcome } = await deferredInstallPrompt.userChoice;
-
-      console.log("Resultado:", outcome);
+      await deferredInstallPrompt.userChoice;
 
       deferredInstallPrompt = null;
       hideInstallButtons();
@@ -2602,11 +2478,8 @@
     if (installBottomBtn) installBottomBtn.addEventListener("click", installApp);
 
     window.addEventListener("appinstalled", () => {
-      console.log("App instalado");
       hideInstallButtons();
     });
   </script>
 </body>
 </html>
-
-
