@@ -2314,8 +2314,7 @@
 
   let clickCountLogo = 0;
   let clickTimeoutLogo = null;
-
-  function handleLogoClick() {
+function handleLogoClick() {
     clickCountLogo++;
 
     if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
@@ -2324,7 +2323,7 @@
       clickCountLogo = 0;
     }, 2500);
 
-    if (clickCountLogo >= 3)
+    if (clickCountLogo >= 3) {
       clickCountLogo = 0;
       document.getElementById('adminOverlay').style.display = 'block';
       document.getElementById('adminPanel').style.display = 'block';
