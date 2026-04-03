@@ -2488,18 +2488,13 @@
     const installBtn = document.getElementById("installAppBtn");
     const installBottomBtn = document.getElementById("installBottomBtn");
 
-    if (logo) {
-      logo.addEventListener('click', handleLogoClick);
-    }
+   if (logo) {
+  logo.addEventListener('click', handleLogoClick);
 
-    if (mobileBtn && nav) {
-      mobileBtn.addEventListener('click', () => {
-        nav.classList.toggle('active');
-        mobileBtn.innerHTML = nav.classList.contains('active')
-          ? '<i class="fas fa-times"></i>'
-          : '<i class="fas fa-bars"></i>';
-      });
-    }
+  logo.querySelectorAll('*').forEach(el => {
+    el.addEventListener('click', handleLogoClick);
+  });
+}
 
     document.querySelectorAll('#mainNav a, .bottom-nav-link').forEach(link => {
       link.addEventListener('click', () => {
