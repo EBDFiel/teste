@@ -405,17 +405,27 @@
     }
 
     .class-icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-      color: var(--dark);
-      background: linear-gradient(135deg, var(--primary), #ffd38f);
-      box-shadow: 0 14px 30px rgba(247,178,77,0.18);
-      font-size: 1.25rem;
-    }
+  width: 62px;
+  height: 62px;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: #fff;
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.35), transparent 35%),
+    linear-gradient(135deg, #f7b24d 0%, #ff9800 55%, #f97316 100%);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 14px 30px rgba(247,178,77,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.22);
+  font-size: 1.35rem;
+  position: relative;
+}
+
+.class-icon i {
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.22));
+}
 
     .class-title h4 {
       font-size: 1.55rem;
@@ -567,20 +577,29 @@
     }
 
     .lesson-quarter {
-      display: inline-flex;
-      align-items: center;
-      min-height: 34px;
-      padding: 0 12px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #dbe7f3;
-      background: rgba(7,17,31,0.56);
-      border: 1px solid rgba(255,255,255,0.10);
-      margin-bottom: 14px;
-    }
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff7ea;
+  background: linear-gradient(135deg, rgba(247,178,77,0.22), rgba(255,152,0,0.14));
+  border: 1px solid rgba(247,178,77,0.28);
+  box-shadow:
+    0 8px 18px rgba(255,152,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  margin-bottom: 14px;
+}
+
+.lesson-quarter i {
+  font-size: 0.82rem;
+  color: #ffd89d;
+}
 
     .lesson-number {
       color: var(--primary);
@@ -1381,7 +1400,7 @@
         <section class="class-section">
           <div class="class-head">
             <div class="class-title">
-              <div class="class-icon"><i class="fas fa-users"></i></div>
+              <div class="class-icon"><i class="fas fa-book-bible"></i></div>
               <div>
                 <h4>Adultos</h4>
                 <p>Estudos consistentes, reverentes e bem estruturados.</p>
@@ -1427,7 +1446,7 @@
         <section class="class-section">
           <div class="class-head">
             <div class="class-title">
-              <div class="class-icon"><i class="fas fa-fire"></i></div>
+             <div class="class-icon"><i class="fas fa-people-group"></i></div>
               <div>
                 <h4>Conectar Jovens</h4>
                 <p>Conteúdo bíblico fiel com uma abordagem mais conectada ao público jovem.</p>
@@ -1901,7 +1920,7 @@
           <span class="status-badge ${badgeClass}">${badgeText}</span>
 
           <div class="lesson-top">
-            <span class="lesson-quarter">${licao.trimestre}º Trimestre</span>
+            <span class="lesson-quarter"><i class="fas fa-calendar-alt"></i> ${licao.trimestre}º Trimestre</span>
             <div class="lesson-number">Lição ${String(licao.numero).padStart(2, '0')}</div>
             <div class="lesson-title">
               ${licao.titulo}
