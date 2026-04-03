@@ -32,9 +32,6 @@
       --danger: #ef4444;
       --dark: #102131;
       --shadow: 0 20px 60px rgba(0,0,0,0.32);
-      --radius-xl: 32px;
-      --radius-lg: 24px;
-      --radius-md: 18px;
       --container: 1240px;
       --bottom-nav-height: 78px;
     }
@@ -62,25 +59,13 @@
     }
 
     @keyframes pageEnter {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes pageLeave {
-      from {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateY(8px);
-      }
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(8px); }
     }
 
     a { color: inherit; text-decoration: none; }
@@ -263,6 +248,7 @@
       font-weight: 800;
       transition: 0.25s ease;
       border: 1px solid transparent;
+      cursor: pointer;
     }
 
     .btn-primary {
@@ -479,7 +465,6 @@
     .panel-side,
     .about-section,
     .feature,
-    .verse-box,
     .empty-message {
       border: 1px solid var(--stroke);
       background: rgba(7,17,31,0.42);
@@ -525,15 +510,6 @@
       border: 0;
       border-radius: 14px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
-
-    .lesson-action {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-weight: 800;
-      transition: 0.25s ease;
     }
 
     .trim-hint {
@@ -603,7 +579,6 @@
     .lesson-top {
       position: relative;
       padding: 22px 22px 14px;
-      background: transparent;
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
@@ -666,7 +641,6 @@
     }
 
     .lesson-body {
-      position: relative;
       padding: 18px 22px 22px;
     }
 
@@ -703,6 +677,12 @@
     .lesson-action {
       min-height: 46px;
       border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 800;
+      transition: 0.25s ease;
     }
 
     .lesson-action.primary {
@@ -712,7 +692,6 @@
       border: 1px solid transparent;
       background: linear-gradient(135deg, var(--primary), var(--primary-2));
       color: var(--dark);
-      font-weight: 900;
       box-shadow: 0 14px 28px rgba(255,152,0,0.18);
     }
 
@@ -731,7 +710,6 @@
       opacity: 0.55;
       pointer-events: none;
       cursor: not-allowed;
-      transform: none;
       background: rgba(255,255,255,0.06);
       color: #d2dde7;
       border-color: rgba(255,255,255,0.08);
@@ -923,9 +901,7 @@
       padding: 22px;
     }
 
-    .edit-modal {
-      z-index: 4000;
-    }
+    .edit-modal { z-index: 4000; }
 
     .admin-panel-header,
     .edit-modal-header {
@@ -968,9 +944,7 @@
       color: #d9e6f1;
     }
 
-    .lesson-info strong {
-      color: #fff;
-    }
+    .lesson-info strong { color: #fff; }
 
     .lesson-row-actions {
       display: flex;
@@ -998,13 +972,8 @@
       background: #24364a;
     }
 
-    .toggle-btn.active {
-      background: var(--success);
-    }
-
-    .toggle-btn.blocked {
-      background: #b91c1c;
-    }
+    .toggle-btn.active { background: var(--success); }
+    .toggle-btn.blocked { background: #b91c1c; }
 
     .edit-btn {
       background: linear-gradient(135deg, var(--primary), var(--primary-2));
@@ -1069,9 +1038,7 @@
       color: var(--dark);
     }
 
-    .fade-in {
-      animation: fadeIn 0.45s ease;
-    }
+    .fade-in { animation: fadeIn 0.45s ease; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(12px); }
@@ -1110,11 +1077,10 @@
       font-size: 0.78rem;
       font-weight: 700;
       transition: 0.2s ease;
+      text-decoration: none;
     }
 
-    .bottom-nav-link i {
-      font-size: 1.05rem;
-    }
+    .bottom-nav-link i { font-size: 1.05rem; }
 
     .bottom-nav-link.active,
     .bottom-nav-link:hover {
@@ -1183,13 +1149,8 @@
         grid-template-columns: 1fr;
       }
 
-      .hero-panel {
-        padding: 34px;
-      }
-
-      .video-universal-container {
-        max-width: 320px;
-      }
+      .hero-panel { padding: 34px; }
+      .video-universal-container { max-width: 320px; }
     }
 
     @media (max-width: 768px) {
@@ -1229,17 +1190,9 @@
         visibility: visible;
       }
 
-      nav a {
-        text-align: center;
-      }
-
-      .brand-copy p {
-        white-space: normal;
-      }
-
-      .hero {
-        padding-top: 28px;
-      }
+      nav a { text-align: center; }
+      .brand-copy p { white-space: normal; }
+      .hero { padding-top: 28px; }
 
       .hero-panel,
       .class-section,
@@ -1255,42 +1208,21 @@
         grid-template-columns: 1fr;
       }
 
-      .section-heading {
-        align-items: flex-start;
-      }
-
-      .class-head {
-        align-items: flex-start;
-      }
+      .section-heading { align-items: flex-start; }
+      .class-head { align-items: flex-start; }
 
       .lesson-row {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .lesson-row-actions {
-        justify-content: flex-start;
-      }
+      .lesson-row-actions { justify-content: flex-start; }
+      .lessons-grid { grid-template-columns: 1fr; }
+      .lesson-description { min-height: auto; }
+      .lesson-footer { flex-wrap: wrap; }
+      .lesson-action.primary { min-width: 0; }
 
-      .lessons-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .lesson-description {
-        min-height: auto;
-      }
-
-      .lesson-footer {
-        flex-wrap: wrap;
-      }
-
-      .lesson-action.primary {
-        min-width: 0;
-      }
-
-      .bottom-app-nav {
-        display: flex;
-      }
+      .bottom-app-nav { display: flex; }
     }
   </style>
 </head>
@@ -1342,10 +1274,15 @@
             <p>
               A Escola Bíblica Dominical é um tempo precioso de crescimento espiritual, comunhão e ensino fiel das Escrituras. Aqui você encontra lições organizadas por trimestre, com conteúdo bíblico, aplicações práticas e recursos para edificação da igreja.
             </p>
+
             <div class="hero-actions">
               <a href="#adult-class" class="btn btn-primary"><i class="fas fa-book-open"></i> Classe Adultos</a>
               <a href="#youth-class" class="btn btn-secondary"><i class="fas fa-users"></i> Classe Jovens</a>
+              <button id="installAppBtn" class="btn btn-secondary" style="display:none;">
+                <i class="fas fa-download"></i> Instalar app
+              </button>
             </div>
+
             <div class="hero-stats">
               <div class="hero-stat">
                 <strong>Ensino</strong>
@@ -1361,6 +1298,7 @@
               </div>
             </div>
           </div>
+
           <div class="hero-side">
             <div class="hero-card">
               <strong><i class="fas fa-book"></i> Estudo sistemático</strong>
@@ -1399,6 +1337,7 @@
             <p>Lições para adultos com estudos bíblicos profundos, aplicações práticas e acesso rápido ao conteúdo do trimestre.</p>
           </div>
         </div>
+
         <section class="class-section">
           <div class="class-head">
             <div class="class-title">
@@ -1408,6 +1347,7 @@
                 <p>Estudos consistentes, reverentes e bem estruturados.</p>
               </div>
             </div>
+
             <div class="quick-links">
               <a href="https://ebdfiel.github.io/Quizzes-ClaseAdultos-2026/" target="_blank" class="quick-link quiz"><i class="fas fa-brain"></i> Quiz</a>
             </div>
@@ -1443,6 +1383,7 @@
             <p>Lições com linguagem atual, apresentação dinâmica e aplicações práticas para a juventude cristã.</p>
           </div>
         </div>
+
         <section class="class-section">
           <div class="class-head">
             <div class="class-title">
@@ -1452,6 +1393,7 @@
                 <p>Conteúdo bíblico fiel com uma abordagem mais conectada ao público jovem.</p>
               </div>
             </div>
+
             <div class="quick-links">
               <a href="https://ebdfiel.github.io/Quizzes-ConectarJovens-/" target="_blank" class="quick-link quiz"><i class="fas fa-users"></i> Quiz</a>
             </div>
@@ -1517,6 +1459,7 @@
                 </div>
               </div>
             </div>
+
             <div class="about-image">
               <div class="about-image-content">
                 <i class="fas fa-bible"></i>
@@ -1571,6 +1514,10 @@
       <i class="fas fa-circle-info"></i>
       <span>Sobre</span>
     </a>
+    <button id="installBottomBtn" class="bottom-nav-link" style="display:none; border:0; background:none;">
+      <i class="fas fa-download"></i>
+      <span>Instalar</span>
+    </button>
   </nav>
 
   <div id="adminOverlay" class="admin-panel-overlay"></div>
@@ -1660,7 +1607,7 @@
         if (updatedCount > 0) {
           alert(`${updatedCount} título(s) do 2º trimestre dos jovens foram corrigidos e salvos.`);
         } else {
-          alert("Nenhum título precisou ser corrigido. Verifique se as lições do 2º trimestre já estão com os títulos corretos.");
+          alert("Nenhum título precisou ser corrigido.");
         }
       }
 
@@ -1807,13 +1754,9 @@
 
     async function carregarDados() {
       try {
-        const response = await fetch(`lessons.json?v=${Date.now()}`, {
-          cache: 'no-store'
-        });
+        const response = await fetch(`lessons.json?v=${Date.now()}`, { cache: 'no-store' });
 
-        if (!response.ok) {
-          throw new Error(`Erro HTTP: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
 
         const data = await response.json();
 
@@ -1832,8 +1775,8 @@
         construirAdminPanel();
       } catch (error) {
         console.error('Erro ao carregar lessons.json:', error);
-        document.getElementById('adultLessonsContainer').innerHTML = '<div class="empty-message">Erro ao carregar as lições de adultos. Verifique o arquivo lessons.json.</div>';
-        document.getElementById('youthLessonsContainer').innerHTML = '<div class="empty-message">Erro ao carregar as lições de jovens. Verifique o arquivo lessons.json.</div>';
+        document.getElementById('adultLessonsContainer').innerHTML = '<div class="empty-message">Erro ao carregar as lições de adultos.</div>';
+        document.getElementById('youthLessonsContainer').innerHTML = '<div class="empty-message">Erro ao carregar as lições de jovens.</div>';
       }
     }
 
@@ -1861,11 +1804,8 @@
           document.querySelectorAll(`#${tipo}Tabs .tab-btn`).forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
 
-          if (tipo === 'adult') {
-            activeAdultTrim = trim;
-          } else {
-            activeYouthTrim = trim;
-          }
+          if (tipo === 'adult') activeAdultTrim = trim;
+          else activeYouthTrim = trim;
 
           const { adults, youths } = getFinalLessons();
           const source = tipo === 'adult' ? adults : youths;
@@ -1971,21 +1911,31 @@
 
     function attachCardAdminClicks(tipo) {
       document.querySelectorAll(`#${tipo}LessonsContainer .lesson-card`).forEach(card => {
-        let clickCount = 0, timeout;
+        let clickCount = 0;
+        let timeout;
 
         card.addEventListener('click', (e) => {
           if (e.target.closest('.view-btn') || e.target.closest('.edit-title-icon')) return;
 
           clickCount++;
+
           if (timeout) clearTimeout(timeout);
-          timeout = setTimeout(() => { clickCount = 0; }, 1000);
+
+          timeout = setTimeout(() => {
+            clickCount = 0;
+          }, 1000);
 
           if (clickCount >= 5) {
             clickCount = 0;
+
             if (checkPassword()) {
               const lessonId = card.getAttribute('data-lesson-id');
               const lessonTipo = card.getAttribute('data-lesson-tipo');
-              const lesson = allLessons.find(item => String(item.id) === String(lessonId) && item.tipo === lessonTipo);
+
+              const lesson = allLessons.find(item =>
+                String(item.id) === String(lessonId) && item.tipo === lessonTipo
+              );
+
               if (lesson) abrirEditModal(lesson);
             } else {
               alert('Senha incorreta! Acesso negado.');
@@ -2025,7 +1975,9 @@
 
       allLessons.forEach(lesson => {
         const key = `${lesson.tipo}:${lesson.id}`;
-        const available = Object.prototype.hasOwnProperty.call(adminOverrides, key) ? adminOverrides[key] : isLessonAvailable(lesson);
+        const available = Object.prototype.hasOwnProperty.call(adminOverrides, key)
+          ? adminOverrides[key]
+          : isLessonAvailable(lesson);
 
         const row = document.createElement('div');
         row.className = 'lesson-row';
@@ -2045,7 +1997,9 @@
         btn.addEventListener('click', () => {
           const key = btn.dataset.key;
           const lesson = allLessons.find(item => `${item.tipo}:${item.id}` === key);
-          const current = Object.prototype.hasOwnProperty.call(adminOverrides, key) ? adminOverrides[key] : isLessonAvailable(lesson);
+          const current = Object.prototype.hasOwnProperty.call(adminOverrides, key)
+            ? adminOverrides[key]
+            : isLessonAvailable(lesson);
           adminOverrides[key] = !current;
           saveOverrides();
           renderAll();
@@ -2072,17 +2026,27 @@
       const key = `${lesson.tipo}:${lesson.id}`;
 
       title.textContent = `Editar: ${lesson.titulo}`;
-      textarea.value = contentOverrides[key]?.conteudo !== undefined ? contentOverrides[key].conteudo : (lesson.conteudo || '');
+      textarea.value =
+        contentOverrides[key]?.conteudo !== undefined
+          ? contentOverrides[key].conteudo
+          : (lesson.conteudo || '');
 
       modal.style.display = 'block';
 
       document.getElementById('saveEditBtn').onclick = () => {
         const novoConteudo = textarea.value;
         let novoTitulo = lesson.titulo;
-        const titleMatch = novoConteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
-        if (titleMatch && titleMatch[1]) novoTitulo = titleMatch[1].trim();
 
-        contentOverrides[key] = { conteudo: novoConteudo, titulo: novoTitulo };
+        const titleMatch = novoConteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
+        if (titleMatch && titleMatch[1]) {
+          novoTitulo = titleMatch[1].trim();
+        }
+
+        contentOverrides[key] = {
+          conteudo: novoConteudo,
+          titulo: novoTitulo
+        };
+
         saveOverrides();
         modal.style.display = 'none';
         renderAll();
@@ -2294,30 +2258,29 @@
       if (overlay) overlay.classList.remove('show');
     }
 
-  function abrirNovaGuia(licao) {
-  if (!licao) {
-    alert("Erro: lição inválida");
-    return;
-  }
+    function abrirNovaGuia(licao) {
+      if (!licao) {
+        alert("Erro: lição inválida");
+        return;
+      }
 
-  try {
-    sessionStorage.setItem("licaoAtual", JSON.stringify(licao));
+      try {
+        sessionStorage.setItem("licaoAtual", JSON.stringify(licao));
+        const destino = licao.tipo === "youth" ? "#youth-class" : "#adult-class";
+        sessionStorage.setItem("voltarPara", destino);
+      } catch (e) {
+        console.error("Erro ao salvar a lição:", e);
+        alert("Não foi possível abrir a lição agora.");
+        return;
+      }
 
-    const destino = licao.tipo === "youth" ? "#youth-class" : "#adult-class";
-    sessionStorage.setItem("voltarPara", destino);
-  } catch (e) {
-    console.error("Erro ao salvar a lição:", e);
-    alert("Não foi possível abrir a lição agora.");
-    return;
-  }
+      showLoadingOverlay();
+      document.body.classList.add("page-leaving");
 
-  showLoadingOverlay();
-  document.body.classList.add("page-leaving");
-
-  setTimeout(() => {
-    window.location.href = "./licao.html";
-  }, 250);
-}
+      setTimeout(() => {
+        window.location.href = "./licao.html";
+      }, 250);
+    }
 
     function fecharAdminPanel() {
       document.getElementById('adminOverlay').style.display = 'none';
@@ -2336,8 +2299,12 @@
 
     function handleLogoClick() {
       clickCountLogo++;
+
       if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
-      clickTimeoutLogo = setTimeout(() => { clickCountLogo = 0; }, 1000);
+
+      clickTimeoutLogo = setTimeout(() => {
+        clickCountLogo = 0;
+      }, 1000);
 
       if (clickCountLogo >= 5) {
         clickCountLogo = 0;
@@ -2362,12 +2329,10 @@
         const el = document.getElementById(section.id);
         if (!el) return;
         const rect = el.getBoundingClientRect();
-        if (rect.top <= trigger && rect.bottom >= trigger) {
-          current = section.link;
-        }
+        if (rect.top <= trigger && rect.bottom >= trigger) current = section.link;
       });
 
-      document.querySelectorAll('.bottom-nav-link').forEach(link => {
+      document.querySelectorAll('.bottom-nav-link[data-target]').forEach(link => {
         link.classList.toggle('active', link.dataset.target === current);
       });
     }
@@ -2416,7 +2381,9 @@
 
       mobileBtn.addEventListener('click', () => {
         nav.classList.toggle('active');
-        mobileBtn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        mobileBtn.innerHTML = nav.classList.contains('active')
+          ? '<i class="fas fa-times"></i>'
+          : '<i class="fas fa-bars"></i>';
       });
 
       document.querySelectorAll('#mainNav a, .bottom-nav-link').forEach(link => {
@@ -2533,5 +2500,50 @@
       });
     }
   </script>
+
+  <script>
+    let deferredInstallPrompt = null;
+
+    const installBtn = document.getElementById("installAppBtn");
+    const installBottomBtn = document.getElementById("installBottomBtn");
+
+    function showInstallButtons() {
+      if (installBtn) installBtn.style.display = "inline-flex";
+      if (installBottomBtn) installBottomBtn.style.display = "inline-flex";
+    }
+
+    function hideInstallButtons() {
+      if (installBtn) installBtn.style.display = "none";
+      if (installBottomBtn) installBottomBtn.style.display = "none";
+    }
+
+    async function installApp() {
+      if (!deferredInstallPrompt) return;
+
+      deferredInstallPrompt.prompt();
+      const { outcome } = await deferredInstallPrompt.userChoice;
+
+      console.log("Resultado:", outcome);
+
+      deferredInstallPrompt = null;
+      hideInstallButtons();
+    }
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      showInstallButtons();
+    });
+
+    if (installBtn) installBtn.addEventListener("click", installApp);
+    if (installBottomBtn) installBottomBtn.addEventListener("click", installApp);
+
+    window.addEventListener("appinstalled", () => {
+      console.log("App instalado");
+      hideInstallButtons();
+    });
+  </script>
 </body>
 </html>
+
+
