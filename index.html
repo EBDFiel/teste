@@ -1668,839 +1668,907 @@
     </div>
   </div>
 
-  <script>
-    let adultLessons = [];
-    let youthLessons = [];
-    let allLessons = [];
-    let adminOverrides = {};
-    let contentOverrides = {};
+ <script>
+  let adultLessons = [];
+  let youthLessons = [];
+  let allLessons = [];
+  let adminOverrides = {};
+  let contentOverrides = {};
 
-    let activeAdultTrim = null;
-    let activeYouthTrim = null;
+  let activeAdultTrim = null;
+  let activeYouthTrim = null;
 
-    const EDIT_PASSWORD = "4141";
+  const EDIT_PASSWORD = "4141";
 
-    const YOUTH_TRIMESTRE_2_TITLES = {
-      1: "Reconhecendo o Senhorio de Deus",
-      2: "Compreendendo a Mordomia Cristã",
-      3: "A Mordomia da natureza",
-      4: "O Templo do Espírito Santo: vivendo com saúde e em santidade",
-      5: "Mordomia dos sentimentos: fortalecendo o coração e a alma",
-      6: "A Mordomia da mente: lidando com os pensamentos",
-      7: "Cuidando do espírito que nos conecta",
-      8: "A Mordomia do tempo: administrando os dias com sabedoria",
-      9: "Glorificando a Deus com as finanças",
-      10: "Servindo na Igreja do Senhor",
-      11: "A Mordomia da família",
-      12: "A Mordomia dos Dons e talentos",
-      13: "Mordomia cristã: obediência e responsabilidade"
-    };
+  const YOUTH_TRIMESTRE_2_TITLES = {
+    1: "Reconhecendo o Senhorio de Deus",
+    2: "Compreendendo a Mordomia Cristã",
+    3: "A Mordomia da natureza",
+    4: "O Templo do Espírito Santo: vivendo com saúde e em santidade",
+    5: "Mordomia dos sentimentos: fortalecendo o coração e a alma",
+    6: "A Mordomia da mente: lidando com os pensamentos",
+    7: "Cuidando do espírito que nos conecta",
+    8: "A Mordomia do tempo: administrando os dias com sabedoria",
+    9: "Glorificando a Deus com as finanças",
+    10: "Servindo na Igreja do Senhor",
+    11: "A Mordomia da família",
+    12: "A Mordomia dos Dons e talentos",
+    13: "Mordomia cristã: obediência e responsabilidade"
+  };
 
-    function applyYouthTitleUpdatesAndSave(showAlert = true) {
-      if (!youthLessons.length) {
-        if (showAlert) alert("Nenhuma lição de jovens carregada ainda.");
-        return false;
-      }
-
-      let updatedCount = 0;
-
-      youthLessons.forEach(lesson => {
-        if (String(lesson.trimestre) === "2" && YOUTH_TRIMESTRE_2_TITLES[lesson.numero]) {
-          const key = `${lesson.tipo}:${lesson.id}`;
-          const newTitle = YOUTH_TRIMESTRE_2_TITLES[lesson.numero];
-
-          if (lesson.titulo !== newTitle) {
-            lesson.titulo = newTitle;
-            updatedCount++;
-
-            if (!contentOverrides[key]) contentOverrides[key] = {};
-            contentOverrides[key].titulo = newTitle;
-
-            if (!contentOverrides[key].conteudo) {
-              contentOverrides[key].conteudo = lesson.conteudo;
-            }
-          }
-        }
-      });
-
-      if (showAlert) {
-        if (updatedCount > 0) alert(`${updatedCount} título(s) corrigidos.`);
-        else alert("Nenhum título precisou ser corrigido.");
-      }
-
-      if (updatedCount > 0) {
-        saveOverrides();
-        renderAll();
-      }
-
-      return true;
+  function applyYouthTitleUpdatesAndSave(showAlert = true) {
+    if (!youthLessons.length) {
+      if (showAlert) alert("Nenhuma lição de jovens carregada ainda.");
+      return false;
     }
 
-    function updateLessonTitle(lesson, newTitle) {
-      if (!newTitle || newTitle.trim() === "") return false;
-      const key = `${lesson.tipo}:${lesson.id}`;
+    let updatedCount = 0;
 
-      if (lesson.tipo === 'adult') {
-        const idx = adultLessons.findIndex(l => l.id === lesson.id);
-        if (idx !== -1) adultLessons[idx].titulo = newTitle;
-      } else if (lesson.tipo === 'youth') {
-        const idx = youthLessons.findIndex(l => l.id === lesson.id);
-        if (idx !== -1) youthLessons[idx].titulo = newTitle;
-      }
-
-      if (!contentOverrides[key]) contentOverrides[key] = {};
-      contentOverrides[key].titulo = newTitle;
-
-      if (!contentOverrides[key].conteudo) {
-        contentOverrides[key].conteudo = lesson.conteudo;
-      }
-
-      saveOverrides();
-      renderAll();
-      return true;
-    }
-
-    function checkPassword() {
-      const pass = prompt("Digite a senha para editar a lição:");
-      return pass === EDIT_PASSWORD;
-    }
-
-    function loadOverrides() {
-      const storedAdmin = localStorage.getItem('ebd_admin_overrides');
-      const storedContent = localStorage.getItem('ebd_content_overrides');
-
-      if (storedAdmin) {
-        try { adminOverrides = JSON.parse(storedAdmin); } catch(e) { adminOverrides = {}; }
-      }
-
-      if (storedContent) {
-        try { contentOverrides = JSON.parse(storedContent); } catch(e) { contentOverrides = {}; }
-      }
-    }
-
-    function saveOverrides() {
-      localStorage.setItem('ebd_admin_overrides', JSON.stringify(adminOverrides));
-      localStorage.setItem('ebd_content_overrides', JSON.stringify(contentOverrides));
-    }
-
-    function applyContentOverrides(lesson) {
-      const key = `${lesson.tipo}:${lesson.id}`;
-      if (!contentOverrides[key]) return lesson;
-
-      const override = contentOverrides[key];
-
-      if (override.conteudo !== undefined) {
-        const updatedLesson = { ...lesson, conteudo: override.conteudo };
-        const titleMatch = updatedLesson.conteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
-        updatedLesson.titulo = titleMatch && titleMatch[1]
-          ? titleMatch[1].trim()
-          : (override.titulo || lesson.titulo);
-        return updatedLesson;
-      } else if (override.titulo !== undefined) {
-        return { ...lesson, titulo: override.titulo };
-      }
-
-      return lesson;
-    }
-
-    function getFinalLessons() {
-      return {
-        adults: adultLessons.map(applyContentOverrides),
-        youths: youthLessons.map(applyContentOverrides)
-      };
-    }
-
-    function parseDate(dateStr) {
-      if (!dateStr || !dateStr.includes('/')) return new Date();
-      const [day, month, year] = dateStr.split('/');
-      return new Date(Number(year), Number(month) - 1, Number(day));
-    }
-
-    function getReleaseDate(dateStr) {
-      const lessonDate = parseDate(dateStr);
-      const releaseDate = new Date(lessonDate);
-      releaseDate.setDate(lessonDate.getDate() - 6);
-      return releaseDate;
-    }
-
-    function isLessonAvailable(lesson) {
-      const key = `${lesson.tipo}:${lesson.id}`;
-      if (Object.prototype.hasOwnProperty.call(adminOverrides, key)) {
-        return adminOverrides[key];
-      }
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return today >= getReleaseDate(lesson.data);
-    }
-
-    function getIntroSummary(html) {
-      if (!html) return 'Clique para abrir o conteúdo completo da lição.';
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-      tempDiv.querySelectorAll('style, script, link').forEach(tag => tag.remove());
-
-      const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
-      for (let heading of headings) {
-        const headingText = heading.innerText.trim().toLowerCase();
-        if (headingText.includes('introdução') || headingText.includes('introducao')) {
-          let introText = '';
-          let nextElement = heading.nextElementSibling;
-          while (nextElement && !/^H[1-6]$/i.test(nextElement.tagName)) {
-            introText += nextElement.innerText + ' ';
-            nextElement = nextElement.nextElementSibling;
-          }
-          if (introText.trim()) {
-            introText = introText.replace(/\s+/g, ' ').trim();
-            if (introText.length > 200) introText = introText.substring(0, 200) + '...';
-            return introText;
-          }
-          break;
-        }
-      }
-
-      const firstParagraph = tempDiv.querySelector('p');
-      if (firstParagraph && firstParagraph.innerText.trim()) {
-        let text = firstParagraph.innerText.trim();
-        if (text.length > 200) text = text.substring(0, 200) + '...';
-        return text;
-      }
-
-      return 'Clique para abrir o conteúdo completo da lição.';
-    }
-
-    async function carregarDados() {
-      try {
-        const response = await fetch(`lessons.json?v=${Date.now()}`, { cache: 'no-store' });
-        if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
-
-        const data = await response.json();
-
-        adultLessons = data.adult || [];
-        youthLessons = data.youth || [];
-
-        let nextId = 1;
-        adultLessons.forEach(lesson => { lesson.id = nextId++; lesson.tipo = 'adult'; });
-        youthLessons.forEach(lesson => { lesson.id = nextId++; lesson.tipo = 'youth'; });
-
-        allLessons = [...adultLessons, ...youthLessons];
-
-        criarAbas('adult', adultLessons);
-        criarAbas('youth', youthLessons);
-        construirAdminPanel();
-      } catch (error) {
-        console.error('Erro ao carregar lessons.json:', error);
-        document.getElementById('adultLessonsContainer').innerHTML = '<div class="empty-message">Erro ao carregar as lições de adultos.</div>';
-        document.getElementById('youthLessonsContainer').innerHTML = '<div class="empty-message">Erro ao carregar as lições de jovens.</div>';
-      }
-    }
-
-    function criarAbas(tipo, lista) {
-      const trimestres = [...new Set(lista.map(l => l.trimestre))].sort((a, b) => a - b);
-      const tabsContainer = document.getElementById(`${tipo}Tabs`);
-      const lessonsContainer = document.getElementById(`${tipo}LessonsContainer`);
-
-      if (!tabsContainer || !lessonsContainer) return;
-
-      tabsContainer.innerHTML = '';
-
-      if (trimestres.length === 0) {
-        lessonsContainer.innerHTML = '<div class="empty-message">Nenhuma lição cadastrada ainda.</div>';
-        return;
-      }
-
-      trimestres.forEach(trim => {
-        const btn = document.createElement('button');
-        btn.className = 'tab-btn';
-        btn.textContent = `${trim}º Trimestre`;
-        btn.dataset.trim = trim;
-
-        btn.addEventListener('click', () => {
-          document.querySelectorAll(`#${tipo}Tabs .tab-btn`).forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-
-          if (tipo === 'adult') activeAdultTrim = trim;
-          else activeYouthTrim = trim;
-
-          const { adults, youths } = getFinalLessons();
-          const source = tipo === 'adult' ? adults : youths;
-          renderizarLicoes(tipo, source.filter(l => String(l.trimestre) === String(trim)));
-        });
-
-        tabsContainer.appendChild(btn);
-      });
-
-      lessonsContainer.innerHTML = '<div class="empty-message">📖 Selecione um trimestre para ver as lições.</div>';
-    }
-
-    function renderizarLicoes(tipo, lista) {
-      const container = document.getElementById(`${tipo}LessonsContainer`);
-      if (!container) return;
-
-      if (!lista.length) {
-        container.innerHTML = '<div class="empty-message">Nenhuma lição disponível para este trimestre.</div>';
-        return;
-      }
-
-      container.innerHTML = '';
-
-      lista.forEach(licao => {
-        const available = isLessonAvailable(licao);
-        const card = document.createElement('article');
-        card.className = 'lesson-card fade-in';
-        card.setAttribute('data-lesson-id', licao.id);
-        card.setAttribute('data-lesson-tipo', licao.tipo);
-
-        const badgeClass = available ? 'available' : 'preparation';
-        const badgeText = available ? 'Disponível' : 'Em breve';
-        const introSummary = getIntroSummary(licao.conteudo);
-        const safeLesson = encodeURIComponent(JSON.stringify(licao));
-
-        card.innerHTML = `
-          <span class="status-badge ${badgeClass}">${badgeText}</span>
-
-          <div class="lesson-top">
-            <span class="lesson-quarter"><i class="fas fa-calendar-alt"></i> ${licao.trimestre}º Trimestre</span>
-            <div class="lesson-number">Lição ${String(licao.numero).padStart(2, '0')}</div>
-            <div class="lesson-title">
-              ${licao.titulo}
-              <i class="fas fa-pencil-alt edit-title-icon" data-lesson-id="${licao.id}" data-lesson-tipo="${licao.tipo}" title="Editar título"></i>
-            </div>
-          </div>
-
-          <div class="lesson-body">
-            <div class="lesson-date">
-              <i class="far fa-calendar-alt"></i> ${licao.data || ''}
-            </div>
-
-            <div class="lesson-description">${introSummary}</div>
-
-            <div class="lesson-footer">
-              ${
-                available
-                  ? `
-                    <button class="lesson-action primary view-btn" data-licao="${safeLesson}">
-                      <i class="fas fa-book-open"></i> Ver lição
-                    </button>
-                    <button class="lesson-action secondary-ghost view-btn" data-licao="${safeLesson}" aria-label="Abrir lição">
-                      <i class="fas fa-arrow-right"></i>
-                    </button>
-                  `
-                  : `
-                    <button class="lesson-action primary" disabled>
-                      <i class="fas fa-clock"></i> Em breve
-                    </button>
-                    <button class="lesson-action secondary-ghost disabled" disabled aria-label="Indisponível">
-                      <i class="fas fa-lock"></i>
-                    </button>
-                  `
-              }
-            </div>
-          </div>
-        `;
-
-        container.appendChild(card);
-      });
-
-      document.querySelectorAll(`#${tipo}LessonsContainer .edit-title-icon`).forEach(icon => {
-        icon.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (!checkPassword()) {
-            alert('Senha incorreta! Acesso negado.');
-            return;
-          }
-          const lessonId = parseInt(icon.dataset.lessonId);
-          const lessonTipo = icon.dataset.lessonTipo;
-          const lesson = allLessons.find(l => l.id === lessonId && l.tipo === lessonTipo);
-          if (lesson) {
-            const newTitle = prompt("Digite o novo título da lição:", lesson.titulo);
-            if (newTitle && newTitle.trim() !== "") {
-              updateLessonTitle(lesson, newTitle.trim());
-            }
-          }
-        });
-      });
-
-      attachCardAdminClicks(tipo);
-    }
-
-    function attachCardAdminClicks(tipo) {
-      document.querySelectorAll(`#${tipo}LessonsContainer .lesson-card`).forEach(card => {
-        let clickCount = 0;
-        let timeout;
-
-        card.addEventListener('click', (e) => {
-          if (e.target.closest('.view-btn') || e.target.closest('.edit-title-icon')) return;
-
-          clickCount++;
-
-          if (timeout) clearTimeout(timeout);
-          timeout = setTimeout(() => { clickCount = 0; }, 1000);
-
-          if (clickCount >= 5) {
-            clickCount = 0;
-
-            if (checkPassword()) {
-              const lessonId = card.getAttribute('data-lesson-id');
-              const lessonTipo = card.getAttribute('data-lesson-tipo');
-
-              const lesson = allLessons.find(item =>
-                String(item.id) === String(lessonId) && item.tipo === lessonTipo
-              );
-
-              if (lesson) abrirEditModal(lesson);
-            } else {
-              alert('Senha incorreta! Acesso negado.');
-            }
-          }
-        });
-      });
-    }
-
-    function renderAll() {
-      const { adults, youths } = getFinalLessons();
-
-      if (activeAdultTrim !== null) {
-        renderizarLicoes('adult', adults.filter(l => String(l.trimestre) === String(activeAdultTrim)));
-      } else {
-        const container = document.getElementById('adultLessonsContainer');
-        if (container) container.innerHTML = '<div class="empty-message">📖 Selecione um trimestre para ver as lições.</div>';
-      }
-
-      if (activeYouthTrim !== null) {
-        renderizarLicoes('youth', youths.filter(l => String(l.trimestre) === String(activeYouthTrim)));
-      } else {
-        const container = document.getElementById('youthLessonsContainer');
-        if (container) container.innerHTML = '<div class="empty-message">📖 Selecione um trimestre para ver as lições.</div>';
-      }
-
-      construirAdminPanel();
-    }
-
-    function construirAdminPanel() {
-      const container = document.getElementById('adminList');
-      if (!container) return;
-
-      container.innerHTML = '';
-
-      allLessons.forEach(lesson => {
+    youthLessons.forEach(lesson => {
+      if (String(lesson.trimestre) === "2" && YOUTH_TRIMESTRE_2_TITLES[lesson.numero]) {
         const key = `${lesson.tipo}:${lesson.id}`;
-        const available = Object.prototype.hasOwnProperty.call(adminOverrides, key)
-          ? adminOverrides[key]
-          : isLessonAvailable(lesson);
+        const newTitle = YOUTH_TRIMESTRE_2_TITLES[lesson.numero];
 
-        const row = document.createElement('div');
-        row.className = 'lesson-row';
-        row.innerHTML = `
-          <div class="lesson-info">
-            <strong>${lesson.tipo === 'adult' ? 'Adultos' : 'Jovens'}</strong> | ${lesson.trimestre}º Trim | Lição ${lesson.numero}: ${lesson.titulo}
-          </div>
-          <div class="lesson-row-actions">
-            <button class="toggle-btn ${available ? 'active' : 'blocked'}" data-key="${key}">${available ? 'Liberada' : 'Bloqueada'}</button>
-            <button class="edit-btn" data-key="${key}">Editar</button>
-          </div>
-        `;
-        container.appendChild(row);
-      });
+        if (lesson.titulo !== newTitle) {
+          lesson.titulo = newTitle;
+          updatedCount++;
 
-      document.querySelectorAll('#adminList .toggle-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const key = btn.dataset.key;
-          const lesson = allLessons.find(item => `${item.tipo}:${item.id}` === key);
-          const current = Object.prototype.hasOwnProperty.call(adminOverrides, key)
-            ? adminOverrides[key]
-            : isLessonAvailable(lesson);
-          adminOverrides[key] = !current;
-          saveOverrides();
-          renderAll();
-        });
-      });
+          if (!contentOverrides[key]) contentOverrides[key] = {};
+          contentOverrides[key].titulo = newTitle;
 
-      document.querySelectorAll('#adminList .edit-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          if (!checkPassword()) {
-            alert('Senha incorreta!');
-            return;
+          if (!contentOverrides[key].conteudo) {
+            contentOverrides[key].conteudo = lesson.conteudo;
           }
-          const key = btn.dataset.key;
-          const lesson = allLessons.find(item => `${item.tipo}:${item.id}` === key);
-          if (lesson) abrirEditModal(lesson);
-        });
-      });
-    }
-
-    function formatarHtmlBasico(html) {
-      try {
-        let texto = html.trim();
-        texto = texto.replace(/>\s+</g, '>\n<');
-        texto = texto.replace(/<(h1|h2|h3|h4|h5|h6|p|ul|ol|li|blockquote|section|article|div)([^>]*)>/gi, '\n<$1$2>');
-        texto = texto.replace(/<\/(h1|h2|h3|h4|h5|h6|p|ul|ol|li|blockquote|section|article|div)>/gi, '</$1>\n');
-        texto = texto.replace(/\n{3,}/g, '\n\n');
-        return texto.trim();
-      } catch (e) {
-        console.error("Erro ao formatar HTML:", e);
-        return html;
-      }
-    }
-
-    function atualizarPreviewEdicao() {
-      const textarea = document.getElementById('editConteudo');
-      const previewWrap = document.getElementById('editPreviewWrap');
-      const preview = document.getElementById('editPreview');
-
-      const conteudo = textarea.value.trim();
-
-      if (!conteudo) {
-        preview.innerHTML = "<p><em>Nada para visualizar.</em></p>";
-      } else {
-        preview.innerHTML = conteudo;
-      }
-
-      previewWrap.style.display = 'block';
-    }
-
-    function abrirEditModal(lesson) {
-      const modal = document.getElementById('editModal');
-      const title = document.getElementById('editModalTitle');
-      const textarea = document.getElementById('editConteudo');
-      const previewWrap = document.getElementById('editPreviewWrap');
-      const preview = document.getElementById('editPreview');
-      const key = `${lesson.tipo}:${lesson.id}`;
-
-      title.textContent = `Editar: ${lesson.titulo}`;
-
-      textarea.value =
-        contentOverrides[key]?.conteudo !== undefined
-          ? contentOverrides[key].conteudo
-          : (lesson.conteudo || '');
-
-      previewWrap.style.display = 'none';
-      preview.innerHTML = '';
-
-      modal.style.display = 'block';
-      modal.scrollTop = 0;
-      textarea.scrollTop = 0;
-
-      setTimeout(() => {
-        textarea.focus();
-      }, 100);
-
-      document.getElementById('previewEditBtn').onclick = () => {
-        atualizarPreviewEdicao();
-        modal.scrollTop = modal.scrollHeight;
-      };
-
-      document.getElementById('formatHtmlBtn').onclick = () => {
-        textarea.value = formatarHtmlBasico(textarea.value);
-        textarea.focus();
-      };
-
-      document.getElementById('cancelEditBtn').onclick = () => {
-        modal.style.display = 'none';
-      };
-
-      document.getElementById('saveEditBtn').onclick = () => {
-        const novoConteudo = textarea.value;
-
-        if (!novoConteudo.trim()) {
-          alert("O conteúdo não pode ficar vazio.");
-          return;
         }
-
-        let novoTitulo = lesson.titulo;
-        const titleMatch = novoConteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
-        if (titleMatch && titleMatch[1]) {
-          novoTitulo = titleMatch[1].trim();
-        }
-
-        contentOverrides[key] = {
-          conteudo: novoConteudo,
-          titulo: novoTitulo
-        };
-
-        saveOverrides();
-        modal.style.display = 'none';
-        renderAll();
-      };
-    }
-
-    function resetAllContent() {
-      if (!confirm('Isso apagará todas as edições de conteúdo e disponibilidade. Deseja continuar?')) return;
-      contentOverrides = {};
-      adminOverrides = {};
-      saveOverrides();
-      renderAll();
-    }
-
-    function clearAllData() {
-      if (!confirm('Isso limpará todos os dados salvos no navegador e recarregará a página. Deseja continuar?')) return;
-      localStorage.clear();
-      location.reload();
-    }
-
-    function exportJSON() {
-      const { adults, youths } = getFinalLessons();
-      const exportData = { adult: adults, youth: youths };
-      const dataStr = JSON.stringify(exportData, null, 2);
-      const blob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'lessons_export.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function showLoadingOverlay() {
-      const overlay = document.getElementById('loadingOverlay');
-      if (overlay) overlay.classList.add('show');
-    }
-
-    function hideLoadingOverlay() {
-      const overlay = document.getElementById('loadingOverlay');
-      if (overlay) overlay.classList.remove('show');
-    }
-
-    function abrirNovaGuia(licao) {
-      if (!licao) {
-        alert("Erro: lição inválida");
-        return;
       }
-
-      try {
-        sessionStorage.setItem("licaoAtual", JSON.stringify(licao));
-        const destino = licao.tipo === "youth" ? "#youth-class" : "#adult-class";
-        sessionStorage.setItem("voltarPara", destino);
-      } catch (e) {
-        console.error("Erro ao salvar a lição:", e);
-        alert("Não foi possível abrir a lição agora.");
-        return;
-      }
-
-      showLoadingOverlay();
-      document.body.classList.add("page-leaving");
-
-      setTimeout(() => {
-        window.location.href = "./licao.html";
-      }, 250);
-    }
-
-    function fecharAdminPanel() {
-      document.getElementById('adminOverlay').style.display = 'none';
-      document.getElementById('adminPanel').style.display = 'none';
-    }
-
-    document.addEventListener('click', (event) => {
-      const viewBtn = event.target.closest('.view-btn');
-      if (!viewBtn || viewBtn.disabled) return;
-      const licao = JSON.parse(decodeURIComponent(viewBtn.dataset.licao));
-      abrirNovaGuia(licao);
     });
 
-  let clickCountLogo = 0;
-let clickTimeoutLogo;
-
-function handleLogoClick() {
-  clickCountLogo++;
-
-  if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
-
-  clickTimeoutLogo = setTimeout(() => {
-    clickCountLogo = 0;
-  }, 2500);
-
-  if (clickCountLogo >= 5) {
-    clickCountLogo = 0;
-
-    document.getElementById('adminOverlay').style.display = 'block';
-    document.getElementById('adminPanel').style.display = 'block';
-
-    construirAdminPanel();
-  }
-}
-
-    function updateBottomNavActive() {
-      const sections = [
-        { id: 'home', link: 'home' },
-        { id: 'adult-class', link: 'adult-class' },
-        { id: 'youth-class', link: 'youth-class' },
-        { id: 'about', link: 'about' }
-      ];
-
-      let current = 'home';
-      const trigger = window.innerHeight * 0.35;
-
-      sections.forEach(section => {
-        const el = document.getElementById(section.id);
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= trigger && rect.bottom >= trigger) current = section.link;
-      });
-
-      document.querySelectorAll('.bottom-nav-link[data-target]').forEach(link => {
-        link.classList.toggle('active', link.dataset.target === current);
-      });
+    if (showAlert) {
+      if (updatedCount > 0) alert(`${updatedCount} título(s) corrigidos.`);
+      else alert("Nenhum título precisou ser corrigido.");
     }
 
-    function setupSwipeBack() {
-      let startX = 0;
-      let startY = 0;
-      let tracking = false;
+    if (updatedCount > 0) {
+      saveOverrides();
+      renderAll();
+    }
 
-      document.addEventListener('touchstart', (e) => {
-        const touch = e.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        tracking = startX <= 28;
-      }, { passive: true });
+    return true;
+  }
 
-      document.addEventListener('touchend', (e) => {
-        if (!tracking) return;
+  function updateLessonTitle(lesson, newTitle) {
+    if (!newTitle || newTitle.trim() === "") return false;
+    const key = `${lesson.tipo}:${lesson.id}`;
 
-        const touch = e.changedTouches[0];
-        const deltaX = touch.clientX - startX;
-        const deltaY = Math.abs(touch.clientY - startY);
+    if (lesson.tipo === 'adult') {
+      const idx = adultLessons.findIndex(l => l.id === lesson.id);
+      if (idx !== -1) adultLessons[idx].titulo = newTitle;
+    } else if (lesson.tipo === 'youth') {
+      const idx = youthLessons.findIndex(l => l.id === lesson.id);
+      if (idx !== -1) youthLessons[idx].titulo = newTitle;
+    }
 
-        if (deltaX > 90 && deltaY < 80) {
-          if (window.history.length > 1 && location.hash && location.hash !== '#home') {
-            history.back();
-          } else if (location.hash && location.hash !== '#home') {
-            location.hash = '#home';
+    if (!contentOverrides[key]) contentOverrides[key] = {};
+    contentOverrides[key].titulo = newTitle;
+
+    if (!contentOverrides[key].conteudo) {
+      contentOverrides[key].conteudo = lesson.conteudo;
+    }
+
+    saveOverrides();
+    renderAll();
+    return true;
+  }
+
+  function checkPassword() {
+    const pass = prompt("Digite a senha para editar a lição:");
+    return pass === EDIT_PASSWORD;
+  }
+
+  function loadOverrides() {
+    const storedAdmin = localStorage.getItem('ebd_admin_overrides');
+    const storedContent = localStorage.getItem('ebd_content_overrides');
+
+    if (storedAdmin) {
+      try {
+        adminOverrides = JSON.parse(storedAdmin);
+      } catch (e) {
+        adminOverrides = {};
+      }
+    }
+
+    if (storedContent) {
+      try {
+        contentOverrides = JSON.parse(storedContent);
+      } catch (e) {
+        contentOverrides = {};
+      }
+    }
+  }
+
+  function saveOverrides() {
+    localStorage.setItem('ebd_admin_overrides', JSON.stringify(adminOverrides));
+    localStorage.setItem('ebd_content_overrides', JSON.stringify(contentOverrides));
+  }
+
+  function applyContentOverrides(lesson) {
+    const key = `${lesson.tipo}:${lesson.id}`;
+    if (!contentOverrides[key]) return lesson;
+
+    const override = contentOverrides[key];
+
+    if (override.conteudo !== undefined) {
+      const updatedLesson = { ...lesson, conteudo: override.conteudo };
+      const titleMatch = updatedLesson.conteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
+      updatedLesson.titulo = titleMatch && titleMatch[1]
+        ? titleMatch[1].trim()
+        : (override.titulo || lesson.titulo);
+      return updatedLesson;
+    } else if (override.titulo !== undefined) {
+      return { ...lesson, titulo: override.titulo };
+    }
+
+    return lesson;
+  }
+
+  function getFinalLessons() {
+    return {
+      adults: adultLessons.map(applyContentOverrides),
+      youths: youthLessons.map(applyContentOverrides)
+    };
+  }
+
+  function parseDate(dateStr) {
+    if (!dateStr || !dateStr.includes('/')) return new Date();
+    const [day, month, year] = dateStr.split('/');
+    return new Date(Number(year), Number(month) - 1, Number(day));
+  }
+
+  function getReleaseDate(dateStr) {
+    const lessonDate = parseDate(dateStr);
+    const releaseDate = new Date(lessonDate);
+    releaseDate.setDate(lessonDate.getDate() - 6);
+    return releaseDate;
+  }
+
+  function isLessonAvailable(lesson) {
+    const key = `${lesson.tipo}:${lesson.id}`;
+    if (Object.prototype.hasOwnProperty.call(adminOverrides, key)) {
+      return adminOverrides[key];
+    }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today >= getReleaseDate(lesson.data);
+  }
+
+  function getIntroSummary(html) {
+    if (!html) return 'Clique para abrir o conteúdo completo da lição.';
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    tempDiv.querySelectorAll('style, script, link').forEach(tag => tag.remove());
+
+    const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    for (let heading of headings) {
+      const headingText = heading.innerText.trim().toLowerCase();
+      if (headingText.includes('introdução') || headingText.includes('introducao')) {
+        let introText = '';
+        let nextElement = heading.nextElementSibling;
+        while (nextElement && !/^H[1-6]$/i.test(nextElement.tagName)) {
+          introText += nextElement.innerText + ' ';
+          nextElement = nextElement.nextElementSibling;
+        }
+        if (introText.trim()) {
+          introText = introText.replace(/\s+/g, ' ').trim();
+          if (introText.length > 200) introText = introText.substring(0, 200) + '...';
+          return introText;
+        }
+        break;
+      }
+    }
+
+    const firstParagraph = tempDiv.querySelector('p');
+    if (firstParagraph && firstParagraph.innerText.trim()) {
+      let text = firstParagraph.innerText.trim();
+      if (text.length > 200) text = text.substring(0, 200) + '...';
+      return text;
+    }
+
+    return 'Clique para abrir o conteúdo completo da lição.';
+  }
+
+  async function carregarDados() {
+    try {
+      const response = await fetch(`lessons.json?v=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+
+      const data = await response.json();
+
+      adultLessons = data.adult || [];
+      youthLessons = data.youth || [];
+
+      let nextId = 1;
+      adultLessons.forEach(lesson => {
+        lesson.id = nextId++;
+        lesson.tipo = 'adult';
+      });
+      youthLessons.forEach(lesson => {
+        lesson.id = nextId++;
+        lesson.tipo = 'youth';
+      });
+
+      allLessons = [...adultLessons, ...youthLessons];
+
+      criarAbas('adult', adultLessons);
+      criarAbas('youth', youthLessons);
+      construirAdminPanel();
+    } catch (error) {
+      console.error('Erro ao carregar lessons.json:', error);
+      document.getElementById('adultLessonsContainer').innerHTML = '<div class="empty-message">Erro ao carregar as lições de adultos.</div>';
+      document.getElementById('youthLessonsContainer').innerHTML = '<div class="empty-message">Erro ao carregar as lições de jovens.</div>';
+    }
+  }
+
+  function criarAbas(tipo, lista) {
+    const trimestres = [...new Set(lista.map(l => l.trimestre))].sort((a, b) => a - b);
+    const tabsContainer = document.getElementById(`${tipo}Tabs`);
+    const lessonsContainer = document.getElementById(`${tipo}LessonsContainer`);
+
+    if (!tabsContainer || !lessonsContainer) return;
+
+    tabsContainer.innerHTML = '';
+
+    if (trimestres.length === 0) {
+      lessonsContainer.innerHTML = '<div class="empty-message">Nenhuma lição cadastrada ainda.</div>';
+      return;
+    }
+
+    trimestres.forEach(trim => {
+      const btn = document.createElement('button');
+      btn.className = 'tab-btn';
+      btn.innerHTML = `<i class="fas fa-calendar-alt"></i> ${trim}º Trimestre`;
+      btn.dataset.trim = trim;
+
+      btn.addEventListener('click', () => {
+        document.querySelectorAll(`#${tipo}Tabs .tab-btn`).forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (tipo === 'adult') activeAdultTrim = trim;
+        else activeYouthTrim = trim;
+
+        const { adults, youths } = getFinalLessons();
+        const source = tipo === 'adult' ? adults : youths;
+        renderizarLicoes(tipo, source.filter(l => String(l.trimestre) === String(trim)));
+      });
+
+      tabsContainer.appendChild(btn);
+    });
+
+    lessonsContainer.innerHTML = '<div class="empty-message">📖 Selecione um trimestre para ver as lições.</div>';
+  }
+
+  function renderizarLicoes(tipo, lista) {
+    const container = document.getElementById(`${tipo}LessonsContainer`);
+    if (!container) return;
+
+    if (!lista.length) {
+      container.innerHTML = '<div class="empty-message">Nenhuma lição disponível para este trimestre.</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+
+    lista.forEach(licao => {
+      const available = isLessonAvailable(licao);
+      const card = document.createElement('article');
+      card.className = 'lesson-card fade-in';
+      card.setAttribute('data-lesson-id', licao.id);
+      card.setAttribute('data-lesson-tipo', licao.tipo);
+
+      const badgeClass = available ? 'available' : 'preparation';
+      const badgeText = available ? 'Disponível' : 'Em breve';
+      const introSummary = getIntroSummary(licao.conteudo);
+      const safeLesson = encodeURIComponent(JSON.stringify(licao));
+
+      card.innerHTML = `
+        <span class="status-badge ${badgeClass}">${badgeText}</span>
+
+        <div class="lesson-top">
+          <span class="lesson-quarter"><i class="fas fa-calendar-alt"></i> ${licao.trimestre}º Trimestre</span>
+          <div class="lesson-number">Lição ${String(licao.numero).padStart(2, '0')}</div>
+          <div class="lesson-title">
+            ${licao.titulo}
+            <i class="fas fa-pencil-alt edit-title-icon" data-lesson-id="${licao.id}" data-lesson-tipo="${licao.tipo}" title="Editar título"></i>
+          </div>
+        </div>
+
+        <div class="lesson-body">
+          <div class="lesson-date">
+            <i class="far fa-calendar-alt"></i> ${licao.data || ''}
+          </div>
+
+          <div class="lesson-description">${introSummary}</div>
+
+          <div class="lesson-footer">
+            ${
+              available
+                ? `
+                  <button class="lesson-action primary view-btn" data-licao="${safeLesson}">
+                    <i class="fas fa-book-open"></i> Ver lição
+                  </button>
+                  <button class="lesson-action secondary-ghost view-btn" data-licao="${safeLesson}" aria-label="Abrir lição">
+                    <i class="fas fa-arrow-right"></i>
+                  </button>
+                `
+                : `
+                  <button class="lesson-action primary" disabled>
+                    <i class="fas fa-clock"></i> Em breve
+                  </button>
+                  <button class="lesson-action secondary-ghost disabled" disabled aria-label="Indisponível">
+                    <i class="fas fa-lock"></i>
+                  </button>
+                `
+            }
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+    document.querySelectorAll(`#${tipo}LessonsContainer .edit-title-icon`).forEach(icon => {
+      icon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!checkPassword()) {
+          alert('Senha incorreta! Acesso negado.');
+          return;
+        }
+        const lessonId = parseInt(icon.dataset.lessonId, 10);
+        const lessonTipo = icon.dataset.lessonTipo;
+        const lesson = allLessons.find(l => l.id === lessonId && l.tipo === lessonTipo);
+        if (lesson) {
+          const newTitle = prompt("Digite o novo título da lição:", lesson.titulo);
+          if (newTitle && newTitle.trim() !== "") {
+            updateLessonTitle(lesson, newTitle.trim());
           }
         }
+      });
+    });
 
-        tracking = false;
-      }, { passive: true });
+    attachCardAdminClicks(tipo);
+  }
+
+  function attachCardAdminClicks(tipo) {
+    document.querySelectorAll(`#${tipo}LessonsContainer .lesson-card`).forEach(card => {
+      let clickCount = 0;
+      let timeout;
+
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.view-btn') || e.target.closest('.edit-title-icon')) return;
+
+        clickCount++;
+
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          clickCount = 0;
+        }, 1000);
+
+        if (clickCount >= 5) {
+          clickCount = 0;
+
+          if (checkPassword()) {
+            const lessonId = card.getAttribute('data-lesson-id');
+            const lessonTipo = card.getAttribute('data-lesson-tipo');
+
+            const lesson = allLessons.find(item =>
+              String(item.id) === String(lessonId) && item.tipo === lessonTipo
+            );
+
+            if (lesson) abrirEditModal(lesson);
+          } else {
+            alert('Senha incorreta! Acesso negado.');
+          }
+        }
+      });
+    });
+  }
+
+  function renderAll() {
+    const { adults, youths } = getFinalLessons();
+
+    if (activeAdultTrim !== null) {
+      renderizarLicoes('adult', adults.filter(l => String(l.trimestre) === String(activeAdultTrim)));
+    } else {
+      const container = document.getElementById('adultLessonsContainer');
+      if (container) container.innerHTML = '<div class="empty-message">📖 Selecione um trimestre para ver as lições.</div>';
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadOverrides();
-      carregarDados();
-      hideLoadingOverlay();
-
-      let clickCountLogo = 0;
-let clickTimeoutLogo;
-
-function handleLogoClick() {
-  clickCountLogo++;
-
-  if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
-
-  clickTimeoutLogo = setTimeout(() => {
-    clickCountLogo = 0;
-  }, 2500);
-
-  if (clickCountLogo >= 5) {
-    clickCountLogo = 0;
-
-    document.getElementById('adminOverlay').style.display = 'block';
-    document.getElementById('adminPanel').style.display = 'block';
+    if (activeYouthTrim !== null) {
+      renderizarLicoes('youth', youths.filter(l => String(l.trimestre) === String(activeYouthTrim)));
+    } else {
+      const container = document.getElementById('youthLessonsContainer');
+      if (container) container.innerHTML = '<div class="empty-message">📖 Selecione um trimestre para ver as lições.</div>';
+    }
 
     construirAdminPanel();
   }
-}
 
-// aplica em toda a área da logo
-document.querySelector('.brand').addEventListener('click', handleLogoClick);
-document.querySelector('.brand-mark').addEventListener('click', handleLogoClick);
-document.querySelector('.brand-copy').addEventListener('click', handleLogoClick);
+  function construirAdminPanel() {
+    const container = document.getElementById('adminList');
+    if (!container) return;
 
+    container.innerHTML = '';
+
+    allLessons.forEach(lesson => {
+      const key = `${lesson.tipo}:${lesson.id}`;
+      const available = Object.prototype.hasOwnProperty.call(adminOverrides, key)
+        ? adminOverrides[key]
+        : isLessonAvailable(lesson);
+
+      const row = document.createElement('div');
+      row.className = 'lesson-row';
+      row.innerHTML = `
+        <div class="lesson-info">
+          <strong>${lesson.tipo === 'adult' ? 'Adultos' : 'Jovens'}</strong> | ${lesson.trimestre}º Trim | Lição ${lesson.numero}: ${lesson.titulo}
+        </div>
+        <div class="lesson-row-actions">
+          <button class="toggle-btn ${available ? 'active' : 'blocked'}" data-key="${key}">${available ? 'Liberada' : 'Bloqueada'}</button>
+          <button class="edit-btn" data-key="${key}">Editar</button>
+        </div>
+      `;
+      container.appendChild(row);
+    });
+
+    document.querySelectorAll('#adminList .toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.key;
+        const lesson = allLessons.find(item => `${item.tipo}:${item.id}` === key);
+        const current = Object.prototype.hasOwnProperty.call(adminOverrides, key)
+          ? adminOverrides[key]
+          : isLessonAvailable(lesson);
+        adminOverrides[key] = !current;
+        saveOverrides();
+        renderAll();
+      });
+    });
+
+    document.querySelectorAll('#adminList .edit-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!checkPassword()) {
+          alert('Senha incorreta!');
+          return;
+        }
+        const key = btn.dataset.key;
+        const lesson = allLessons.find(item => `${item.tipo}:${item.id}` === key);
+        if (lesson) abrirEditModal(lesson);
+      });
+    });
+  }
+
+  function formatarHtmlBasico(html) {
+    try {
+      let texto = html.trim();
+      texto = texto.replace(/>\s+</g, '>\n<');
+      texto = texto.replace(/<(h1|h2|h3|h4|h5|h6|p|ul|ol|li|blockquote|section|article|div)([^>]*)>/gi, '\n<$1$2>');
+      texto = texto.replace(/<\/(h1|h2|h3|h4|h5|h6|p|ul|ol|li|blockquote|section|article|div)>/gi, '</$1>\n');
+      texto = texto.replace(/\n{3,}/g, '\n\n');
+      return texto.trim();
+    } catch (e) {
+      console.error("Erro ao formatar HTML:", e);
+      return html;
+    }
+  }
+
+  function atualizarPreviewEdicao() {
+    const textarea = document.getElementById('editConteudo');
+    const previewWrap = document.getElementById('editPreviewWrap');
+    const preview = document.getElementById('editPreview');
+
+    const conteudo = textarea.value.trim();
+
+    if (!conteudo) {
+      preview.innerHTML = "<p><em>Nada para visualizar.</em></p>";
+    } else {
+      preview.innerHTML = conteudo;
+    }
+
+    previewWrap.style.display = 'block';
+  }
+
+  function abrirEditModal(lesson) {
+    const modal = document.getElementById('editModal');
+    const title = document.getElementById('editModalTitle');
+    const textarea = document.getElementById('editConteudo');
+    const previewWrap = document.getElementById('editPreviewWrap');
+    const preview = document.getElementById('editPreview');
+    const key = `${lesson.tipo}:${lesson.id}`;
+
+    title.textContent = `Editar: ${lesson.titulo}`;
+
+    textarea.value =
+      contentOverrides[key]?.conteudo !== undefined
+        ? contentOverrides[key].conteudo
+        : (lesson.conteudo || '');
+
+    previewWrap.style.display = 'none';
+    preview.innerHTML = '';
+
+    modal.style.display = 'block';
+    modal.scrollTop = 0;
+    textarea.scrollTop = 0;
+
+    setTimeout(() => {
+      textarea.focus();
+    }, 100);
+
+    document.getElementById('previewEditBtn').onclick = () => {
+      atualizarPreviewEdicao();
+      modal.scrollTop = modal.scrollHeight;
+    };
+
+    document.getElementById('formatHtmlBtn').onclick = () => {
+      textarea.value = formatarHtmlBasico(textarea.value);
+      textarea.focus();
+    };
+
+    document.getElementById('cancelEditBtn').onclick = () => {
+      modal.style.display = 'none';
+    };
+
+    document.getElementById('saveEditBtn').onclick = () => {
+      const novoConteudo = textarea.value;
+
+      if (!novoConteudo.trim()) {
+        alert("O conteúdo não pode ficar vazio.");
+        return;
+      }
+
+      let novoTitulo = lesson.titulo;
+      const titleMatch = novoConteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
+      if (titleMatch && titleMatch[1]) {
+        novoTitulo = titleMatch[1].trim();
+      }
+
+      contentOverrides[key] = {
+        conteudo: novoConteudo,
+        titulo: novoTitulo
+      };
+
+      saveOverrides();
+      modal.style.display = 'none';
+      renderAll();
+    };
+  }
+
+  function resetAllContent() {
+    if (!confirm('Isso apagará todas as edições de conteúdo e disponibilidade. Deseja continuar?')) return;
+    contentOverrides = {};
+    adminOverrides = {};
+    saveOverrides();
+    renderAll();
+  }
+
+  function clearAllData() {
+    if (!confirm('Isso limpará todos os dados salvos no navegador e recarregará a página. Deseja continuar?')) return;
+    localStorage.clear();
+    location.reload();
+  }
+
+  function exportJSON() {
+    const { adults, youths } = getFinalLessons();
+    const exportData = { adult: adults, youth: youths };
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'lessons_export.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function showLoadingOverlay() {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) overlay.classList.add('show');
+  }
+
+  function hideLoadingOverlay() {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) overlay.classList.remove('show');
+  }
+
+  function abrirNovaGuia(licao) {
+    if (!licao) {
+      alert("Erro: lição inválida");
+      return;
+    }
+
+    try {
+      sessionStorage.setItem("licaoAtual", JSON.stringify(licao));
+      const destino = licao.tipo === "youth" ? "#youth-class" : "#adult-class";
+      sessionStorage.setItem("voltarPara", destino);
+    } catch (e) {
+      console.error("Erro ao salvar a lição:", e);
+      alert("Não foi possível abrir a lição agora.");
+      return;
+    }
+
+    showLoadingOverlay();
+    document.body.classList.add("page-leaving");
+
+    setTimeout(() => {
+      window.location.href = "./licao.html";
+    }, 250);
+  }
+
+  function fecharAdminPanel() {
+    document.getElementById('adminOverlay').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'none';
+  }
+
+  document.addEventListener('click', (event) => {
+    const viewBtn = event.target.closest('.view-btn');
+    if (!viewBtn || viewBtn.disabled) return;
+    const licao = JSON.parse(decodeURIComponent(viewBtn.dataset.licao));
+    abrirNovaGuia(licao);
+  });
+
+  let clickCountLogo = 0;
+  let clickTimeoutLogo = null;
+
+  function handleLogoClick() {
+    clickCountLogo++;
+
+    if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
+
+    clickTimeoutLogo = setTimeout(() => {
+      clickCountLogo = 0;
+    }, 2500);
+
+    if (clickCountLogo >= 5) {
+      clickCountLogo = 0;
+      document.getElementById('adminOverlay').style.display = 'block';
+      document.getElementById('adminPanel').style.display = 'block';
+      construirAdminPanel();
+    }
+  }
+
+  function updateBottomNavActive() {
+    const sections = [
+      { id: 'home', link: 'home' },
+      { id: 'adult-class', link: 'adult-class' },
+      { id: 'youth-class', link: 'youth-class' },
+      { id: 'about', link: 'about' }
+    ];
+
+    let current = 'home';
+    const trigger = window.innerHeight * 0.35;
+
+    sections.forEach(section => {
+      const el = document.getElementById(section.id);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= trigger && rect.bottom >= trigger) current = section.link;
+    });
+
+    document.querySelectorAll('.bottom-nav-link[data-target]').forEach(link => {
+      link.classList.toggle('active', link.dataset.target === current);
+    });
+  }
+
+  function setupSwipeBack() {
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+
+    document.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      tracking = startX <= 28;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (!tracking) return;
+
+      const touch = e.changedTouches[0];
+      const deltaX = touch.clientX - startX;
+      const deltaY = Math.abs(touch.clientY - startY);
+
+      if (deltaX > 90 && deltaY < 80) {
+        if (window.history.length > 1 && location.hash && location.hash !== '#home') {
+          history.back();
+        } else if (location.hash && location.hash !== '#home') {
+          location.hash = '#home';
+        }
+      }
+
+      tracking = false;
+    }, { passive: true });
+  }
+
+  const canvas = document.getElementById('particles');
+  const ctx = canvas ? canvas.getContext('2d') : null;
+  let particles = [];
+
+  function resizeCanvas() {
+    if (!canvas || !ctx) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    particles = Array.from({ length: window.innerWidth < 768 ? 45 : 90 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2.1 + 0.2,
+      d: Math.random() * 0.9 + 0.2,
+      o: Math.random() * 0.28 + 0.08
+    }));
+  }
+
+  function drawParticles() {
+    if (!canvas || !ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(247, 178, 77, ${p.o})`;
+      ctx.fill();
+
+      p.y += p.d;
+      if (p.y > canvas.height) {
+        p.y = -5;
+        p.x = Math.random() * canvas.width;
+      }
+    });
+    requestAnimationFrame(drawParticles);
+  }
+
+  let deferredInstallPrompt = null;
+
+  function showInstallButtons() {
+    const installBtn = document.getElementById("installAppBtn");
+    const installBottomBtn = document.getElementById("installBottomBtn");
+    if (installBtn) installBtn.style.display = "inline-flex";
+    if (installBottomBtn) installBottomBtn.style.display = "inline-flex";
+  }
+
+  function hideInstallButtons() {
+    const installBtn = document.getElementById("installAppBtn");
+    const installBottomBtn = document.getElementById("installBottomBtn");
+    if (installBtn) installBtn.style.display = "none";
+    if (installBottomBtn) installBottomBtn.style.display = "none";
+  }
+
+  async function installApp() {
+    if (!deferredInstallPrompt) return;
+
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+
+    deferredInstallPrompt = null;
+    hideInstallButtons();
+  }
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    showInstallButtons();
+  });
+
+  window.addEventListener("appinstalled", () => {
+    hideInstallButtons();
+  });
+
+  window.addEventListener("error", function (e) {
+    console.error("Erro global capturado:", e.message);
+  });
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    loadOverrides();
+
+    try {
+      await carregarDados();
+    } catch (e) {
+      console.error("Erro ao carregar dados:", e);
+    }
+
+    hideLoadingOverlay();
+
+    const logo = document.getElementById('logo');
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const nav = document.getElementById('mainNav');
+    const adminOverlay = document.getElementById('adminOverlay');
+    const closeAdminBtn = document.getElementById('closeAdminBtn');
+    const adminUnlockAll = document.getElementById('adminUnlockAll');
+    const adminBlockAll = document.getElementById('adminBlockAll');
+    const adminResetAll = document.getElementById('adminResetAll');
+    const adminExport = document.getElementById('adminExport');
+    const adminClearStorage = document.getElementById('adminClearStorage');
+    const adminFixYouthTitles = document.getElementById('adminFixYouthTitles');
+    const closeEditBtn = document.getElementById('closeEditBtn');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
+    const installBtn = document.getElementById("installAppBtn");
+    const installBottomBtn = document.getElementById("installBottomBtn");
+
+    if (logo) {
+      logo.addEventListener('click', handleLogoClick);
+    }
+
+    if (mobileBtn && nav) {
       mobileBtn.addEventListener('click', () => {
         nav.classList.toggle('active');
         mobileBtn.innerHTML = nav.classList.contains('active')
           ? '<i class="fas fa-times"></i>'
           : '<i class="fas fa-bars"></i>';
       });
+    }
 
-      document.querySelectorAll('#mainNav a, .bottom-nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-          nav.classList.remove('active');
-          mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    document.querySelectorAll('#mainNav a, .bottom-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (nav) nav.classList.remove('active');
+        if (mobileBtn) mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      });
+    });
+
+    if (closeAdminBtn) closeAdminBtn.addEventListener('click', fecharAdminPanel);
+    if (adminOverlay) adminOverlay.addEventListener('click', fecharAdminPanel);
+
+    if (adminUnlockAll) {
+      adminUnlockAll.addEventListener('click', () => {
+        allLessons.forEach(lesson => {
+          adminOverrides[`${lesson.tipo}:${lesson.id}`] = true;
         });
-      });
-
-      document.getElementById('closeAdminBtn').addEventListener('click', fecharAdminPanel);
-      document.getElementById('adminOverlay').addEventListener('click', fecharAdminPanel);
-
-      document.getElementById('adminUnlockAll').addEventListener('click', () => {
-        allLessons.forEach(lesson => { adminOverrides[`${lesson.tipo}:${lesson.id}`] = true; });
         saveOverrides();
         renderAll();
       });
+    }
 
-      document.getElementById('adminBlockAll').addEventListener('click', () => {
-        allLessons.forEach(lesson => { adminOverrides[`${lesson.tipo}:${lesson.id}`] = false; });
+    if (adminBlockAll) {
+      adminBlockAll.addEventListener('click', () => {
+        allLessons.forEach(lesson => {
+          adminOverrides[`${lesson.tipo}:${lesson.id}`] = false;
+        });
         saveOverrides();
         renderAll();
       });
+    }
 
-      document.getElementById('adminResetAll').addEventListener('click', resetAllContent);
-      document.getElementById('adminExport').addEventListener('click', exportJSON);
-      document.getElementById('adminClearStorage').addEventListener('click', clearAllData);
+    if (adminResetAll) adminResetAll.addEventListener('click', resetAllContent);
+    if (adminExport) adminExport.addEventListener('click', exportJSON);
+    if (adminClearStorage) adminClearStorage.addEventListener('click', clearAllData);
 
-      document.getElementById('adminFixYouthTitles').addEventListener('click', () => {
+    if (adminFixYouthTitles) {
+      adminFixYouthTitles.addEventListener('click', () => {
         if (checkPassword()) applyYouthTitleUpdatesAndSave(true);
         else alert('Senha incorreta! Acesso negado.');
       });
+    }
 
-      document.getElementById('closeEditBtn').addEventListener('click', () => {
+    if (closeEditBtn) {
+      closeEditBtn.addEventListener('click', () => {
         document.getElementById('editModal').style.display = 'none';
       });
+    }
 
-      document.getElementById('cancelEditBtn').addEventListener('click', () => {
+    if (cancelEditBtn) {
+      cancelEditBtn.addEventListener('click', () => {
         document.getElementById('editModal').style.display = 'none';
       });
+    }
 
-      window.addEventListener('click', (event) => {
-        if (event.target === document.getElementById('editModal')) {
-          document.getElementById('editModal').style.display = 'none';
-        }
-      });
-
-      window.addEventListener('scroll', updateBottomNavActive, { passive: true });
-      window.addEventListener('hashchange', updateBottomNavActive);
-      updateBottomNavActive();
-      setupSwipeBack();
+    window.addEventListener('click', (event) => {
+      if (event.target === document.getElementById('editModal')) {
+        document.getElementById('editModal').style.display = 'none';
+      }
     });
 
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      particles = Array.from({ length: window.innerWidth < 768 ? 45 : 90 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 2.1 + 0.2,
-        d: Math.random() * 0.9 + 0.2,
-        o: Math.random() * 0.28 + 0.08
-      }));
-    }
-
-    function drawParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(247, 178, 77, ${p.o})`;
-        ctx.fill();
-
-        p.y += p.d;
-        if (p.y > canvas.height) {
-          p.y = -5;
-          p.x = Math.random() * canvas.width;
-        }
-      });
-      requestAnimationFrame(drawParticles);
-    }
+    window.addEventListener('scroll', updateBottomNavActive, { passive: true });
+    window.addEventListener('hashchange', updateBottomNavActive);
+    updateBottomNavActive();
+    setupSwipeBack();
 
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     drawParticles();
-  </script>
 
-  <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", async () => {
         try {
@@ -2522,46 +2590,10 @@ document.querySelector('.brand-copy').addEventListener('click', handleLogoClick)
         }
       });
     }
-  </script>
-
-  <script>
-    let deferredInstallPrompt = null;
-
-    const installBtn = document.getElementById("installAppBtn");
-    const installBottomBtn = document.getElementById("installBottomBtn");
-
-    function showInstallButtons() {
-      if (installBtn) installBtn.style.display = "inline-flex";
-      if (installBottomBtn) installBottomBtn.style.display = "inline-flex";
-    }
-
-    function hideInstallButtons() {
-      if (installBtn) installBtn.style.display = "none";
-      if (installBottomBtn) installBottomBtn.style.display = "none";
-    }
-
-    async function installApp() {
-      if (!deferredInstallPrompt) return;
-
-      deferredInstallPrompt.prompt();
-      await deferredInstallPrompt.userChoice;
-
-      deferredInstallPrompt = null;
-      hideInstallButtons();
-    }
-
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      deferredInstallPrompt = e;
-      showInstallButtons();
-    });
 
     if (installBtn) installBtn.addEventListener("click", installApp);
     if (installBottomBtn) installBottomBtn.addEventListener("click", installApp);
-
-    window.addEventListener("appinstalled", () => {
-      hideInstallButtons();
-    });
-  </script>
+  });
+</script>
 </body>
 </html>
