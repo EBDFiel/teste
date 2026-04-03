@@ -2296,21 +2296,30 @@
     let clickCountLogo = 0;
     let clickTimeoutLogo;
 
-    function handleLogoClick() {
-      clickCountLogo++;
+   let clickCountLogo = 0;
+let clickTimeoutLogo;
 
-      if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
-      clickTimeoutLogo = setTimeout(() => {
-        clickCountLogo = 0;
-      }, 1000);
+function handleLogoClick() {
+  clickCountLogo++;
 
-      if (clickCountLogo >= 5) {
-        clickCountLogo = 0;
-        document.getElementById('adminOverlay').style.display = 'block';
-        document.getElementById('adminPanel').style.display = 'block';
-        construirAdminPanel();
-      }
-    }
+  // limpa o timer anterior
+  if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
+
+  // agora você tem mais tempo pra clicar
+  clickTimeoutLogo = setTimeout(() => {
+    clickCountLogo = 0;
+  }, 2500);
+
+  // abre com 5 cliques
+  if (clickCountLogo >= 5) {
+    clickCountLogo = 0;
+
+    document.getElementById('adminOverlay').style.display = 'block';
+    document.getElementById('adminPanel').style.display = 'block';
+
+    construirAdminPanel();
+  }
+}
 
     function updateBottomNavActive() {
       const sections = [
