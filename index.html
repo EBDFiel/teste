@@ -234,35 +234,53 @@
     }
 
     .btn {
-      min-height: 50px;
-      padding: 0 22px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-weight: 800;
-      transition: 0.25s ease;
-      border: 1px solid transparent;
-      cursor: pointer;
-    }
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.btn:hover::after {
+  opacity: 1;
+}
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      color: var(--dark);
-      box-shadow: 0 14px 30px rgba(255,152,0,0.22);
-    }
+  background: linear-gradient(135deg, #ffb347, #ff9800);
+  color: #1a1a1a;
+  box-shadow:
+    0 10px 25px rgba(255,152,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 16px 35px rgba(255,152,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+}
 
     .btn-secondary {
-      background: rgba(255,255,255,0.05);
-      border-color: var(--stroke);
-      color: #fff;
-    }
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  transition: all 0.25s ease;
+}
 
-    .hero-side {
-      display: grid;
-      gap: 14px;
-    }
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-2px) scale(1.02);
+}
 
     .hero-card {
       border-radius: 24px;
@@ -1334,13 +1352,13 @@
               A Escola Bíblica Dominical é um tempo precioso de crescimento espiritual, comunhão e ensino fiel das Escrituras. Aqui você encontra lições organizadas por trimestre, com conteúdo bíblico, aplicações práticas e recursos para edificação da igreja.
             </p>
 
-            <div class="hero-actions">
-              <a href="#adult-class" class="btn btn-primary"><i class="fas fa-book-open"></i> Classe Adultos</a>
-              <a href="#youth-class" class="btn btn-secondary"><i class="fas fa-users"></i> Classe Jovens</a>
-              <button id="installAppBtn" class="btn btn-secondary" style="display:none;">
-                <i class="fas fa-download"></i> Instalar app
-              </button>
-            </div>
+           <a href="#adult-class" class="btn btn-primary">
+  <i class="fas fa-book-bible"></i> Classe Adultos
+</a>
+
+<a href="#youth-class" class="btn btn-secondary">
+  <i class="fas fa-people-group"></i> Classe Jovens
+</a>
 
             <div class="hero-stats">
               <div class="hero-stat">
