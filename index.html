@@ -884,22 +884,75 @@
 
     .admin-panel,
     .edit-modal {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(92vw, 920px);
-      max-height: 84vh;
-      overflow-y: auto;
-      background: #0d1726;
-      color: #fff;
-      border: 1px solid rgba(247,178,77,0.3);
-      border-radius: 26px;
-      box-shadow: 0 30px 70px rgba(0,0,0,0.45);
-      z-index: 3000;
-      padding: 22px;
-    }
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92vw, 920px);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  background: #0d1726;
+  color: #fff;
+  border: 1px solid rgba(247,178,77,0.3);
+  border-radius: 26px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+  z-index: 4000;
+  padding: 22px;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.cancel-btn {
+  background: linear-gradient(135deg, #475569, #334155);
+  color: #fff;
+}
+
+.edit-preview-wrap {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 18px;
+  background: #142233;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.edit-preview-wrap h4 {
+  margin-bottom: 12px;
+  color: #ffd79b;
+}
+
+.edit-preview {
+  background: #fff;
+  color: #334155;
+  border-radius: 16px;
+  padding: 20px;
+  line-height: 1.7;
+}
+
+.edit-preview h1,
+.edit-preview h2,
+.edit-preview h3 {
+  color: #102131;
+}
+
+@media (max-width: 768px) {
+  .edit-modal {
+    top: 10px;
+    width: calc(100vw - 16px);
+    max-height: calc(100vh - 20px);
+    border-radius: 20px;
+    padding: 16px;
+  }
+
+  .edit-actions {
+    flex-direction: column;
+  }
+}
 
     .edit-modal { z-index: 4000; }
 
@@ -1536,17 +1589,27 @@
       <button id="adminFixYouthTitles" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">Corrigir Títulos dos Jovens (2º Trim)</button>
     </div>
     <p class="admin-note">Se algum card continuar exibindo conteúdo antigo, use “Limpar Todos os Dados” e recarregue a página.</p>
+  <div id="editModal" class="edit-modal">
+  <div class="edit-modal-header">
+    <h3 id="editModalTitle">Editar Lição</h3>
+    <button class="close-edit" id="closeEditBtn">&times;</button>
   </div>
 
-  <div id="editModal" class="edit-modal">
-    <div class="edit-modal-header">
-      <h3 id="editModalTitle">Editar Lição</h3>
-      <button class="close-edit" id="closeEditBtn">&times;</button>
-    </div>
-    <label for="editConteudo">Conteúdo da lição (HTML)</label>
-    <textarea id="editConteudo" placeholder="Cole aqui todo o conteúdo da lição, incluindo o título em <h1>...</h1>"></textarea>
-    <button class="save-btn" id="saveEditBtn">Salvar Alterações</button>
+  <label for="editConteudo">Conteúdo da lição (HTML)</label>
+  <textarea id="editConteudo" placeholder="Cole aqui todo o conteúdo da lição, incluindo o título em <h1>...</h1>"></textarea>
+
+  <div class="edit-actions">
+    <button class="save-btn" id="previewEditBtn" type="button">Visualizar antes de salvar</button>
+    <button class="save-btn" id="formatHtmlBtn" type="button">Formatar HTML automático</button>
+    <button class="save-btn" id="saveEditBtn" type="button">Salvar Alterações</button>
+    <button class="save-btn cancel-btn" id="cancelEditBtn" type="button">Cancelar</button>
   </div>
+
+  <div id="editPreviewWrap" class="edit-preview-wrap" style="display:none;">
+    <h4>Pré-visualização</h4>
+    <div id="editPreview" class="edit-preview"></div>
+  </div>
+</div>
 
   <script>
     let adultLessons = [];
