@@ -2380,11 +2380,32 @@ function handleLogoClick() {
       carregarDados();
       hideLoadingOverlay();
 
-      const logo = document.getElementById('logo');
-      const mobileBtn = document.getElementById('mobileMenuBtn');
-      const nav = document.getElementById('mainNav');
+      let clickCountLogo = 0;
+let clickTimeoutLogo;
 
-      logo.addEventListener('click', handleLogoClick);
+function handleLogoClick() {
+  clickCountLogo++;
+
+  if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
+
+  clickTimeoutLogo = setTimeout(() => {
+    clickCountLogo = 0;
+  }, 2500);
+
+  if (clickCountLogo >= 5) {
+    clickCountLogo = 0;
+
+    document.getElementById('adminOverlay').style.display = 'block';
+    document.getElementById('adminPanel').style.display = 'block';
+
+    construirAdminPanel();
+  }
+}
+
+// aplica em toda a área da logo
+document.querySelector('.brand').addEventListener('click', handleLogoClick);
+document.querySelector('.brand-mark').addEventListener('click', handleLogoClick);
+document.querySelector('.brand-copy').addEventListener('click', handleLogoClick);
 
       mobileBtn.addEventListener('click', () => {
         nav.classList.toggle('active');
